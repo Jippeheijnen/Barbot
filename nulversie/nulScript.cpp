@@ -1,4 +1,4 @@
-#include <BrickPi3.h>
+#include "../include/BrickPi3.h"
 #include <iostream>
 #include <unistd.h>
 #include <signal.h>
