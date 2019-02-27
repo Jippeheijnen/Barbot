@@ -5,7 +5,7 @@
 
 using namespace std;
 
-BrickPi3 BP;
+
 
 void exit_signal_handler(int signo);
 
@@ -50,45 +50,6 @@ void back(void)
     BP.set_motor_dps(PORT_C, -360);
     sleep(3);
     stop();
-}
-
-int main()
-{
-    signal(SIGINT, exit_signal_handler); // register the exit function for Ctrl+C
-    BP.detect(); // Make sure that the BrickPi3 is communicating and that the firmware is compatible with the drivers.
-    BP.set_motor_limits(PORT_B, 60, 0);
-    BP.set_motor_limits(PORT_C, 60, 0);
-    char inp;
-
-    while(true)
-    {
-        cout << "Press f (forward), b (backward), l(left), r (right), s (stop): " << endl;
-        cin >> inp;	//Take input from the terminal
-        //Move the bot
-        if(inp=='f') {
-            fwd();
-        }
-
-        else if (inp=='b') {
-            back();
-        }
-
-        else if (inp=='l'){
-            left();
-        }
-        else if (inp=='r'){
-            right();
-        }
-        else if (inp=='s'){
-            stop();
-        }
-
-
-
-
-    }
-
-    return 0;
 }
 
 // Signal handler that will be called when Ctrl+C is pressed to stop the program

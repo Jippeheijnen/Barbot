@@ -18,6 +18,8 @@ uint8_t spi_array_out[LONGEST_SPI_TRANSFER]; // SPI out array
 uint8_t spi_array_in[LONGEST_SPI_TRANSFER];  // SPI in array
 
 // Set up SPI. Open the file, and define the configuration.
+
+
 int spi_setup(){
   spi_file_handle = open(SPIDEV_FILE_NAME, O_RDWR);
 

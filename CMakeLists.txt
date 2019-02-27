@@ -5,9 +5,12 @@ set(CMAKE_CXX_STANDARD 14)
 
 
 
-add_executable(Barbot "nulversie/nulScript.cpp")
+add_executable(Barbot "nulversie/main.cpp")
 
-target_sources(Barbot PUBLIC include/BrickPi3.cpp include/BrickPi3.h)
+target_sources(Barbot
+        PUBLIC
+            include/BrickPi3.cpp
+        )
 
 
 add_executable(LCD_Display "lcd_leven/lcd_display.cpp")
