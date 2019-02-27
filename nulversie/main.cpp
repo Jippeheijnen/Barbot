@@ -1,5 +1,5 @@
 //
-// Created by Jippe Heijnen on 2/26/2019.
+// amended by Jippe Heijnen on 2/27/2019.
 //
 
 #include "nulVersie.cpp"
