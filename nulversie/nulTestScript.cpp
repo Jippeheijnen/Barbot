@@ -10,11 +10,11 @@ using namespace std;
 void exit_signal_handler(int signo);
 
 //Stop
-void stop(void)
-{
-    BP.set_motor_power(PORT_B, 0);
-    BP.set_motor_power(PORT_C, 0);
-}
+//void stop(void)
+//{
+//    BP.set_motor_power(PORT_B, 0);
+//    BP.set_motor_power(PORT_C, 0);
+//}
 
 //Move Forward
 void fwd(void)
@@ -53,9 +53,9 @@ void back(void)
 }
 
 // Signal handler that will be called when Ctrl+C is pressed to stop the program
-void exit_signal_handler(int signo){
-    if(signo == SIGINT){
-        BP.reset_all();    // Reset everything so there are no run-away motors
-        exit(-2);
-    }
-}
+//void exit_signal_handler(int signo){
+////    if(signo == SIGINT){
+////        BP.reset_all();    // Reset everything so there are no run-away motors
+////        exit(-2);
+////    }
+////}
