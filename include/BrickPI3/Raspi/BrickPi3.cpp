@@ -9,8 +9,14 @@
  *  C++ drivers for the BrickPi3
  */
 
-#include "BrickPi3.h"
-
+#include "../BrickPi3.h"
+#include <stdint.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+#include <linux/spi/spidev.h>
+#include <stdio.h>            // for printf
+#include <string.h>           // for strstr
 
 int spi_file_handle = -1;                    // SPI file handle
 struct spi_ioc_transfer spi_xfer_struct;     // SPI transfer struct

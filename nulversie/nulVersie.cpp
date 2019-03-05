@@ -8,7 +8,7 @@
 // Created by Jippe Heijnen on 2/27/2019.
 //
 
-#include "../include/BrickPi3.h"
+#include "../include/BrickPI3/BrickPi3.h"
 
 #include <iostream>
 #include <unistd.h>
@@ -53,7 +53,6 @@ void gradually_forward(float sleeptime) {
  * This function is self explanatory, only one interesting thing tho,
  * the turnspeed is dialled down. This way the turns are a lot more consistent.
  */
-
 void turn_around() {
     BP.set_motor_limits(PORT_B, 20, 0);
     BP.set_motor_limits(PORT_C, 20, 0);

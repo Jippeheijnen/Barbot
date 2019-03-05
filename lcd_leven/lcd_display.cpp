@@ -16,7 +16,7 @@ void show_ips(nIels2C lcd) {
     char *addr;
 
     getifaddrs (&ifap);
-    lcd.clear();
+//    lcd.clear();
     uint8_t i = 1;
     for (ifa = ifap; ifa; ifa = ifa->ifa_next) {
         if (ifa->ifa_addr->sa_family==AF_INET) {
@@ -29,11 +29,16 @@ void show_ips(nIels2C lcd) {
     freeifaddrs(ifap);
 }
 
+void exiting() {
+}
+
 int main() {
     nIels2C lcd(0x3f, 4, 20);
 //    lcd.clear();
     time_t start,end;
     time (&start);
+    std::atexit(exiting);
+
     while(true) {
         show_ips(lcd);
         time (&end);

@@ -9,8 +9,21 @@ add_executable(Barbot "nulversie/main.cpp")
 
 target_sources(Barbot
         PUBLIC
-            include/BrickPi3.cpp
         )
+
+if(UNIX)
+    target_sources(
+            Barbot
+            PUBLIC
+            include/BrickPI3/Raspi/BrickPi3.cpp
+    )
+else(UNIX)
+    target_sources(
+            Barbot
+            PUBLIC
+            include/BrickPI3/Windows/BrickPi3.cpp
+    )
+endif(UNIX)
 
 
 add_executable(LCD_Display "lcd_leven/lcd_display.cpp")

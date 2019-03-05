@@ -13,6 +13,8 @@
 #define BrickPi3_h_
 //#pragma once
 
+#include <cstdint>
+
 #define FIRMWARE_VERSION_REQUIRED "1.4." // Firmware version needs to start with this
 
 #define LONGEST_SPI_TRANSFER 29 // longest possible message for configuring for an I2C sensor
@@ -22,13 +24,7 @@
 
 #define SPIDEV_FILE_NAME "/dev/spidev0.1" // File name of SPI
 
-#include <stdint.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <sys/ioctl.h>
-#include <linux/spi/spidev.h>
-#include <stdio.h>            // for printf
-#include <string.h>           // for strstr
+
 
 //#include <linux/types.h>
 //#include <getopt.h>
