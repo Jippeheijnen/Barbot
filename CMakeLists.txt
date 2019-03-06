@@ -4,7 +4,6 @@ project(BarBot)
 set(CMAKE_CXX_STANDARD 14)
 
 
-
 add_executable(Barbot "nulversie/main.cpp")
 
 target_sources(Barbot
@@ -24,6 +23,13 @@ else(UNIX)
             include/BrickPI3/Windows/BrickPi3.cpp
     )
 endif(UNIX)
+
+target_sources(
+        Barbot
+        PUBLIC
+        codebase/Movement.cpp
+        codebase/LineDetection.cpp
+)
 
 
 add_executable(LCD_Display "lcd_leven/lcd_display.cpp")

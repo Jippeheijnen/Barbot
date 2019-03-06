@@ -279,7 +279,7 @@ class BrickPi3{
 
   // Configure a sensor
     // Pass the port(s), sensor type, and optionally extra sensor configurations (flags and I2C information).
-    int     set_sensor_type(uint8_t port, uint8_t type, uint16_t flags = 0, i2c_struct_t *i2c_struct = NULL);
+    int     set_sensor_type(uint8_t port, uint8_t type, uint16_t flags = 0, i2c_struct_t *i2c_struct = nullptr);
   // Configure and trigger an I2C transaction
     int     transact_i2c(uint8_t port, i2c_struct_t *i2c_struct);
   // Get sensor value(s)
