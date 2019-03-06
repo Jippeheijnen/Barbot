@@ -30,7 +30,8 @@ void stop() {
 /**
  * this function uses two forloops to increase and decrease the voltage
  * to the motors gradually.
- * @param sleeptime The time in seconds you want to move between
+ * @param sleeptime The time in
+ * seconds you want to move between
  * the accelerating and decelerating. This  value has to be positive.
  */
 void gradually_forward(float sleeptime) {
