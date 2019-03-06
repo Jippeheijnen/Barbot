@@ -11,6 +11,7 @@ class Movement {
 private:
     int8_t MOTOR_LEFT = PORT_B;
     int8_t MOTOR_RIGHT = PORT_C;
+    int8_t currSpeed = 0;
 public:
     /**
      * Initializes Motors
@@ -33,7 +34,7 @@ public:
      * Sets the speed for the motors
      * @param speed (arbitrary) speed to set
      */
-    void speed(uint32_t speed);
+    void speed(int32_t speed);
 };
 
 
