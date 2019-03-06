@@ -7,7 +7,7 @@
 
 #include "../include/BrickPI3/BrickPi3.h"
 
-class Motor {
+class Movement {
 private:
     int8_t MOTOR_LEFT = PORT_B;
     int8_t MOTOR_RIGHT = PORT_C;

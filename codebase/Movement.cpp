@@ -4,18 +4,18 @@
 
 #include "Movement.h"
 
-void Motor::init() {
+void Movement::init() {
 
 }
 
-void Motor::stop() {
+void Movement::stop() {
 
 }
 
-void Motor::steer(int32_t direction, int32_t milliseconds) {
+void Movement::steer(int32_t direction, int32_t milliseconds) {
 
 }
 
-void Motor::speed(uint32_t speed) {
+void Movement::speed(uint32_t speed) {
 
 }
