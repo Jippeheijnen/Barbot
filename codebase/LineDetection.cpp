@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <zconf.h>
 #include "LineDetection.h"
 
 void LineDetection::init(int16_t target, int16_t margin) {
@@ -11,7 +12,7 @@ void LineDetection::init(int16_t target, int16_t margin) {
 
     BP.detect(); // Ensure
     BP.set_sensor_type(LIGHT_SENSOR_PORT, SENSOR_TYPE_NXT_LIGHT_ON);
-
+    BP.set_sensor_type(COLOR_SENSOR_PORT, SENSOR_TYPE_NXT_COLOR_FULL);
 }
 
 double LineDetection::getLineDirection() {
@@ -23,4 +24,12 @@ double LineDetection::getLineDirection() {
     }
     std::cout << "Error getting Sensor Data" << std::endl;
     return 0;
+}
+
+ColorReading LineDetection::readColor() {
+    if(BP.get_sensor(COLOR_SENSOR_PORT, COLOR_SENSOR_DATA) == 0){
+        lastColorReading.hasChanged = lastColorReading.color != COLOR_SENSOR_DATA.color;
+        lastColorReading.color = COLOR_SENSOR_DATA.color;
+    }
+    return lastColorReading;
 }
