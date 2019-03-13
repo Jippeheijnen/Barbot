@@ -4,7 +4,7 @@ project(BarBot)
 set(CMAKE_CXX_STANDARD 14)
 
 
-add_executable(Barbot "nulversie/main.cpp")
+add_executable(Barbot "main.cpp")
 
 target_sources(Barbot
         PUBLIC
