@@ -16,18 +16,18 @@ void LineDetection::init(int16_t target, int16_t margin) {
 }
 
 double LineDetection::getLineDirection() {
-    if(BP.get_sensor(LIGHT_SENSOR_PORT, LIGHT_SENSOR_DATA) == 0){
+    if(BP.get_sensor(LIGHT_SENSOR_PORT, LIGHT_SENSOR_DATA) == 0) {
         int16_t relative = LIGHT_SENSOR_DATA.reflected - this->target;
-        if(abs(relative) < margin)
+        if (abs(relative) < margin)
             return 0;
-        return ((double)relative) * LIGHT_SENSOR_FACTOR;
+        return ((double) relative) * LIGHT_SENSOR_FACTOR;
     }
     std::cout << "Error getting Sensor Data" << std::endl;
     return 0;
 }
 
 ColorReading LineDetection::readColor() {
-    if(BP.get_sensor(COLOR_SENSOR_PORT, COLOR_SENSOR_DATA) == 0){
+    if (BP.get_sensor(COLOR_SENSOR_PORT, COLOR_SENSOR_DATA) == 0) {
         lastColorReading.hasChanged = lastColorReading.color != COLOR_SENSOR_DATA.color;
         lastColorReading.color = COLOR_SENSOR_DATA.color;
     }

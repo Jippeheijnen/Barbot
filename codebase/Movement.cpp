@@ -10,8 +10,8 @@
 
 BrickPi3 BP;
 
-void exit_signal_handler(int signo){
-    if(signo == SIGINT){
+void exit_signal_handler(int signo) {
+    if (signo == SIGINT) {
         BP.reset_all();    // Reset everything so there are no run-away motors
         exit(-2);
     }
@@ -26,7 +26,7 @@ void Movement::init() {
 }
 
 void Movement::stop() {
-    for (int32_t i=Movement::currSpeed; i>=0;i--) {
+    for (int32_t i = Movement::currSpeed; i >= 0; i--) {
         BP.set_motor_power(MOTOR_LEFT, i);
         BP.set_motor_power(MOTOR_RIGHT, i);
         usleep(25000);
@@ -38,7 +38,7 @@ void Movement::steer(int32_t direction, int32_t milliseconds) {
 }
 
 void Movement::speed(uint8_t speed) {
-    for (uint8_t i=0; i<speed;i++) {
+    for (uint8_t i = 0; i < speed; i++) {
         BP.set_motor_power(MOTOR_LEFT, i);
         BP.set_motor_power(MOTOR_RIGHT, i);
         usleep(25000);

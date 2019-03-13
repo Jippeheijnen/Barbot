@@ -1,9 +1,3 @@
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "bugprone-narrowing-conversions"
-#pragma clang diagnostic ignored "-Wconversion"
-#pragma clang diagnostic ignored "-Wunknown-pragmas"
-#pragma ide diagnostic ignored "cert-err58-cpp"
-
 //
 // Created by Jippe Heijnen on 2/27/2019.
 //
@@ -16,13 +10,12 @@
 
 using namespace std;
 
-BrickPi3 BP;
 
 /**
  * This function resets the motor voltages, nothing too complicated here.
  */
 
-void stop() {
+void stop(BrickPi3 BP) {
     BP.set_motor_power(PORT_B, 0);
     BP.set_motor_power(PORT_C, 0);
 }
@@ -34,8 +27,8 @@ void stop() {
  * seconds you want to move between
  * the accelerating and decelerating. This  value has to be positive.
  */
-void gradually_forward(float sleeptime) {
-    for (unsigned int i=0; i<51;i++) {
+void gradually_forward(BrickPi3 BP, unsigned int sleeptime) {
+    for (unsigned int i = 0; i < 51; i++) {
         BP.set_motor_power(PORT_B, i);
         BP.set_motor_power(PORT_C, i);
         usleep(25000);
@@ -43,7 +36,7 @@ void gradually_forward(float sleeptime) {
 
     sleep(sleeptime);
 
-    for (int i=50; i>=0;i--) {
+    for (unsigned int i = 50; i >= 0; i--) {
         BP.set_motor_power(PORT_B, i);
         BP.set_motor_power(PORT_C, i);
         usleep(25000);
@@ -54,7 +47,7 @@ void gradually_forward(float sleeptime) {
  * This function is self explanatory, only one interesting thing tho,
  * the turnspeed is dialled down. This way the turns are a lot more consistent.
  */
-void turn_around() {
+void turn_around(BrickPi3 BP) {
     BP.set_motor_limits(PORT_B, 20, 0);
     BP.set_motor_limits(PORT_C, 20, 0);
     BP.set_motor_position_relative(PORT_B, 390);
@@ -74,33 +67,32 @@ void turn_around() {
  * @param signo This parameter is the exitcode provided by the compiled program.
  */
 
-void exit_signal_handler(int signo){
-    if(signo == SIGINT){
+void exit_signal_handler2(BrickPi3 BP, int signo) {
+    if (signo == SIGINT) {
         BP.reset_all();    // Reset everything so there are no run-away motors
         exit(-2);
     }
 }
+
 /**
  * This function sets the brickPi to be ready for receiving commands.
  */
-void brickPiSetup() {
-    signal(SIGINT, exit_signal_handler); // register the exit function for Ctrl+C
+void brickPiSetup(BrickPi3 BP) {
+//    signal(SIGINT, exit_signal_handler2); // register the exit function for Ctrl+C
     BP.detect(); // Make sure that the BrickPi3 is communicating and that the firmware is compatible with the drivers.
     BP.set_motor_limits(PORT_B, 60, 0);
     BP.set_motor_limits(PORT_C, 60, 0);
 }
 
-void move_forward(float sleeptime) {
+void move_forward(BrickPi3 BP, unsigned int sleeptime) {
 
-    gradually_forward(sleeptime);
+    gradually_forward(BP, sleeptime);
 
-    turn_around();
+    turn_around(BP);
 
-    gradually_forward(.5);
+    gradually_forward(BP, 500);
 
-    turn_around();
+    turn_around(BP);
 
-    stop();
+    stop(BP);
 }
-
-#pragma clang diagnostic pop

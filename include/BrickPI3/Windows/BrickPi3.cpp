@@ -6,8 +6,6 @@
 #include "../BrickPi3.h"
 
 
-
-
 struct Motor {
     char id = 't';
     std::string power = "0";
@@ -22,10 +20,11 @@ struct MotorData {
     Motor A, B, C, D;
 };
 
-Motor & getPort(int8_t port);
-void printStates();
-MotorData data = {};
+Motor &getPort(int8_t port);
 
+void printStates();
+
+MotorData data = {};
 
 
 BrickPi3::BrickPi3(uint8_t addr) {
@@ -104,33 +103,33 @@ int BrickPi3::get_sensor(uint8_t port, sensor_val_struct_t &sensor_val_struct) {
     return 0;
 }
 
-int BrickPi3::set_motor_power(uint8_t port, int8_t power) {
+int BrickPi3::set_motor_power(uint8_t port, unsigned int power) {
 
-    getPort(port).power = std::to_string((int)power);
+    getPort(port).power = std::to_string((int) power);
     printStates();
     return 0;
 }
 
 int BrickPi3::set_motor_position(uint8_t port, int32_t position) {
-    std::cout << "(" << getPort(port).id << ") " << "Setting Position: " << (int)position << std::endl;
+    std::cout << "(" << getPort(port).id << ") " << "Setting Position: " << (int) position << std::endl;
     printStates();
     return 0;
 }
 
 int BrickPi3::set_motor_position_relative(uint8_t port, int32_t position) {
-    std::cout << "(" << getPort(port).id << ") " << "Adding Position: " << (int)position << std::endl;
+    std::cout << "(" << getPort(port).id << ") " << "Adding Position: " << (int) position << std::endl;
     return 0;
 }
 
 int BrickPi3::set_motor_dps(uint8_t port, int16_t dps) {
-    getPort(port).dps = std::to_string((int)dps);
+    getPort(port).dps = std::to_string((int) dps);
     printStates();
     return 0;
 }
 
 int BrickPi3::set_motor_limits(uint8_t port, uint8_t power, uint16_t dps) {
-    getPort(port).limit_power = std::to_string((int)power);
-    getPort(port).limit_dps = std::to_string((int)power);
+    getPort(port).limit_power = std::to_string((int) power);
+    getPort(port).limit_dps = std::to_string((int) power);
     printStates();
     return 0;
 }
@@ -140,7 +139,7 @@ int BrickPi3::get_motor_status(uint8_t port, uint8_t &state, int8_t &power, int3
 }
 
 int BrickPi3::offset_motor_encoder(uint8_t port, int32_t position) {
-    std::cout << "(" << getPort(port).id << ") " << "Offsetting Encoder: " << (int)position << std::endl;
+    std::cout << "(" << getPort(port).id << ") " << "Offsetting Encoder: " << (int) position << std::endl;
     return 0;
 }
 
@@ -153,7 +152,7 @@ int BrickPi3::reset_motor_encoder(uint8_t port) {
 }
 
 int BrickPi3::set_motor_encoder(uint8_t port, int32_t value) {
-    getPort(port).encoder = std::to_string((int)value);
+    getPort(port).encoder = std::to_string((int) value);
     printStates();
     return 0;
 }
@@ -186,7 +185,7 @@ int BrickPi3::spi_read_string(uint8_t msg_type, char *str, uint8_t chars) {
     return 0;
 }
 
-std::string fill(std::string & value, const size_t & size) {
+std::string fill(std::string &value, const size_t &size) {
     bool side = true;
     for (size_t i = value.size(); i < size; i++) {
         if (side)
@@ -201,14 +200,16 @@ std::string fill(std::string & value, const size_t & size) {
 void printStates() {
     std::cout
 //            << fill(data.A.power, 8) << " " << fill(data.A.dps, 8) << " " << fill(data.A.encoder, 8) << " " << fill(data.A.limit_dps, 8) << " " << fill(data.A.limit_power, 8) << " | "
-            << fill(data.B.power, 8) << " " << fill(data.B.dps, 8) << " " << fill(data.B.encoder, 8) << " " << fill(data.B.limit_dps, 8) << " " << fill(data.B.limit_power, 8) << " | "
-            << fill(data.C.power, 8) << " " << fill(data.C.dps, 8) << " " << fill(data.C.encoder, 8) << " " << fill(data.C.limit_dps, 8) << " " << fill(data.C.limit_power, 8) << " | "
-//            << fill(data.D.power, 8) << " " << fill(data.D.dps, 8) << " " << fill(data.D.encoder, 8) << " " << fill(data.D.limit_dps, 8) << " " << fill(data.D.limit_power, 8) << " | " << std::endl
+            << fill(data.B.power, 8) << " " << fill(data.B.dps, 8) << " " << fill(data.B.encoder, 8) << " "
+            << fill(data.B.limit_dps, 8) << " " << fill(data.B.limit_power, 8) << " | "
+            << fill(data.C.power, 8) << " " << fill(data.C.dps, 8) << " " << fill(data.C.encoder, 8) << " "
+            << fill(data.C.limit_dps, 8) << " " << fill(data.C.limit_power, 8) << " | "
+            //            << fill(data.D.power, 8) << " " << fill(data.D.dps, 8) << " " << fill(data.D.encoder, 8) << " " << fill(data.D.limit_dps, 8) << " " << fill(data.D.limit_power, 8) << " | " << std::endl
             << std::endl;
 }
 
-Motor&  getPort(int8_t port) {
-    switch(port) {
+Motor &getPort(int8_t port) {
+    switch (port) {
         case PORT_A:
             return data.A;
         case PORT_B:

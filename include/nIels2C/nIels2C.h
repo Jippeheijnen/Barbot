@@ -57,8 +57,9 @@ const uint8_t Rs = 0b00000001; // Register select bit
 
 class nIels2C {
 private:
-    uint8_t address, rows,cols;
+    uint8_t address, rows, cols;
     int _fd;
+
     void sleep(long us);
 
 public:
@@ -67,10 +68,15 @@ public:
     nIels2C(uint8_t address, uint8_t rows, uint8_t cols);
 
     void strobe(uint8_t data);
+
     void write_four_bits(uint8_t data);
+
     void write(uint8_t cmd, uint8_t mode = 0);
+
     void display_string(std::string str, uint8_t line);
+
     void clear();
+
     void i2c_write(uint8_t data);
 };
 

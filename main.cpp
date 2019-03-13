@@ -11,7 +11,6 @@
 #include "include/BrickPI3/BrickPi3.h"
 
 Movement M;
-LineDetection S;
 
 int main() {
     M.init();
