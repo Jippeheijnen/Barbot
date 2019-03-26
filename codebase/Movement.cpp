@@ -38,7 +38,7 @@ void Movement::steer(int32_t direction, int32_t milliseconds) {
 }
 
 void Movement::speed(uint8_t speed) {
-    for (uint8_t i = 0; i < speed; i++) {
+    for (uint8_t i = currSpeed; i < speed; i++) {
         BP.set_motor_power(MOTOR_LEFT, i);
         BP.set_motor_power(MOTOR_RIGHT, i);
         usleep(25000);
