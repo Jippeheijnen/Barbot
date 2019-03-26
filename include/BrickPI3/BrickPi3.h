@@ -300,7 +300,7 @@ public:
     int get_sensor(uint8_t port, sensor_val_struct_t &sensor_val_struct);
 
     // Set the motor PWM power
-    int set_motor_power(uint8_t port, unsigned int power);
+    int set_motor_power(uint8_t port, uint8_t power);
 
     // Set the motor target position to run to
     // Set the absolute position to run to (go to the specified position)

@@ -667,7 +667,7 @@ int BrickPi3::get_sensor(uint8_t port, sensor_val_struct_t &sensor_val_struct) {
     return SENSOR_STATE_VALID_DATA;
 }
 
-int BrickPi3::set_motor_power(uint8_t port, int8_t power) {
+int BrickPi3::set_motor_power(uint8_t port, uint8_t power) {
     spi_array_out[0] = Address;
     spi_array_out[1] = BPSPI_MESSAGE_SET_MOTOR_POWER;
     spi_array_out[2] = port;
