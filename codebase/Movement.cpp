@@ -10,6 +10,8 @@
 
 BrickPi3 BP;
 
+// Todo: This script needs to be updated for event-loop usage.
+
 void exit_signal_handler(int signo) {
     if (signo == SIGINT) {
         BP.reset_all();    // Reset everything so there are no run-away motors
@@ -28,10 +30,10 @@ void Movement::init() {
 void Movement::stop() {
         targSpeed = 0;
         BP.set_motor_power(MOTOR_LEFT, currSpeed * currLeft);
-        BP.set_motor_power(MOTOR_RIGHT, i);
+        BP.set_motor_power(MOTOR_RIGHT, currSpeed * currRight);
 }
 
-void Movement::steer(bool direction, uint_8 percentage) {
+void Movement::steer(bool direction, uint8_t percentage) {
     //TODO: Steering function
 }
 
