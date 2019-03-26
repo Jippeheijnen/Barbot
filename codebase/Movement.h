@@ -12,6 +12,11 @@ private:
     uint8_t MOTOR_LEFT = PORT_B;
     uint8_t MOTOR_RIGHT = PORT_C;
     uint8_t currSpeed = 0;
+    uint8_t currLeft = 0;
+    uint8_t currRight = 0;
+    uint8_t targLeft = 0;
+    uint8_t targRight = 0;
+    uint8_t targSpeed = 0;
 public:
     /**
      * Initializes Motors
@@ -23,12 +28,13 @@ public:
      */
     void stop();
 
+
     /**
-     * Steer the robot in a direction
-     * @param direction (arbitrary) The direction to steer in, negative values will steer left, whereas positive values will steer right
-     * @param milliseconds The time in milliseconds to steer for
+     * steers the BarBot by limiting the speed to a certain motor
+     * @param direction true is right, false is left.
+     * @param percentage percentage in integers.
      */
-    void steer(int32_t direction, int32_t milliseconds = 1000);
+    void steer(bool direction, uint8_t percentage);
 
     /**
      * Sets the speed for the motors

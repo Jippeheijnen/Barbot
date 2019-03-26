@@ -26,22 +26,19 @@ void Movement::init() {
 }
 
 void Movement::stop() {
-    for (int32_t i = Movement::currSpeed; i >= 0; i--) {
-        BP.set_motor_power(MOTOR_LEFT, i);
+        targSpeed = 0;
+        BP.set_motor_power(MOTOR_LEFT, currSpeed * currLeft);
         BP.set_motor_power(MOTOR_RIGHT, i);
-        usleep(25000);
-    }
 }
 
-void Movement::steer(int32_t direction, int32_t milliseconds) {
-
+void Movement::steer(bool direction, uint_8 percentage) {
+    //TODO: Steering function
 }
 
 void Movement::speed(uint8_t speed) {
     for (uint8_t i = currSpeed; i < speed; i++) {
         BP.set_motor_power(MOTOR_LEFT, i);
         BP.set_motor_power(MOTOR_RIGHT, i);
-        usleep(25000);
     }
     currSpeed = speed;
 }
