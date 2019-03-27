@@ -9,8 +9,6 @@
 
 class Movement {
 private:
-    uint8_t MOTOR_LEFT = PORT_B;
-    uint8_t MOTOR_RIGHT = PORT_C;
     uint8_t currSpeed = 0;
     uint8_t currLeft = 0;
     uint8_t currRight = 0;
@@ -18,6 +16,10 @@ private:
     uint8_t targRight = 0;
     uint8_t targSpeed = 0;
 public:
+    uint8_t MOTOR_LEFT = PORT_B;
+    uint8_t MOTOR_RIGHT = PORT_C;
+
+
     /**
      * Initializes Motors
      */

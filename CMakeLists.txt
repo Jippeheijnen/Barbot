@@ -30,6 +30,7 @@ target_sources(
         PUBLIC
         codebase/Movement.cpp
         codebase/LineDetection.cpp
+        codebase/LineFollow.cpp
         nulversie/nulVersie.cpp
 )
 
