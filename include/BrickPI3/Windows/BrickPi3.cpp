@@ -103,7 +103,7 @@ int BrickPi3::get_sensor(uint8_t port, sensor_val_struct_t &sensor_val_struct) {
     return 0;
 }
 
-int BrickPi3::set_motor_power(uint8_t port, unsigned int power) {
+int BrickPi3::set_motor_power(uint8_t port, uint8_t power) {
 
     getPort(port).power = std::to_string((int) power);
     printStates();

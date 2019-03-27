@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.7.2)
 project(BarBot)
 
 set(CMAKE_CXX_STANDARD 14)
-cmake_policy(SET CMP0076 NEW)
+
 
 add_executable(Barbot "main.cpp")
 
@@ -17,6 +17,7 @@ if (UNIX)
             include/BrickPI3/Raspi/BrickPi3.cpp
     )
 else (UNIX)
+    cmake_policy(SET CMP0076 NEW)
     target_sources(
             Barbot
             PUBLIC
