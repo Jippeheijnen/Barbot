@@ -1,24 +1,29 @@
+#include <zconf.h>
+#include <iostream>
 #include "LineFollow.h"
 #include "LineDetection.h"
 #include "Movement.h"
-#include "../include/BrickPI3/BrickPi3.h"
 
-BrickPi3 BP3;
 LineDetection LD;
+Movement movement;
 
-void Follow() {
+void LineFollow::follow() {
 //    if(ColorReading.hasChanged == true){cout << ColorReading.color;}
+    LD.init(2000, 20);
+    movement.init();
     double SensorInput = LD.getLineDirection();
-    if (SensorInput > 0) {
-        BP3.set_motor_power(PORT_B,((100+SensorInput)/100)*20);
-        BP3.set_motor_power(PORT_C, 20);
-    } else {
-        BP3.set_motor_power(PORT_C,((100-SensorInput)/100)*20);
-        BP3.set_motor_power(PORT_B,20);
+    std::cout << SensorInput << std::endl;
+    if (SensorInput < 0) {
+        movement.leftSpeed(((100+SensorInput)/100)*30);
+        movement.rightSpeed(30);
+    } else if (SensorInput > 0) {
+        movement.rightSpeed(((100-SensorInput)/100)*30);
+        movement.leftSpeed(30);
     }
+    usleep(1000);
 }
 
-//void Destination(){
+//void LineFollow::destination(){
 //    if(ColorReading.hasChanged==true && ColorReading.color == DestinationColor){
 //        M.stop()
 //    }

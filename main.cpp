@@ -1,24 +1,20 @@
-//
-// amended by Jippe Heijnen on 2/27/2019.
-//
 
-#include <iostream>
+#include  <iostream>
+
 #include <iomanip>
 #include <csignal>
 #include <zconf.h>
-#include "codebase/Movement.h"
-#include "codebase/LineDetection.h"
-//#include "include/BrickPI3/BrickPi3.h"
-#include "codebase/LineFollow.h"
 
-Movement M;
+#include "codebase/LineFollow.h"
+#include "codebase/Movement.h"
+
 LineFollow LF;
-LineDetection L;
+Movement M;
+
 
 int main() {
-    M.init();
-    M.speed(10);
-    L.init(0,0);
-//    LF.Follow();
-    M.stop();
+    while (1) {
+        LF.follow();
+    }
+
 }

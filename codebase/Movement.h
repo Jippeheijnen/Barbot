@@ -30,6 +30,17 @@ public:
      */
     void stop();
 
+    /**
+     * sets motor speed for left motor.
+     * @param speed motor speed
+     */
+    void leftSpeed(uint8_t speed);
+
+    /**
+    * sets motor speed for left motor.
+    * @param speed motor speed
+    */
+    void rightSpeed(uint8_t speed);
 
     /**
      * steers the BarBot by limiting the speed to a certain motor

@@ -45,6 +45,17 @@ void Movement::speed(uint8_t speed) {
     currSpeed = speed;
 }
 
+void Movement::leftSpeed(uint8_t speed) {
+    if (speed<100) {
+        BP.set_motor_power(MOTOR_LEFT, speed);
+    }
+}
+
+void Movement::rightSpeed(uint8_t speed) {
+    if (speed<100) {
+        BP.set_motor_power(MOTOR_RIGHT, speed);
+    }
+}
 
 // void Movement::changeCurrentSpeed(){
 // if(currSpeed!=targSpeed){
