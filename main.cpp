@@ -9,13 +9,15 @@
 #include "codebase/Movement.h"
 #include "codebase/LineDetection.h"
 #include "include/BrickPI3/BrickPi3.h"
+#include "codebase/LineFollow.h"
 
 Movement M;
+LineFollow LF;
+LineDetection L;
 
 int main() {
     M.init();
-    M.speed(60);
-    usleep(1000000);
-    M.stop();
-    return 0;
+    L.init(0,0);
+    M.speed(20);
+    LF.Follow();
 }
