@@ -44,3 +44,31 @@ void Movement::speed(uint8_t speed) {
     }
     currSpeed = speed;
 }
+
+
+// void Movement::changeCurrentSpeed(){
+// if(currSpeed!=targSpeed){
+//      if((targSpeed-currSpeed)/abs(targSpeed-currSpeed) == 1){
+//          currSpeed=currSpeed+1
+//      }
+//      else{currSpeed=currSpeed-1}
+// }
+//}
+//
+// void Movement::changeCurrentLeft(){
+// if(currLeft!=targSpeed){
+//      if((targLeft-currLeft)/abs(targLeft-currLeft) == 1){
+//          currLeft=currLeft+1
+//      }
+//      else{currLeft=currLeft-1}
+// }
+//}
+//
+// void Movement::changeCurrentRight(){
+// if(currRight!=targRight){
+//      if((targRight-currRight)/abs(targRight-currRight) == 1){
+//          currRight=currRight+1
+//      }
+//      else{currRight=currRight-1}
+// }
+//}
