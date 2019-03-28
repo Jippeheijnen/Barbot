@@ -5,8 +5,8 @@
 #include <csignal>
 #include <zconf.h>
 
-#include "codebase/LineFollow.h"
-#include "codebase/Movement.h"
+#include "LineFollow.h"
+#include "Movement.h"
 
 LineFollow LF;
 Movement M;

@@ -4,11 +4,7 @@ project(BarBot)
 set(CMAKE_CXX_STANDARD 14)
 
 
-add_executable(Barbot "main.cpp")
-
-target_sources(Barbot
-        PUBLIC
-        )
+add_executable(Barbot "codebase/BarBot/main.cpp")
 
 if (UNIX)
     target_sources(
@@ -23,19 +19,20 @@ else (UNIX)
             PUBLIC
             include/BrickPI3/Windows/BrickPi3.cpp
     )
+    add_executable(GitInspector "codebase/GitInspector/GitInspector_Check.cpp")
 endif (UNIX)
 
 target_sources(
         Barbot
         PUBLIC
-        codebase/Movement.cpp
-        codebase/LineDetection.cpp
-        codebase/LineFollow.cpp
-        nulversie/nulVersie.cpp
+        codebase/BarBot/Movement.cpp
+        codebase/BarBot/LineDetection.cpp
+        codebase/BarBot/LineFollow.cpp
+        codebase/NulVersie/nulVersie.cpp
 )
 
 
-add_executable(LCD_Display "lcd_leven/lcd_display.cpp")
+add_executable(LCD_Display "codebase/LCD_IPDisplay/LCD_IPDisplay.cpp")
 
 
 target_sources(LCD_Display
@@ -43,3 +40,6 @@ target_sources(LCD_Display
         ./include/nIels2C/nIels2C.cpp
         ./include/nIels2C/nIels2C.h
         )
+
+
+

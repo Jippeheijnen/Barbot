@@ -3,7 +3,7 @@
 //
 
 #include "Movement.h"
-#include "../include/BrickPI3/BrickPi3.h"
+#include "../../include/BrickPI3/BrickPi3.h"
 #include <iostream>
 #include <unistd.h>
 #include <csignal>

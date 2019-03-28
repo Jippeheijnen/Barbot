@@ -2,7 +2,7 @@
 // Created by Jippe Heijnen on 2/27/2019.
 //
 
-#include "../include/BrickPI3/BrickPi3.h"
+#include "../../include/BrickPI3/BrickPi3.h"
 
 #include <iostream>
 #include <unistd.h>

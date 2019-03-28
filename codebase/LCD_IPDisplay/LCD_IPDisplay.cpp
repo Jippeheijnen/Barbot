@@ -3,7 +3,7 @@
 //
 #include <chrono>
 #include <thread>
-#include "../include/nIels2C/nIels2C.h"
+#include "../../include/nIels2C/nIels2C.h"
 #include <sys/unistd.h>
 #include <netdb.h>
 #include <arpa/inet.h>
