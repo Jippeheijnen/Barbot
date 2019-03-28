@@ -1,6 +1,3 @@
-//
-// Created by niels on 3/6/2019.
-//
 
 #include <iostream>
 #include <zconf.h>

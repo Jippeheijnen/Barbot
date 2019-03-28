@@ -1,6 +1,3 @@
-//
-// Created by niels on 3/6/2019.
-//
 
 #ifndef BARBOT_LINEDETECTION_H
 #define BARBOT_LINEDETECTION_H

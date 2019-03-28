@@ -1,6 +1,3 @@
-//
-// Created by niels on 3/8/2019.
-//
 
 #ifndef BARBOT_SPEECHSYNTHESIS_H
 #define BARBOT_SPEECHSYNTHESIS_H

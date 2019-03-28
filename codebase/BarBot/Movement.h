@@ -1,6 +1,3 @@
-//
-// Created by niels on 3/6/2019.
-//
 
 #ifndef BARBOT_MOTOR_H
 #define BARBOT_MOTOR_H
