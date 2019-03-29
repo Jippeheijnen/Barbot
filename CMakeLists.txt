@@ -29,6 +29,7 @@ target_sources(
         codebase/BarBot/LineDetection.cpp
         codebase/BarBot/LineFollow.cpp
         codebase/NulVersie/nulVersie.cpp
+        codebase/BarBot/CupDetection.cpp
 )
 
 
