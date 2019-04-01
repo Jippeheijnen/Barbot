@@ -30,6 +30,8 @@ target_sources(
         codebase/BarBot/LineFollow.cpp
         codebase/NulVersie/nulVersie.cpp
         codebase/BarBot/CupDetection.cpp
+        codebase/BarBot/Bluetooth.cpp
+        codebase/Bluetooth/BluetoothSocket.cpp
 )
 
 
