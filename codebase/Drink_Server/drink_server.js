@@ -57,6 +57,11 @@ app.post("/drinks/save", async (req,res) => {
     }
 });
 
+app.get("/pump_fluids", async (req,res) => {
+    res.end(JSON.stringify(connected_fluids));
+    }
+);
+
 app.post("/fluids/save", async (req,res) => {
     try {
         let drink = req.body;
@@ -116,6 +121,7 @@ app.get("/drinks", async (req, res) => {
  */
 app.get("/connect_pump/:pump/:fluid", (req,res) => {
     connected_fluids[parseInt(req.params.pump)] = parseInt(req.params.fluid);
+    console.log(connected_fluids);
     res.end();
 });
 

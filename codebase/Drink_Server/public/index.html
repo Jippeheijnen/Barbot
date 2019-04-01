@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BarBot</title>
+
+    <style>
+
+
+        body {
+            font-family: Aller;
+            margin: 0;
+            padding: 0;
+            background: url(/mosaic.png);
+            background-repeat: repeat;
+        }
+
+        .headerTable {
+            margin-left: 1vw;
+            margin-right: 1vw;
+            width: 95vw;
+            border-spacing: 5px;
+            color: white;
+            font-size: 2em;
+        }
+
+        .headerTable tr td {
+            background: #4951ff;
+        }
+
+
+        #pumpContainer {
+            margin-left: 1vw;
+            margin-right: 1vw;
+            width: 95vw;
+            border-spacing: 5px;
+            color: white;
+        }
+
+        #pumpContainer tr td {
+            font-size: 1.5em;
+        }
+
+
+        tr td {
+            margin: 0;
+            padding: 0;
+            width: 50%;
+            text-align: center;
+            transition: background 0.5s;
+            height: 200px;
+            background: #637fff;
+            padding-top: 10px;
+        }
+
+        tr:not(:first-child) td:hover {
+            background: #95b1ff;
+
+        }
+
+        .pump_select {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            border:none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: #637fff;
+            color: white;
+            font-size: 2em;
+            -ms-appearance: none; /* get rid of default appearance for IE8, 9 and 10*/
+        }
+
+        tr:first-child {
+            font-size: 2em;
+        }
+
+        tr:not(:first-child) td {
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+<table class="headerTable">
+    <tr>
+        <td>BarBot</td>
+    </tr>
+</table>
+<table id="pumpContainer">
+    <tr>
+
+    </tr>
+    <tr>
+        <td onclick="window.location.href = '/drinks.html'">Edit Drinks</td>
+        <td onclick="window.location.href = '/fluids.html'">Edit Fluids</td>
+    </tr>
+    <tr>
+        <td onclick="window.location.href = '/pour.html'">Pour Drinks</td>
+        <td onclick="window.location.href = '/pumps.html'">Connect New Fluids</td>
+    </tr>
+</table>
+</body>
+</html>

@@ -6,10 +6,36 @@
     <title>BarBot</title>
 
     <style>
+
+        .headerTable {
+            margin-top: 10px;
+            cursor:pointer;
+            margin-left: 1vw; !important;
+            margin-right: 1vw;!important;
+            width: 95vw;!important;
+            border-spacing: 5px;!important;
+            color: white;!important;
+            font-size: 2em;!important;
+            background: #637fff;!important;
+
+        }
+
+        .headerTable tr td {
+            margin: 0;!important;
+            padding: 10px 0 10px 10px;!important;
+            text-align: left;!important;
+        }
+
+        .headerTable:hover {
+            background: #a9c0ff;!important;
+        }
+
         body {
             font-family: Aller;
             margin: 0;
             padding: 0;
+            background: url(/mosaic.png);
+            background-repeat: repeat;
         }
 
         #fluidContainer {
@@ -191,6 +217,11 @@
     </script>
 </head>
 <body>
+<table class="headerTable">
+    <tr onclick="window.location.href='/'">
+        <td>BarBot</td>
+    </tr>
+</table>
 <table id="fluidContainer">
     <tr>
         <td><label class="label_add_new" for="add_new">+</label></td>
