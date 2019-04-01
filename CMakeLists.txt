@@ -11,6 +11,8 @@ if (UNIX)
             Barbot
             PUBLIC
             include/BrickPI3/Raspi/BrickPi3.cpp
+            codebase/BarBot/Bluetooth.cpp
+            codebase/Bluetooth/BluetoothSocket.cpp
     )
 else (UNIX)
     cmake_policy(SET CMP0076 NEW)
@@ -30,8 +32,6 @@ target_sources(
         codebase/BarBot/LineFollow.cpp
         codebase/NulVersie/nulVersie.cpp
         codebase/BarBot/CupDetection.cpp
-        codebase/BarBot/Bluetooth.cpp
-        codebase/Bluetooth/BluetoothSocket.cpp
 )
 
 

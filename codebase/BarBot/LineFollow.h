@@ -12,7 +12,7 @@ public:
     /**
      * Sets boolean toBePaused to true and stops the motor
      */
-    void pause();
+    void pause(Movement &M);
 
     /**
      * Sets boolean toBePaused to false

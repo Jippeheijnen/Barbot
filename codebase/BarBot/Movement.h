@@ -8,9 +8,9 @@
 class Movement {
 
 private:
-    BrickPi3 test;
     uint8_t currSpeed = 0;
     uint8_t targSpeed = 0;
+    BrickPi3 BP3;
 public:
     uint8_t MOTOR_LEFT = PORT_B;
     uint8_t MOTOR_RIGHT = PORT_C;
@@ -24,7 +24,7 @@ public:
     /**
      * Initializes Motors
      */
-    void init(Classes &inC);
+    void init(BrickPi3 &BP3);
 
     /**
      * Stops the robot gradually
