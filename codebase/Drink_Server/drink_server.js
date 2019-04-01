@@ -1,5 +1,6 @@
 const express = require("express");
 const {Client} = require("pg");
+const bodyparser = require("body-parser");
 const client = new Client({
     user: 'BarBot',
     host: '127.0.0.1',
@@ -13,6 +14,67 @@ let app = express();
 
 let connected_fluids = [0,1,2,3];
 
+
+app.use(express.static("public/"));
+app.use(bodyparser.json());
+
+/**
+ * Route to retrieve all known fluids
+ */
+app.get("/fluids", async (req, res) => {
+    try {
+        let {rows} = await client.query("SELECT * FROM fluid;");
+        res.end(JSON.stringify(rows))
+    }
+    catch(e) {
+        res.end(JSON.stringify(e))
+    }
+});
+
+app.post("/drinks/save", async (req,res) => {
+    try {
+        let drink = req.body;
+        let {rows} = await client.query("INSERT INTO drink_name (drink_name) VALUES ($1) RETURNING drink_id", [drink.name])
+        let id = rows[0]['drink_id'];
+
+        let i = 1;
+        let paramString = drink['ingredients'].map(ingredient => {
+            let str = "($" + i +  ",$" + (i+1) + ",$" + (i+2) + ")";
+            i += 3;
+            return str;
+        });
+
+        let paremeters = drink['ingredients'].map(ingredient => {
+            return [id, ingredient.id, ingredient.amount];
+        }).flat();
+
+        await client.query("INSERT INTO drink (id, fluid, amount) VALUES " + paramString, paremeters);
+        res.end("{}")
+    }
+    catch(e) {
+        console.log(e);
+        res.end(JSON.stringify(e))
+    }
+});
+
+app.get("/drinks", async (req, res) => {
+    try {
+        let {rows} = await client.query("SELECT *, drink.id as drinkid FROM drink LEFT JOIN drink_name ON id = drink_id LEFT JOIN fluid ON drink.fluid = fluid.id;");
+        let drinks = {};
+        for(let row of rows) {
+            if(!drinks.hasOwnProperty(row['drinkid'])) {
+                drinks[row['drinkid']] = {name: row['drink_name'], fluids: []};
+            }
+
+            drinks[row['drinkid']]['fluids'].push({id: row['fluid'], amount: row['amount'], name: row['name']})
+        }
+        res.end(JSON.stringify(drinks));
+    }
+    catch(e) {
+        console.log(e);
+        res.end(JSON.stringify(e))
+    }
+});
 
 /**
  * Route to switch the bottle connected to a pump
@@ -54,7 +116,6 @@ app.get("/pumps", async (req,res) => {
 
         let {rows: poured_drinks} = await client.query("SELECT * FROM poured_drink WHERE poured = false ORDER BY moment ASC LIMIT 1;");
         if (poured_drinks.length === 0) {
-            console.log("No Drinks to Pour");
             return res.end(amounts.join(" "))
         }
 

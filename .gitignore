@@ -10,3 +10,8 @@ CTestTestfile.cmake
 .idea/
 cmake-build-*/
 Gitinspector_stats.html
+node_modules
+.pio
+.pioenvs
+.piolibdeps
+CMakeListsPrivate.txt
