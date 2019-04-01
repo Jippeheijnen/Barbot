@@ -10,9 +10,14 @@ public:
     void follow();
 
     /**
-     * Collects data from LineDetection::readColor, detects if it is the destination and makes the robot stop
+     * Sets boolean toBePaused to true and stops the motor
      */
-    void destination();
+    void pause();
+
+    /**
+     * Sets boolean toBePaused to false
+     */
+    void resume();
 };
 
 
