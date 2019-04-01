@@ -4,17 +4,18 @@
 #include <iomanip>
 #include <csignal>
 #include <zconf.h>
-
+#include "../../include/BrickPI3/BrickPi3.h"
 #include "LineFollow.h"
 #include "Movement.h"
 
-LineFollow LF;
-Movement M;
+#include "LineDetection.h"
 
+
+
+void mainInit() {
+    //Todo: init all relevant libraries.
+}
 
 int main() {
-    while (1) {
-        LF.follow();
-    }
-
+    //Todo: Event-loop here.
 }
