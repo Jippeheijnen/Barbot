@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BarBot</title>
+
+    <style>
+        body {
+            font-family: Aller;
+            margin: 0;
+            padding: 0;
+        }
+
+        #fluidContainer {
+            margin-left: 1vw;
+            margin-right: 1vw;
+            width: 95vw;
+            border-spacing: 0 5px;
+            color: white;
+        }
+
+        #fluidContainer tr {
+            background: #637fff;
+        }
+
+        #fluidContainer tr:first-child {
+            cursor: pointer;
+            background: rgba(31, 128, 27, 0.6);
+        }
+
+        #fluidContainer tr:first-child:hover {
+            background: rgb(59, 178, 57);
+        }
+
+        tr:not(:first-child) td {
+            margin: 0;
+            padding: 40px 10px 40px 10px;
+        }
+
+        td:first-child {
+            width: 10%;
+            text-align: center;
+        }
+
+        td:last-child {
+            width: 90%;
+
+        }
+
+        .label_add_new {
+            padding: 40px 10px 40px 10px;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        #add_new {
+            display: none;
+        }
+
+        .add_new_drink_content {
+            overflow: hidden;
+            width: 90%;
+            background: #9cc0ff;
+            margin-bottom: 10px;
+
+            -webkit-transition: opacity 0.5s, height 0.5s, transform 0.5s;
+            -moz-transition: opacity 0.5s, height 0.5s, transform 0.5s;
+            -ms-transition: opacity 0.5s, height 0.5s, transform 0.5s;
+            -o-transition: opacity 0.5s, height 0.5s, transform 0.5s;
+            transition: opacity 0.5s, height 0.5s, transform 0.5s;
+            -webkit-transform-origin: top;
+            -moz-transform-origin: top;
+            -ms-transform-origin: top;
+            -o-transform-origin: top;
+            transform-origin: top;
+        }
+
+        .fluid select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 40%;
+            border: 0;
+            padding: 5px 0 5px 0;
+        }
+
+        #add_new:not(:checked) + .add_new_drink_content {
+            opacity: 0;
+            height: 0;
+            transform: scaleY(0);
+        }
+
+        #add_new:checked + .add_new_drink_content {
+            opacity: 1;
+            transform: scaleY(1);
+            padding: 10px;
+        }
+
+        #drink_name {
+            width: 90%;
+        }
+
+        input[type=text], input[type=number] {
+            border: 0;
+            padding: 5px;
+            /*width: 30Em;*/
+        }
+
+        .add_new_drink_content div {
+            margin-top: 5px;
+        }
+
+
+        div.buttons {
+            padding-top: 10px;
+            clear: both;
+        }
+
+
+        .buttons span {
+            cursor: pointer;
+            padding: 5px 10px 5px 10px;
+        }
+
+        .save_fluid {
+            margin-left: 5px;
+            background: rgba(31, 128, 27, 0.6);
+        }
+
+        .save_fluid:hover {
+            background: rgb(59, 178, 57);
+        }
+
+        .discard_fluid, .remove_fluid {
+            cursor: pointer;
+            margin-left: 5px;
+            background: rgba(128, 14, 9, 0.6);
+        }
+
+        .discard_fluid:hover, .remove_fluid:hover {
+            background: rgb(178, 21, 16);
+        }
+
+        input, select {
+            border-radius: 0;
+        }
+
+        #fluid_name {
+            width: 90%;
+        }
+
+    </style>
+
+
+    <script>
+        function fetch_fluids() {
+            fetch("/fluids")
+                .then((res) => {
+                    res.json().then((result) => {
+                        let fluidContainer = document.getElementById("fluidContainer");
+                        for( let fluid of result) {
+                            let tr = document.createElement("tr");
+                            let tdId = document.createElement("td");
+                            tdId.classList.add("remove_fluid");
+                            tdId.onclick = remove_fluid;
+                            tdId.dataset.fluid_id = fluid['id'];
+                            tdId.appendChild(document.createTextNode('X'));
+                            let tdName = document.createElement("td");
+                            tdName.appendChild(document.createTextNode(fluid['name']));
+
+
+                            tr.appendChild(tdId);
+                            tr.appendChild(tdName);
+                            fluidContainer.appendChild(tr);
+                        }
+
+
+                    })
+                })
+                .catch((err) => {
+
+                })
+        }
+
+        (function () {
+            fetch_fluids();
+        })();
+
+    </script>
+</head>
+<body>
+<table id="fluidContainer">
+    <tr>
+        <td><label class="label_add_new" for="add_new">+</label></td>
+        <td>
+            <label class="label_add_new" for="add_new">
+                Add New
+            </label>
+            <input type="checkbox" id="add_new">
+            <div class="add_new_drink_content">
+                <input type="text" id="fluid_name" placeholder="Drink Name" tabindex="1" autofocus>
+
+
+
+                <script>
+                    function save_fluid() {
+                        let fluid = {};
+                        fluid['name'] = document.getElementById("fluid_name").value;
+
+                        fetch("/fluids/save", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(fluid)
+                        }).then(res => {
+                            window.location.reload(true);
+                        })
+                    }
+
+                    function discard_fluid() {
+                        document.getElementById("fluid_name").value = "";
+                    }
+
+                    function remove_fluid() {
+                        let fluid_id = this.dataset.fluid_id;
+                        console.log(fluid_id)
+                        fetch("/fluids/remove/" + fluid_id).then(
+                            resp => {
+                                window.location.reload(true);
+                            }
+                        )
+                    }
+                </script>
+                <br>
+                <div class="buttons">
+                    <span class="save_fluid" onclick="save_fluid()">
+                        Save Fluid
+                    </span>
+                    <span class="discard_fluid" onclick="discard_fluid()">
+                        Discard Fluid
+                    </span>
+                </div>
+
+
+            </div>
+
+
+        </td>
+    </tr>
+</table>
+</body>
+</html>
