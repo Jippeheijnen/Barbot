@@ -1,18 +1,18 @@
 #include "Bluetooth.h"
 #include "../Bluetooth/BluetoothSocket.h"
 
-void openSocket(){
+void Bluetooth::openSocket(){
     BluetoothServerSocket serversock(2, 1);  //2 is het channel-number
     cout << "listening" << endl;
 }
 
-void acceptConnection(){
+void Bluetooth::acceptConnection(){
     BluetoothSocket* clientsock = serversock.accept();
     cout << "accepted from " << clientsock->getForeignAddress().getAddress() << endl;
     MessageBox& mb = clientsock->getMessageBox();
 }
 
-void getBTMessage(){
+void Bluetooth::getBTInput(){
     input = mb.readMessage();  //blokkeert niet
     if(input != "") cout << endl << input << endl;
     //doe andere dingen.
@@ -20,6 +20,6 @@ void getBTMessage(){
     cout.flush();
 }
 
-void closeSocket(){
+void Bluetooth::closeSocket(){
     clientsock->close();
 }

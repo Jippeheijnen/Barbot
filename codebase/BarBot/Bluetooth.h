@@ -3,9 +3,24 @@
 
 
 class Bluetooth {
+private:
+    uint_8t direction;
+public:
+    /**
+     * Open the Bluetooth socket
+     */
     void openSocket();
+    /**
+     * Accept Bluetooth connections
+     */
     void acceptConnection;
-    void getBTMessage();
+    /**
+     * Get Bluetooth input message
+     */
+    void getBTInput();
+    /**
+     * Close the Bluetooth socket
+     */
     void closeSocket();
 };
 
