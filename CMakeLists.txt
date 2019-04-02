@@ -6,6 +6,25 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(Barbot "codebase/BarBot/main.cpp")
 
+add_executable(DownloadRestCPP "include/DownloadRestCPP.cpp")
+
+add_custom_target(DownloadRestCPP_Ex
+        COMMAND DownloadRestCPP
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMENT "Downloading Rest-CPP"
+        SOURCES "include/DownloadRestCPP.cpp"
+        )
+
+add_dependencies(Barbot DownloadRestCPP_Ex)
+
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} )
+
+#add_subdirectory(include/curl)
+add_subdirectory(include/rest-cpp)
+add_dependencies(Barbot restclient-cpp)
+
+
+
 if (UNIX)
     target_sources(
             Barbot
@@ -16,6 +35,7 @@ if (UNIX)
     )
 else (UNIX)
     cmake_policy(SET CMP0076 NEW)
+    target_link_libraries(Barbot STATIC "C:\\Program Files\\CUrl\\lib")
     target_sources(
             Barbot
             PUBLIC
@@ -23,6 +43,8 @@ else (UNIX)
     )
     add_executable(GitInspector "codebase/GitInspector/GitInspector_Check.cpp")
 endif (UNIX)
+
+
 
 target_sources(
         Barbot
@@ -32,6 +54,7 @@ target_sources(
         codebase/BarBot/LineFollow.cpp
         codebase/NulVersie/nulVersie.cpp
         codebase/BarBot/CupDetection.cpp
+        codebase/BarBot/Pumps.cpp
 )
 
 

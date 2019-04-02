@@ -2,5 +2,10 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/include/curl" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/include/libcurl" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/include/rest-cpp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/include/rest-cpp/restc-cpp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/include/restc-cpp" vcs="Git" />
   </component>
 </project>

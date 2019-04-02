@@ -160,7 +160,7 @@ app.get("/pumps", async (req,res) => {
             return res.end(amounts.join(" "))
         }
 
-        let {rows: fluids} = await client.query("SELECT * FROM drink WHERE drink_id = $1;", [poured_drinks[0]['drink']]);
+        let {rows: fluids} = await client.query("SELECT * FROM drink WHERE id = $1;", [poured_drinks[0]['drink']]);
 
         for (let fluid of fluids) {
             amounts[connected_fluids.indexOf(fluid['fluid'])] = fluid['amount'] + "";

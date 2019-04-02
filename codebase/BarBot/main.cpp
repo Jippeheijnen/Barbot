@@ -8,7 +8,7 @@
 #include "../../include/BrickPI3/BrickPi3.h"
 BrickPi3 BP3;
 
-
+#include "Pumps.h"
 #include "Movement.h"
 Movement M;
 #include "LineDetection.h"
@@ -24,11 +24,6 @@ void mainInit() {
 }
 
 int main() {
-    bool running = true;
-    //Todo: Event-loop here.
-    mainInit();
-    while (running) {
-
-
-    }
+    Pumps p;
+    p.pour(3);
 }

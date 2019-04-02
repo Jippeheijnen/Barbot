@@ -100,9 +100,12 @@
                             td.dataset.drink_id = drink_id;
                             td.onclick = function () {
                                 let thatTd = this;
-                                fetch("/pour/" + this.dataset.drink_id).then(
-                                    function() {
-                                        thatTd.style.background = "rgba(31, 128, 27, 0.6)";
+                                fetch("/pour/" + this.dataset.drink_id).then(res => res.json()).then(
+                                    function(res) {
+                                        if(!res.error)
+                                            thatTd.style.background = "rgba(31, 128, 27, 0.6)";
+                                        else
+                                            thatTd.style.background = "rgba(128, 14, 9, 0.6)";
                                         setTimeout(
                                             function() {
                                                 thatTd.style.background= "#637fff";
