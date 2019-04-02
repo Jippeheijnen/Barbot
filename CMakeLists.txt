@@ -3,7 +3,6 @@ project(BarBot)
 
 set(CMAKE_CXX_STANDARD 14)
 
-
 add_executable(Barbot "codebase/BarBot/main.cpp")
 
 if (UNIX)
@@ -11,8 +10,8 @@ if (UNIX)
             Barbot
             PUBLIC
             include/BrickPI3/Raspi/BrickPi3.cpp
-            codebase/BarBot/Bluetooth.cpp
-            codebase/Bluetooth/BluetoothSocket.cpp
+#            codebase/BarBot/Bluetooth.cpp
+#            codebase/Bluetooth/BluetoothSocket.cpp
     )
 else (UNIX)
     cmake_policy(SET CMP0076 NEW)

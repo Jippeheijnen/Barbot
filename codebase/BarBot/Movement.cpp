@@ -6,19 +6,11 @@
 #include "../../include/BrickPI3/BrickPi3.h"
 // Todo: Exit handler fix
 
-void exit_signal_handler(int signo) {
-    BrickPi3 BP3;
-    if (signo == SIGINT) {
-        BP3.reset_all();    // Reset everything so there are no run-away motors
-        exit(-2);
-    }
-}
+
 
 void Movement::init(BrickPi3 &BP3) {
-    signal(SIGINT, exit_signal_handler);
-    BP3.detect();
-    BP3.set_motor_limits(MOTOR_LEFT, 60, 0);
-    BP3.set_motor_limits(MOTOR_RIGHT, 60, 0);
+//    BP3.set_motor_limits(MOTOR_LEFT, 60, 50);
+    BP3.set_motor_limits(MOTOR_RIGHT, 60, 200);
 }
 
 void Movement::stop() {

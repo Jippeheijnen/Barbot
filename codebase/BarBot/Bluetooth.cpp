@@ -1,6 +1,7 @@
 #include "Bluetooth.h"
 #include "../Bluetooth/BluetoothSocket.h"
 
+using std::cout, std::endl;
 void Bluetooth::openSocket(){
     BluetoothServerSocket serversock(2, 1);  //2 is het channel-number
     cout << "listening" << endl;

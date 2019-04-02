@@ -13,7 +13,7 @@ private:
     BrickPi3 BP3;
 public:
     uint8_t MOTOR_LEFT = PORT_B;
-    uint8_t MOTOR_RIGHT = PORT_C;
+    uint8_t MOTOR_RIGHT = PORT_D;
 
     /**
      * This function checks the current & target speed. When they
