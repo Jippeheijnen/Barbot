@@ -2,9 +2,11 @@
 #define BARBOT_BLUETOOTH_H
 
 
+#include <cstdint>
+
 class Bluetooth {
 private:
-    uint_8t direction;
+    uint8_t direction;
 public:
     /**
      * Open the Bluetooth socket
@@ -13,7 +15,7 @@ public:
     /**
      * Accept Bluetooth connections
      */
-    void acceptConnection;
+    void acceptConnection();
     /**
      * Get Bluetooth input message
      */
