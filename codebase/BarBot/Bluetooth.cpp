@@ -1,6 +1,8 @@
 #include "Bluetooth.h"
 #include "../Bluetooth/BluetoothSocket.h"
 
+using std::cout, std::endl;
+
 Movement m;
 
 uint16_t tempBTInput = 0;

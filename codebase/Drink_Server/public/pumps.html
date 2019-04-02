@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BarBot</title>
+
+    <style>
+
+        .headerTable {
+            margin-top: 10px;
+            cursor:pointer;
+            margin-left: 1vw; !important;
+            margin-right: 1vw;!important;
+            width: 95vw;!important;
+            border-spacing: 5px;!important;
+            color: white;!important;
+            font-size: 2em;!important;
+            background: #637fff;!important;
+
+        }
+
+        .headerTable tr td {
+            margin: 0;!important;
+            padding: 10px 0 10px 10px;!important;
+            text-align: left;!important;
+        }
+
+        .headerTable:hover {
+            background: #a9c0ff;!important;
+        }
+
+
+        body {
+            font-family: Aller;
+            margin: 0;
+            padding: 0;
+            background: url(/mosaic.png);
+            background-repeat: repeat;
+        }
+
+        #pumpContainer {
+            margin-left: 1vw;
+            margin-right: 1vw;
+            width: 95vw;
+            border-spacing: 5px;
+            color: white;
+        }
+
+        #pumpContainer tr td {
+            font-size: 1.5em;
+        }
+
+
+        #pumpContainer tr td {
+            margin: 0;
+            padding: 0;
+            width: 50%;
+            text-align: center;
+            transition: background 0.5s;
+            height: 200px;
+            background: #637fff;
+            padding-top: 10px;
+        }
+
+        .pump_select {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            border:none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: #637fff;
+            color: white;
+            font-size: 2em;
+            -ms-appearance: none; /* get rid of default appearance for IE8, 9 and 10*/
+        }
+
+    </style>
+</head>
+<body>
+<table class="headerTable">
+    <tr onclick="window.location.href='/'">
+        <td>BarBot</td>
+    </tr>
+</table>
+<script>
+
+    async function load_pumps() {
+        let result = await fetch("/fluids").then(res => res.json());
+        let pumps = await fetch("/pump_fluids").then(res => res.json());
+        let i =0;
+        let tr;
+        let pumpContainer = document.getElementById("pumpContainer");
+        for (; i < 4; i++) {
+            if (i % 2 === 0) {
+                tr = document.createElement("tr");
+            }
+
+            let td = document.createElement("td");
+
+
+            let select = document.createElement("select");
+            select.classList.add("pump_select");
+            select.id = i + "";
+            select.addEventListener("change", set_pump);
+            select.dataset.pump_id = i + "";
+            let selectedFluid = "";
+            for (let fluid of result) {
+                let option = document.createElement("option");
+                option.appendChild(document.createTextNode(fluid['name']));
+                option.value = fluid['id'];
+                select.appendChild(option);
+                if(pumps[i] == fluid['id']) {
+                    selectedFluid = fluid['name'];
+                    option.selected = true;
+                }
+            }
+            let pumpNr = document.createElement("div");
+            pumpNr.classList.add("pump_nr");
+            pumpNr.appendChild(document.createTextNode("Pump " + (1+i)));
+            td.appendChild(pumpNr)
+            td.appendChild(select);
+            tr.appendChild(td);
+
+            if(i%2!==0) {
+                pumpContainer.appendChild(tr);
+            }
+        }
+        if(i%2!==0) {
+            pumpContainer.appendChild(tr);
+        }
+    }
+
+    (function() {
+        load_pumps()
+    })();
+
+    async function set_pump() {
+        await fetch("/connect_pump/" + this.dataset.pump_id + "/" + this.value);
+    }
+</script>
+
+    <table id="pumpContainer">
+
+    </table>
+</body>
+</html>

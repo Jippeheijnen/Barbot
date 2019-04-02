@@ -2,6 +2,8 @@
 #define BARBOT_BLUETOOTH_H
 
 
+#include <cstdint>
+
 class Bluetooth {
 public:
     /**
@@ -11,7 +13,7 @@ public:
     /**
      * Accept Bluetooth connections
      */
-    void acceptConnection;
+    void acceptConnection();
     /**
      * Get Bluetooth input message
      */

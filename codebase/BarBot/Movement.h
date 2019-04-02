@@ -2,42 +2,35 @@
 #ifndef BARBOT_MOTOR_H
 #define BARBOT_MOTOR_H
 
+
 #include "../../include/BrickPI3/BrickPi3.h"
 
 class Movement {
+
 private:
     uint8_t currSpeed = 0;
-    uint8_t currLeft = 0;
-    uint8_t currRight = 0;
-    uint8_t targLeft = 0;
-    uint8_t targRight = 0;
     uint8_t targSpeed = 0;
+    BrickPi3 BP3;
 public:
     uint8_t MOTOR_LEFT = PORT_B;
-    uint8_t MOTOR_RIGHT = PORT_C;
+    uint8_t MOTOR_RIGHT = PORT_D;
 
+    /**
+     * This function checks the current & target speed. When they
+     * are not equal, the bot will accelerate or decelerate.
+     */
+    void step();
 
     /**
      * Initializes Motors
      */
-    void init();
+    void init(BrickPi3 &BP3);
 
     /**
      * Stops the robot gradually
      */
     void stop();
 
-    /**
-     * sets motor speed for left motor.
-     * @param speed motor speed
-     */
-    void leftSpeed(uint8_t speed);
-
-    /**
-    * sets motor speed for left motor.
-    * @param speed motor speed
-    */
-    void rightSpeed(uint8_t speed);
 
     /**
      * steers the BarBot by limiting the speed to a certain motor

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        .headerTable {
+            margin-top: 10px;
+            cursor:pointer;
+            margin-left: 1vw; !important;
+            margin-right: 1vw;!important;
+            width: 95vw;!important;
+            border-spacing: 5px;!important;
+            color: white;!important;
+            font-size: 2em;!important;
+            background: #637fff;!important;
+
+        }
+
+        .headerTable tr td {
+            margin: 0;!important;
+            padding: 10px 0 10px 10px;!important;
+            text-align: left;!important;
+        }
+
+        .headerTable:hover {
+            background: #a9c0ff;!important;
+        }
+
+        body {
+            font-family: Aller;
+            margin: 0;
+            padding: 0;
+            background: url(/mosaic.png);
+            background-repeat: repeat;
+        }
+
+        #drinkContainer {
+            margin-left: 1vw;
+            margin-right: 1vw;
+            width: 95vw;
+            border-spacing: 5px;
+            color: white;
+        }
+
+        #drinkContainer tr td {
+            background: #637fff;
+            font-size: 1.5em;
+        }
+
+
+        #drinkContainer tr td {
+            margin: 0;
+            padding: 40px 10px 40px 10px;
+            width: 50%;
+            text-align: center;
+            transition: background 0.5s;
+            height: 200px;
+        }
+
+
+        td :not(.drink_name) {
+
+            color: #c5cecb;
+        }
+
+        td .drink_name {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+
+
+
+    </style>
+
+    <script>
+
+        function fetch_drinks() {
+            fetch("/drinks")
+                .then((res) => {
+                    res.json().then((result) => {
+                        let drinkContainer = document.getElementById("drinkContainer");
+                        let i = 0;
+                        let tr;
+                        for (let drink_id in result) {
+                            if (!result.hasOwnProperty(drink_id))
+                                continue;
+
+                            if(i%2 === 0)
+                                tr = document.createElement("tr");
+
+                            let td = document.createElement("td");
+                            let name = document.createElement("div");
+                            name.appendChild(document.createTextNode(result[drink_id]['name']));
+                            name.classList.add("drink_name");
+                            td.appendChild(name);
+                            td.dataset.drink_id = drink_id;
+                            td.onclick = function () {
+                                let thatTd = this;
+                                fetch("/pour/" + this.dataset.drink_id).then(res => res.json()).then(
+                                    function(res) {
+                                        if(!res.error)
+                                            thatTd.style.background = "rgba(31, 128, 27, 0.6)";
+                                        else
+                                            thatTd.style.background = "rgba(128, 14, 9, 0.6)";
+                                        setTimeout(
+                                            function() {
+                                                thatTd.style.background= "#637fff";
+                                            }, 1000
+                                        )
+                                    }
+                                )
+                            };
+                            let ingredients = document.createElement("span");
+                            ingredients.innerHTML = result[drink_id]['fluids'].map(x => x.name).join("<br>");
+                            td.appendChild(ingredients)
+                            tr.appendChild(td);
+
+                            if(i%2 === 1)
+                                drinkContainer.appendChild(tr);
+                            i++;
+                        }
+
+                        if(i%2 === 1)
+                            drinkContainer.appendChild(tr);
+                    })
+                })
+                .catch((err) => {
+
+                })
+        }
+
+        (function() {
+            fetch_drinks();
+        })();
+    </script>
+</head>
+<body>
+<table class="headerTable">
+    <tr onclick="window.location.href='/'">
+        <td>BarBot</td>
+    </tr>
+</table>
+    <table id="drinkContainer">
+
+    </table>
+</body>
+</html>

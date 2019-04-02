@@ -57,6 +57,46 @@ app.post("/drinks/save", async (req,res) => {
     }
 });
 
+app.get("/pump_fluids", async (req,res) => {
+    res.end(JSON.stringify(connected_fluids));
+    }
+);
+
+app.post("/fluids/save", async (req,res) => {
+    try {
+        let drink = req.body;
+        await client.query("INSERT INTO fluid (name) VALUES ($1)", [drink.name]);
+        res.end("{}")
+    }
+    catch(e) {
+        console.log(e);
+        res.end(JSON.stringify(e))
+    }
+});
+
+app.get("/fluids/remove/:id", async (req,res) => {
+    try {
+        await client.query("DELETE FROM fluid WHERE id = $1", [req.params.id]);
+        res.end("{}");
+    }
+    catch(e) {
+        console.log(e);
+        res.end(JSON.stringify(e))
+    }
+});
+
+app.get("/drinks/remove/:id", async (req,res) => {
+    try {
+        await client.query("DELETE FROM drink WHERE id = $1", [req.params.id]);
+        await client.query("DELETE FROM drink_name WHERE drink_id = $1", [req.params.id]);
+        res.end("{}");
+    }
+    catch(e) {
+        console.log(e);
+        res.end(JSON.stringify(e))
+    }
+})
+
 app.get("/drinks", async (req, res) => {
     try {
         let {rows} = await client.query("SELECT *, drink.id as drinkid FROM drink LEFT JOIN drink_name ON id = drink_id LEFT JOIN fluid ON drink.fluid = fluid.id;");
@@ -81,6 +121,7 @@ app.get("/drinks", async (req, res) => {
  */
 app.get("/connect_pump/:pump/:fluid", (req,res) => {
     connected_fluids[parseInt(req.params.pump)] = parseInt(req.params.fluid);
+    console.log(connected_fluids);
     res.end();
 });
 
@@ -91,7 +132,7 @@ app.get("/connect_pump/:pump/:fluid", (req,res) => {
  */
 app.get("/pour/:id", async (req, res) => {
     try {
-        let {rows} = await client.query("SELECT fluid, amount FROM drink WHERE drink_id = $1", [req.params.id]);
+        let {rows} = await client.query("SELECT fluid, amount FROM drink WHERE id = $1", [req.params.id]);
         for (let ingredient of rows) {
             if (connected_fluids.indexOf(ingredient['fluid']) === -1) {
                 return res.end(JSON.stringify({error: "Not all ingredients available"}))
@@ -119,7 +160,7 @@ app.get("/pumps", async (req,res) => {
             return res.end(amounts.join(" "))
         }
 
-        let {rows: fluids} = await client.query("SELECT * FROM drink WHERE drink_id = $1;", [poured_drinks[0]['drink']]);
+        let {rows: fluids} = await client.query("SELECT * FROM drink WHERE id = $1;", [poured_drinks[0]['drink']]);
 
         for (let fluid of fluids) {
             amounts[connected_fluids.indexOf(fluid['fluid'])] = fluid['amount'] + "";

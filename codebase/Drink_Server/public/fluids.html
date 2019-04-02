@@ -6,6 +6,7 @@
     <title>BarBot</title>
 
     <style>
+
         .headerTable {
             margin-top: 10px;
             cursor:pointer;
@@ -37,7 +38,7 @@
             background-repeat: repeat;
         }
 
-        #drinkContainer {
+        #fluidContainer {
             margin-left: 1vw;
             margin-right: 1vw;
             width: 95vw;
@@ -45,30 +46,30 @@
             color: white;
         }
 
-        #drinkContainer tr {
+        #fluidContainer tr {
             background: #637fff;
         }
 
-        #drinkContainer tr:first-child {
+        #fluidContainer tr:first-child {
             cursor: pointer;
             background: rgba(31, 128, 27, 0.6);
         }
 
-        #drinkContainer tr:first-child:hover {
+        #fluidContainer tr:first-child:hover {
             background: rgb(59, 178, 57);
         }
 
-        #drinkContainer tr:not(:first-child) td {
+        tr:not(:first-child) td {
             margin: 0;
             padding: 40px 10px 40px 10px;
         }
 
-        #drinkContainer td:first-child {
+        td:first-child {
             width: 10%;
             text-align: center;
         }
 
-        #drinkContainer td:last-child {
+        td:last-child {
             width: 90%;
 
         }
@@ -111,10 +112,6 @@
             padding: 5px 0 5px 0;
         }
 
-        .fluid .fluid_amount_container {
-            width: 20%;
-        }
-
         #add_new:not(:checked) + .add_new_drink_content {
             opacity: 0;
             height: 0;
@@ -141,35 +138,6 @@
             margin-top: 5px;
         }
 
-        .fluid_remove {
-            color: red;
-            margin-left: 5px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .fluid_remove:hover {
-            text-decoration: underline;
-        }
-
-        .fluid_select {
-            width: 50%;
-            display: inline-block;
-            margin-bottom: 5px;
-        }
-
-        .fluid_amount {
-            width: 40%;
-            display: inline-block;
-        }
-
-        .fluid_remove {
-            width: 10%;
-        }
-
-        .fluid:first-child .fluid_remove {
-            display: none;
-        }
 
         div.buttons {
             padding-top: 10px;
@@ -182,14 +150,6 @@
             padding: 5px 10px 5px 10px;
         }
 
-        .add_fluid {
-            background: rgba(30, 31, 126, 0.55);
-        }
-
-        .add_fluid:hover {
-            background: rgba(44, 45, 255, 0.84);
-        }
-
         .save_fluid {
             margin-left: 5px;
             background: rgba(31, 128, 27, 0.6);
@@ -199,27 +159,22 @@
             background: rgb(59, 178, 57);
         }
 
-        .save_fluid, .remove_drink {
+        .discard_fluid, .remove_fluid {
             cursor: pointer;
             margin-left: 5px;
             background: rgba(128, 14, 9, 0.6);
         }
 
-        .save_fluid:hover, .remove_drink:hover {
+        .discard_fluid:hover, .remove_fluid:hover {
             background: rgb(178, 21, 16);
-        }
-
-        #fluids {
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        #fluids .fluid {
-            clear: both;
         }
 
         input, select {
             border-radius: 0;
+        }
+
+        #fluid_name {
+            width: 90%;
         }
 
     </style>
@@ -230,45 +185,24 @@
             fetch("/fluids")
                 .then((res) => {
                     res.json().then((result) => {
-                        let drinkContainer = document.getElementsByClassName("fluid_select")[0].getElementsByTagName("optgroup")[0];
-                        for (let fluid of result) {
-                            let option = document.createElement("option");
-                            option.value = fluid['id'];
-                            option.appendChild(document.createTextNode(fluid['name']));
-                            drinkContainer.appendChild(option);
-                        }
-                    })
-                })
-                .catch((err) => {
-
-                })
-        }
-        function fetch_drinks() {
-            fetch("/drinks")
-                .then((res) => {
-                    res.json().then((result) => {
-                        let drinkContainer = document.getElementById("drinkContainer");
-                        for (let drink_id in result) {
-                            if (!result.hasOwnProperty(drink_id))
-                                continue;
+                        let fluidContainer = document.getElementById("fluidContainer");
+                        for( let fluid of result) {
                             let tr = document.createElement("tr");
                             let tdId = document.createElement("td");
-                            tdId.classList.add("remove_drink");
-                            tdId.onclick = remove_drink;
-                            tdId.dataset.drink_id = drink_id;
+                            tdId.classList.add("remove_fluid");
+                            tdId.onclick = remove_fluid;
+                            tdId.dataset.fluid_id = fluid['id'];
                             tdId.appendChild(document.createTextNode('X'));
                             let tdName = document.createElement("td");
-                            tdName.appendChild(document.createTextNode(result[drink_id]['name']));
+                            tdName.appendChild(document.createTextNode(fluid['name']));
 
-                            // let tdIngredients = document.createElement("td");
-                            // result[drink_id].fluids.map(i => {return });
 
                             tr.appendChild(tdId);
                             tr.appendChild(tdName);
-                            // tr.appendChild(tdIngredients);
-                            tr.dataset.fluids = result[drink_id].fluids;
-                            drinkContainer.appendChild(tr);
+                            fluidContainer.appendChild(tr);
                         }
+
+
                     })
                 })
                 .catch((err) => {
@@ -277,7 +211,6 @@
         }
 
         (function () {
-            fetch_drinks();
             fetch_fluids();
         })();
 
@@ -289,8 +222,7 @@
         <td>BarBot</td>
     </tr>
 </table>
-
-<table id="drinkContainer">
+<table id="fluidContainer">
     <tr>
         <td><label class="label_add_new" for="add_new">+</label></td>
         <td>
@@ -299,64 +231,34 @@
             </label>
             <input type="checkbox" id="add_new">
             <div class="add_new_drink_content">
-                <input type="text" id="drink_name" placeholder="Drink Name" tabindex="1" autofocus>
-
-                <div>
-                    Ingredients:
-                </div>
-                <div id="fluids">
-                    <div class="fluid">
-
-                        <select name="test" id="" class="fluid_select">
-                            <optgroup label="Choose a Fluid">
-                                <option value="SELECT" selected>--</option>
-                            </optgroup>
-
-                        </select>
+                <input type="text" id="fluid_name" placeholder="Drink Name" tabindex="1" autofocus>
 
 
-                        <input type="number" class="fluid_amount" placeholder="amount" tabindex="2">
-                        <span class="fluid_remove" onclick="remove_fluid(this)">X</span>
-                    </div>
-                </div>
 
                 <script>
-                    function add_fluid() {
-                        document.getElementById("fluids").appendChild(document.querySelector(".fluid:last-of-type").cloneNode(true));
-                    }
+                    function save_fluid() {
+                        let fluid = {};
+                        fluid['name'] = document.getElementById("fluid_name").value;
 
-                    function remove_fluid(element) {
-                        let fluid = element.parentNode;
-                        fluid.parentNode.removeChild(fluid);
-                    }
-
-                    function save_drink() {
-                        let drink = {ingredients: []};
-                        drink['name'] = document.getElementById("drink_name").value;
-                        for(let fluid of document.getElementsByClassName("fluid")) {
-                            let amount = fluid.getElementsByClassName("fluid_amount")[0].value;
-                            let id = fluid.getElementsByClassName("fluid_select")[0].value;
-                            drink.ingredients.push({amount, id});
-                        }
-
-                        fetch("/drinks/save", {
+                        fetch("/fluids/save", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json"
                             },
-                            body: JSON.stringify(drink)
+                            body: JSON.stringify(fluid)
                         }).then(res => {
                             window.location.reload(true);
                         })
                     }
 
-                    function discard_drink() {
-                        window.location.reload(true);
+                    function discard_fluid() {
+                        document.getElementById("fluid_name").value = "";
                     }
 
-                    function remove_drink() {
-                        let drink_id = this.dataset.drink_id;
-                        fetch("/drinks/remove/" + drink_id).then(
+                    function remove_fluid() {
+                        let fluid_id = this.dataset.fluid_id;
+                        console.log(fluid_id)
+                        fetch("/fluids/remove/" + fluid_id).then(
                             resp => {
                                 window.location.reload(true);
                             }
@@ -365,14 +267,11 @@
                 </script>
                 <br>
                 <div class="buttons">
-                    <span class="add_fluid" onclick="add_fluid()">
-                    + Add Ingredient
+                    <span class="save_fluid" onclick="save_fluid()">
+                        Save Fluid
                     </span>
-                    <span class="save_drink" onclick="save_drink()">
-                        Save Drink
-                    </span>
-                    <span class="discard_drink" onclick="discard_drink()">
-                        Discard Drink
+                    <span class="discard_fluid" onclick="discard_fluid()">
+                        Discard Fluid
                     </span>
                 </div>
 
