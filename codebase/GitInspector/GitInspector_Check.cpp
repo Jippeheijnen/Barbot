@@ -8,6 +8,7 @@ std::string PYTHON27_PATH = "C:\\Python27\\python.exe";
 void gitinspector_validate();
 void python27_validate();
 void gitinspector_run();
+void gitinspector_show_stats();
 
 
 int main() {
@@ -15,7 +16,17 @@ int main() {
     python27_validate();
     gitinspector_validate();
     gitinspector_run();
+    gitinspector_show_stats();
     return 0;
+}
+
+/**
+ * Opens the resulting stats
+ */
+void gitinspector_show_stats() {
+    std::cout << "Opening stats file" << std::endl;
+    std::string command = "start ../codebase/GitInspector/Gitinspector_stats.html";
+    system(command.c_str());
 }
 
 /**

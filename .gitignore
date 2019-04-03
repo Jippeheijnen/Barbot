@@ -16,4 +16,4 @@ node_modules
 .piolibdeps
 CMakeListsPrivate.txt
 include/rest-cpp
-.idea
+.idea/
