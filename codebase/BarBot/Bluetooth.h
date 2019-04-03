@@ -5,8 +5,6 @@
 #include <cstdint>
 
 class Bluetooth {
-private:
-    uint8_t direction;
 public:
     /**
      * Open the Bluetooth socket
@@ -19,11 +17,19 @@ public:
     /**
      * Get Bluetooth input message
      */
-    void getBTInput();
+    int getBTInput();
     /**
      * Close the Bluetooth socket
      */
-    void closeSocket();
+    void closeBTSocket();
+    /**
+     * Processes the BT input from getBTInput and sends commands to Movement
+     */
+    void processBTInput();
+    /**
+     * Initialises openSocket and acceptConnection
+     */
+    void init();
 };
 
 
