@@ -7,17 +7,20 @@
 #include <functional>
 
 #include "../../include/BrickPI3/BrickPi3.h"
+#include "App/BluetoothConnection.h"
 
 
-#include "Movement.h"
+#include "Actors/Movement.h"
+
 Movement M;
 
-#include "LineDetection.h"
+#include "Sensors/LineDetection.h"
+
 LineDetection LD;
 
-#include "LineFollow.h"
-#include "SocketConnection.h"
-#include "PumpService.h"
+#include "Events/LineFollow.h"
+#include "API/SocketConnection.h"
+#include "API/PumpService.h"
 
 LineFollow *LF_Pointer = nullptr;
 LineDetection *LD_Pointer = nullptr;
@@ -64,6 +67,18 @@ int main() {
     BP3_Pointer->reset_motor_encoder(PORT_D);
     int32_t centerPos = BP3_Pointer->get_motor_encoder(PORT_D);
     sleep(2);
+    BluetoothConnection connection;
+    connection.init();
+    while(true) {
+        connection.poll();
+        usleep(1000);
+    }
+//    mainInit();
+//    if(Pumps_Pointer->pour(7))
+//        std::cout << "SUCCESS" << std::endl;
+//
+//    if(!Pumps_Pointer->pour(21))
+//        std::cout << "FAILED SUCCESFULLY" << std::endl;
 
     while (running) {
         double sensorValue = LD_Pointer->getLineDirection();

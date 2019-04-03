@@ -2,11 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/cmake-build-debug/plibsys-src" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/include/curl" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/include/libcurl" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/include/rest-cpp" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/include/rest-cpp/restc-cpp" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/include/restc-cpp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/cmake-build-debug-brickpi/plibsys-src" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/cmake-build-debug-mingw/gitinspector" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/cmake-build-debug-mingw/plibsys-src" vcs="Git" />
   </component>
 </project>

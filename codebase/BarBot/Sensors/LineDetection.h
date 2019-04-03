@@ -2,7 +2,7 @@
 #ifndef BARBOT_LINEDETECTION_H
 #define BARBOT_LINEDETECTION_H
 
-#include "../../include/BrickPI3/BrickPi3.h"
+#include "../../../include/BrickPI3/BrickPi3.h"
 
 #define INPUT_BLACKCOLOR    1
 #define INPUT_BLUECOLOR     2

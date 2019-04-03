@@ -14,7 +14,7 @@ download_project(PROJ                plibsys
 )
 
 
-add_subdirectory(${plibsys_SOURCE_DIR} ${plibsys_BINARY_DIR})
+add_subdirectory(${plibsys_SOURCE_DIR} ${plibsys_BINARY_DIR} EXCLUDE_FROM_ALL)
 
 target_include_directories(Barbot PRIVATE ${plibsys_SOURCE_DIR} )
 target_link_libraries(Barbot plibsys)
@@ -26,6 +26,7 @@ if (UNIX)
             PUBLIC
             include/BrickPI3/Raspi/BrickPi3.cpp
     )
+    target_link_libraries(Barbot bluetooth)
 else (UNIX)
     cmake_policy(SET CMP0076 NEW)
     target_sources(
@@ -41,14 +42,16 @@ endif (UNIX)
 target_sources(
         Barbot
         PUBLIC
-        codebase/BarBot/Movement.cpp
-        codebase/BarBot/LineDetection.cpp
-        codebase/BarBot/LineFollow.cpp
+        codebase/BarBot/Actors/Movement.cpp
+        codebase/BarBot/Sensors/LineDetection.cpp
+        codebase/BarBot/Events/LineFollow.cpp
         codebase/NulVersie/nulVersie.cpp
-        codebase/BarBot/CupDetection.cpp
-        codebase/BarBot/PumpService.cpp
-        codebase/BarBot/SocketConnection.cpp
-        codebase/BarBot/PWM.cpp
+        codebase/BarBot/Sensors/CupDetection.cpp
+        codebase/BarBot/API/PumpService.cpp
+        codebase/BarBot/API/SocketConnection.cpp
+        codebase/BarBot/App/BluetoothSocket.cpp
+        codebase/BarBot/App/BluetoothConnection.cpp
+        codebase/BarBot/Actors/PWM.cpp
 )
 
 
