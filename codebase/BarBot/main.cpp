@@ -10,19 +10,17 @@
 
 
 #include "Movement.h"
-
 Movement M;
 
 #include "LineDetection.h"
-
 LineDetection LD;
 
 #include "LineFollow.h"
 #include "SocketConnection.h"
 #include "PumpService.h"
 
-LineFollow LF;
-
+LineFollow *LF_Pointer = nullptr;
+LineDetection *LD_Pointer = nullptr;
 BrickPi3 *BP3_Pointer = nullptr;
 PumpService *Pumps_Pointer = nullptr;
 
@@ -36,9 +34,14 @@ void exit_handler(int signo) {
 };
 
 void mainInit() {
-    //Todo: init all relevant libraries.
+    // Init all relevant libraries.
+
+
+    LD_Pointer = new LineDetection();
+    LD_Pointer->init(2200, 30);
 
     Pumps_Pointer = new PumpService();
+
     Pumps_Pointer->init();
 
     BP3_Pointer = new BrickPi3();
@@ -50,36 +53,24 @@ void mainInit() {
 }
 
 int main() {
+
 //    Todo: Event-loop here.
-    mainInit();
-    if(Pumps_Pointer->pour(7))
-        std::cout << "SUCCESS" << std::endl;
 
-    if(!Pumps_Pointer->pour(21))
-        std::cout << "FAILED SUCCESFULLY" << std::endl;
-
-//    for (fluid f : Pumps_Pointer->get_connected_fluids()) {
-//        std::cout << " --- " << f.name << ":" << f.amount << std::endl;
-//    }
-//
-//    for (drink d : Pumps_Pointer->get_drinks()) {
-//        std::cout << d.name << ":" << d.id << std::endl;
-//        for (fluid f : d.fluids) {
-//            std::cout << " --- " << f.name << ":" << f.amount << std::endl;
-//        }
-//    }
-
-//
-//
-//
-//    bool running = true;
+    bool running = true;
 //    int count = 0;
-//    mainInit(BP3);
-//    BP3.reset_motor_encoder(PORT_D);
-//    uint8_t startPos = BP3.get_motor_encoder(PORT_D);
-//    sleep(2);
-//    while (running) {
-//
-//    }
-//    BP3.reset_all();
+
+    mainInit();
+
+    BP3_Pointer->reset_motor_encoder(PORT_D);
+    int32_t centerPos = BP3_Pointer->get_motor_encoder(PORT_D);
+    sleep(2);
+
+    while (running) {
+        double sensorValue = LD_Pointer->getLineDirection();
+        std::cout << "sensorValue: " << sensorValue << std::endl;
+        LF_Pointer->follow(sensorValue, centerPos, M, LD);
+        usleep(250000);
+    }
+
+    BP3_Pointer->reset_all();
 }

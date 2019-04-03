@@ -21,12 +21,12 @@ private:
     double LIGHT_SENSOR_FACTOR = 0.2;
     sensor_light_t LIGHT_SENSOR_DATA;
 
-    uint8_t LIGHT_SENSOR_PORT = PORT_1;
+    uint8_t LIGHT_SENSOR_PORT = PORT_4;
 
 
     ColorReading lastColorReading = {};
     sensor_color_t COLOR_SENSOR_DATA;
-    uint8_t COLOR_SENSOR_PORT = PORT_2;
+    uint8_t COLOR_SENSOR_PORT = PORT_3;
     BrickPi3 BP;
 public:
     int16_t target, margin;

@@ -12,8 +12,6 @@ private:
     uint8_t targSpeed = 0;
     BrickPi3 BP3;
 public:
-    uint8_t MOTOR_LEFT = PORT_B;
-    uint8_t MOTOR_RIGHT = PORT_D;
 
     /**
      * This function checks the current & target speed. When they
@@ -37,7 +35,13 @@ public:
      * @param direction true is right, false is left.
      * @param percentage percentage in integers.
      */
-    void steer(bool direction, uint8_t percentage);
+    void steer(int32_t centerPos, bool direction, uint8_t percentage);
+
+    /**
+     * Centers the steering wheel
+     * @param centerPos
+     */
+    void center(int32_t centerPos);
 
     /**
      * Sets the speed for the motors

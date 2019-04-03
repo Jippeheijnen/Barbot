@@ -14,8 +14,10 @@
 
 #endif
 
-#include <vector>
+#ifdef _WIN32
 #include <wsman.h>
+#endif
+#include <vector>
 #include <plibsys.h>
 #include <psocket.h>
 
