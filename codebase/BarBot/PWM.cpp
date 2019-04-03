@@ -1,15 +1,32 @@
-#include <wiringPi.h>
 #include <iostream>
-#include <stdio.h>
+#include <cstdio>
+#include <wiringPi.h>
+#include <softPwm.h>
 #include "PWM.h"
 
-void init(){
-    wiringPiSetupGPIO();
-    pinMode(16, PWM_OUTPUT);
+void PWM::init(){
+    wiringPiSetupGpio();
+    pinMode(pinPWM, PWM_OUTPUT);
     pwmSetMode(PWN_MODE_MS);
-    pwmSetRange(255);
+    pinMode(pinEnableCLK, OUTPUT);
+    pinMode(pinEnableCCLK, OUTPUT);
+    pwmSetRange(1024);
 }
 
-void sendPWM(uint8_t pwmspeed){
-    pwmWrite(16,pwmspeed);
+void PWM::setRotation(bool rotation){
+    digitalWrite(pinEnableCCLK, LOW);
+    digitalWrite(pinEnableCLK, LOW);
+    if(rotation){
+        pinEnabled = pinEnableCLK;
+    }
+    else{pinEnabled = pinEnableCCLK;}
+    digitalWrite(pinEnabled, HIGH);
+}
+
+void PWM::sendPWM(uint8_t pwmspeed){
+    pwmWrite(pinPWM,int(pwmspeed));
+}
+
+void PWM::setCornerPWM(uint8_t pwmspeed) {
+    pwmWrite(pinPWM, int(pwmspeed*0.8))
 }
