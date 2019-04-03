@@ -48,6 +48,7 @@ target_sources(
         codebase/BarBot/CupDetection.cpp
         codebase/BarBot/PumpService.cpp
         codebase/BarBot/SocketConnection.cpp
+        codebase/BarBot/PWM.cpp
 )
 
 
