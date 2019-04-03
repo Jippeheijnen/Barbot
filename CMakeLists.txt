@@ -5,36 +5,29 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(Barbot "codebase/BarBot/main.cpp")
 
-add_executable(DownloadRestCPP "include/DownloadRestCPP.cpp")
-
-add_custom_target(DownloadRestCPP_Ex
-        COMMAND DownloadRestCPP
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        COMMENT "Downloading Rest-CPP"
-        SOURCES "include/DownloadRestCPP.cpp"
-        )
-
-add_dependencies(Barbot DownloadRestCPP_Ex)
-
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} )
-
-#add_subdirectory(include/curl)
-add_subdirectory(include/rest-cpp)
-add_dependencies(Barbot restclient-cpp)
+include(DownloadProject.cmake)
+download_project(PROJ                plibsys
+                GIT_REPOSITORY      https://github.com/saprykin/plibsys
+                GIT_TAG             master
+                UPDATE_DISCONNECTED 1
+                QUIET
+)
 
 
+add_subdirectory(${plibsys_SOURCE_DIR} ${plibsys_BINARY_DIR})
+
+target_include_directories(Barbot PRIVATE ${plibsys_SOURCE_DIR} )
+target_link_libraries(Barbot plibsys)
+configure_file(${CMAKE_BINARY_DIR}/plibsysconfig.h ${CMAKE_BINARY_DIR}/plibsys-src/src)
 
 if (UNIX)
     target_sources(
             Barbot
             PUBLIC
             include/BrickPI3/Raspi/BrickPi3.cpp
-#            codebase/BarBot/Bluetooth.cpp
-#            codebase/Bluetooth/BluetoothSocket.cpp
     )
 else (UNIX)
     cmake_policy(SET CMP0076 NEW)
-    target_link_libraries(Barbot STATIC "C:\\Program Files\\CUrl\\lib")
     target_sources(
             Barbot
             PUBLIC
@@ -53,7 +46,8 @@ target_sources(
         codebase/BarBot/LineFollow.cpp
         codebase/NulVersie/nulVersie.cpp
         codebase/BarBot/CupDetection.cpp
-        codebase/BarBot/Pumps.cpp
+        codebase/BarBot/PumpService.cpp
+        codebase/BarBot/SocketConnection.cpp
 )
 
 
