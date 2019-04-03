@@ -15,23 +15,15 @@ void LineFollow::resume() {
     toBePaused = false;
 }
 
-void LineFollow::follow() {
+void LineFollow::follow(double sensorValue, int32_t centerPos, Movement M, LineDetection LD) {
 
     // Todo: New version for only one steering motor
 
-//    if(ColorReading.hasChanged == true){cout << ColorReading.color;}
-//    if(!toBePaused) {
-//        LD.init(2000, 20);
-//        movement.init();
-//        double SensorInput = LD.getLineDirection();
-//        std::cout << SensorInput << std::endl;
-//        if (SensorInput < 0) {
-//            movement.leftSpeed(((100 + SensorInput) / 100) * 30);
-//            movement.rightSpeed(30);
-//        } else if (SensorInput > 0) {
-//            movement.rightSpeed(((100 - SensorInput) / 100) * 30);
-//            movement.leftSpeed(30);
-//        }
-//        usleep(1000);
-//    }
+    if (!toBePaused) {
+        if (sensorValue < 0) M.steer(centerPos, true, abs(sensorValue)/2);
+        else if (sensorValue > 0)
+            M.steer(centerPos, false, sensorValue/2);
+        else
+            M.center(centerPos);
+    }
 }
