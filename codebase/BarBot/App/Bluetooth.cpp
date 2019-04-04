@@ -39,16 +39,16 @@ void Bluetooth::processBTInput(){
         xdirection = BTInput;
         ydirection = BTInput >>8;
         if(xdirection&128){
-            m.steer(1,(xdirection-128)/2.55)
+            m.steer(1,(xdirection-128)/1.27)
         }
         else{
-            m.steer(0,xdirection/2.55)
+            m.steer(0,xdirection/1.27)
         }
         if(ydirection&128){
-            m.speed((ydirection-128)/2.55)
+            m.speed((ydirection-128)/1.27)
         }
         else{
-            m.speed(ydirection/2.55)
+            m.speed(ydirection/1.27)
         }
     }
     tempBTInput = BTInput;

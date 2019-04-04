@@ -10,13 +10,11 @@
     #define WSMAN_API_VERSION_1_0
     #include <winsock2.h>
     #include <windows.h>
+    #include <wsman.h>
 #else
 
 #endif
 
-#ifdef _WIN32
-#include <wsman.h>
-#endif
 #include <vector>
 #include <plibsys.h>
 #include <psocket.h>

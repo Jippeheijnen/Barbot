@@ -3,7 +3,7 @@
 #define BARBOT_MOTOR_H
 
 
-#include "../../include/BrickPI3/BrickPi3.h"
+#include "../../../include/BrickPI3/BrickPi3.h"
 
 class Movement {
 

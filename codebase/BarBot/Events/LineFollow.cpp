@@ -1,8 +1,8 @@
-#include "Movement.h"
+#include "../Actors/Movement.h"
 #include <zconf.h>
 #include <iostream>
 #include "LineFollow.h"
-#include "LineDetection.h"
+#include "../Sensors/LineDetection.h"
 
 bool toBePaused = false;
 

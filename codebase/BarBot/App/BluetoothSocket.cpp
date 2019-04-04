@@ -15,8 +15,9 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program; if not,  If not, see <https://www.gnu.org/licenses/>
  */
- 
- #include "BluetoothSocket.h"
+
+#include <fcntl.h>
+#include "BluetoothSocket.h"
  using namespace std;
  
 ///////////////////////////////////////////////////////////////////////////////
@@ -282,11 +283,14 @@ BluetoothServerSocket::BluetoothServerSocket(uint8_t localChannel, int queueLen)
 	if(sockDesc < 0) throw BluetoothException("error creating socket");
 	//BluetoothAddress locaddr(NULL, localChannel, BluetoothAddress::BLUETOOTH_SERVER);
 	//bind(locaddr);
+//    fcntl(sockDesc, F_SETFL, O_NONBLOCK);
 	struct sockaddr_rc loc_addr = { 0 };
 	loc_addr.rc_family = AF_BLUETOOTH;
     loc_addr.rc_bdaddr = {0};
     loc_addr.rc_channel = localChannel;
     ::bind(sockDesc, (struct sockaddr *)&loc_addr, sizeof(loc_addr));
+    ::
+    std::cout << std::endl;
 	setListen(queueLen);
 }
 
@@ -303,7 +307,7 @@ BluetoothSocket *BluetoothServerSocket::accept() throw(BluetoothException) {
   if ((newConnSD = ::accept(sockDesc, NULL, 0)) < 0) {
     throw BluetoothException("Accept failed (accept())");
   }
-
+    fcntl(sockDesc, F_SETFL, O_NONBLOCK);
   return new BluetoothSocket(newConnSD);
 }
 
