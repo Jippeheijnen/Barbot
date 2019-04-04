@@ -27,6 +27,6 @@ void PWM::sendPWM(uint8_t pwmspeed){
     pwmWrite(pinPWM,int(pwmspeed));
 }
 
-void PWM::setCornerPWM(uint8_t pwmspeed) {
+void PWM::sendCornerPWM(uint8_t pwmspeed) {
     pwmWrite(pinPWM, int(pwmspeed*0.8))
 }

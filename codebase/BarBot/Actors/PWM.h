@@ -32,7 +32,7 @@ public:
      * Gets signal and sends it over PWM to motors for in the corners
      * @param pwmspeed Number between 0 and
      */
-    void setCornerPWM(uint8_t pwmspeed);
+    void sendCornerPWM(uint8_t pwmspeed);
 
 };
 
