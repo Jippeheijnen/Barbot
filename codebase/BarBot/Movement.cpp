@@ -18,9 +18,9 @@ void Movement::stop() {
 void Movement::steer(int32_t centerPos, bool direction, uint8_t percentage) {
     //TODO: Steering function
     if (direction)
-        BP3.set_motor_position(PORT_D, (centerPos + percentage));
-    else
         BP3.set_motor_position(PORT_D, (centerPos - percentage));
+    else
+        BP3.set_motor_position(PORT_D, (centerPos + percentage));
 
     std::cout << "Encoder: " << BP3.get_motor_encoder(PORT_D) << std::endl;
 }

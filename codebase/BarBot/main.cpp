@@ -38,7 +38,7 @@ void mainInit() {
 
 
     LD_Pointer = new LineDetection();
-    LD_Pointer->init(2200, 30);
+    LD_Pointer->init(2000, 30);
 
     Pumps_Pointer = new PumpService();
 

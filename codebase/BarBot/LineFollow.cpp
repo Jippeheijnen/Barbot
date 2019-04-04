@@ -26,4 +26,8 @@ void LineFollow::follow(double sensorValue, int32_t centerPos, Movement M, LineD
         else
             M.center(centerPos);
     }
+    if (toBePaused) {
+        M.stop();
+    }
+    M.step();
 }
