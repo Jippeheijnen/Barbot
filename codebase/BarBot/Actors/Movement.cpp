@@ -1,35 +1,33 @@
 
 #include <iostream>
-#include <unistd.h>
 #include <csignal>
 #include "Movement.h"
-#include "../../../include/BrickPI3/BrickPi3.h"
 // Todo: Exit handler fix
 
 
 
-void Movement::init(BrickPi3 &BP3) {
-    this->BP3 = BP3;
-//    BP3.set_motor_limits(MOTOR_LEFT, 60, 50);
-    BP3.set_motor_limits(PORT_D, 60, 200);
+void Movement::init() {
+    brickPi3->set_motor_limits(PORT_D, 60, 200);
+    brickPi3->reset_motor_encoder(PORT_D);
+    centerPosition = brickPi3->get_motor_encoder(PORT_D);
 }
 
 void Movement::stop() {
     targSpeed = 0;
 }
 
-void Movement::steer(int32_t centerPos, bool direction, uint8_t percentage) {
+void Movement::steer(bool direction, uint8_t percentage) {
     //TODO: Steering function
     if (direction)
-        BP3.set_motor_position(PORT_D, (centerPos - percentage));
+        brickPi3->set_motor_position(PORT_D, (centerPosition - percentage));
     else
-        BP3.set_motor_position(PORT_D, (centerPos + percentage));
+        brickPi3->set_motor_position(PORT_D, (centerPosition + percentage));
 
-    std::cout << "Encoder: " << BP3.get_motor_encoder(PORT_D) << std::endl;
+    std::cout << "Encoder: " << brickPi3->get_motor_encoder(PORT_D) << std::endl;
 }
 
-void Movement::center(int32_t centerPos) {
-    BP3.set_motor_position(PORT_D, centerPos);
+void Movement::center() {
+    brickPi3->set_motor_position(PORT_D, centerPosition);
 }
 
 void Movement::speed(uint8_t speed) {
@@ -45,3 +43,6 @@ void Movement::step() {
                 (currSpeed + (speedDiff / abs(speedDiff))));
     //todo: Call GPIO function here: func(currSpeed);
 }
+
+Movement::Movement(BrickPi3 *brickPi3) : brickPi3(brickPi3) {}
+

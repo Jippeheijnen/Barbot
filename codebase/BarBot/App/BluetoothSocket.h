@@ -21,9 +21,11 @@
 
 
 #include <unistd.h>
+#include <fcntl.h>
 #include <sys/socket.h>
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/rfcomm.h>
+
 typedef void raw_type;       // Type used for raw data on this platform
 
 

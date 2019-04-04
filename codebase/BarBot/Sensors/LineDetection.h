@@ -2,7 +2,8 @@
 #ifndef BARBOT_LINEDETECTION_H
 #define BARBOT_LINEDETECTION_H
 
-#include "../../../include/BrickPI3/BrickPi3.h"
+#include <BarBot/Actors/Movement.h>
+#include "BrickPI3/BrickPi3.h"
 
 #define INPUT_BLACKCOLOR    1
 #define INPUT_BLUECOLOR     2
@@ -27,16 +28,21 @@ private:
     ColorReading lastColorReading = {};
     sensor_color_t COLOR_SENSOR_DATA;
     uint8_t COLOR_SENSOR_PORT = PORT_3;
-    BrickPi3 BP;
+    BrickPi3* brickPi3;
+    Movement* movement;
 public:
+
     int16_t target, margin;
 
-    /**
+
+    LineDetection(BrickPi3 *brickPi3, Movement *movement);
+
+/**
      * Initializes LineDetection with a line threshold
      * @param target The target value
      * @param margin Error margin for detection
      */
-    void init(int16_t target, int16_t margin);
+    void init(int16_t tar, int16_t mar);
 
 
     /**

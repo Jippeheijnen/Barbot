@@ -16,7 +16,7 @@
  *   along with this program; if not,  If not, see <https://www.gnu.org/licenses/>
  */
 
-#include <fcntl.h>
+
 #include "BluetoothSocket.h"
  using namespace std;
  

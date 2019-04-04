@@ -10,15 +10,17 @@ private:
 
     uint8_t ULTRASONIC_SENSOR_PORT = PORT_3;
 
-    BrickPi3 BP;
+    BrickPi3* brickPi3;
 public:
     float detectDistance;
 
-    /**
+    CupDetection(BrickPi3 *brickPi3);
+
+/**
      * Initializes CupDetection with a distance threshold
      * @param detectDistance The targeted distance value in CM
      */
-    void init(float detectDistance);
+    void init(float dD);
 
 
     bool isCupPlaced();

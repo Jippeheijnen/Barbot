@@ -3,7 +3,6 @@
 //
 
 #include "BluetoothConnection.h"
-#include "BluetoothSocket.h"
 
 void BluetoothConnection::init() {
     pid_t pid = fork();
@@ -56,3 +55,6 @@ void BluetoothConnection::poll() {
         }
     }
 }
+
+BluetoothConnection::BluetoothConnection(LineFollow *lineFollow) : lineFollow(lineFollow) {}
+

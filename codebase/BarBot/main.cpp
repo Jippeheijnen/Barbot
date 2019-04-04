@@ -5,51 +5,51 @@
 #include <csignal>
 #include <zconf.h>
 #include <functional>
+#include <BarBot/Sensors/CupDetection.h>
+#include <BarBot/Actors/Movement.h>
+#include <BarBot/Events/LineFollow.h>
+#include <BarBot/API/PumpService.h>
+#include <BarBot/Actors/PWM.h>
+#include "BarBot/App/BluetoothConnection.h"
 
-#include "../../include/BrickPI3/BrickPi3.h"
-#include "App/BluetoothConnection.h"
 
 
-#include "Actors/Movement.h"
+const int16_t LINEDETECTION_THRESHOLD = 2000;
+const int16_t LINEDETECTION_MARGIN = 30;
 
-Movement M;
+const int16_t CUPDETECTION_DISTANCE = 5;
 
-#include "Sensors/LineDetection.h"
 
-LineDetection LD;
-
-#include "Events/LineFollow.h"
-#include "API/SocketConnection.h"
-#include "API/PumpService.h"
-
-LineFollow *LF_Pointer = nullptr;
-LineDetection *LD_Pointer = nullptr;
-BrickPi3 *BP3_Pointer = nullptr;
-PumpService *Pumps_Pointer = nullptr;
-
+BrickPi3 *brickPi3 = new BrickPi3();
+Movement *movement = new Movement(brickPi3);
+LineDetection *lineDetection = new LineDetection(brickPi3, movement);
+LineFollow *lineFollow = new LineFollow(movement, lineDetection);
+CupDetection *cupDetection = new CupDetection(brickPi3);
+PumpService *pumpService = new PumpService();
+PWM *pwm = new PWM();
+BluetoothConnection *bluetoothConnection = new BluetoothConnection(lineFollow);
 
 void exit_handler(int signo) {
     if (signo == SIGINT) {
-        BP3_Pointer->reset_all();
+        brickPi3->reset_all();
         exit(-2);
     }
-    Pumps_Pointer->close();
+    pumpService->close();
 };
 
 void mainInit() {
-    // Init all relevant libraries.
+    brickPi3->detect();
 
+    // Initialize Sensors
+    lineDetection->init(LINEDETECTION_THRESHOLD, LINEDETECTION_MARGIN);
+    cupDetection->init(CUPDETECTION_DISTANCE);
+    movement->init();
 
-    LD_Pointer = new LineDetection();
-    LD_Pointer->init(2000, 30);
+    // Initialize Actors
+    pumpService->init();
+    pwm->init();
 
-    Pumps_Pointer = new PumpService();
-
-    Pumps_Pointer->init();
-
-    BP3_Pointer = new BrickPi3();
-    BP3_Pointer->detect();
-    M.init(*BP3_Pointer);
+    bluetoothConnection->init();
 
     signal(SIGINT, exit_handler);
 
@@ -64,19 +64,10 @@ int main() {
 
     mainInit();
 
-    BP3_Pointer->reset_motor_encoder(PORT_D);
-    int32_t centerPos = BP3_Pointer->get_motor_encoder(PORT_D);
-    sleep(2);
-    BluetoothConnection connection;
-    connection.init();
 
     while (running) {
-        connection.poll();
-        double sensorValue = LD_Pointer->getLineDirection();
-        std::cout << "sensorValue: " << sensorValue << std::endl;
-        LF_Pointer->follow(sensorValue, centerPos, M, LD);
+        lineFollow->follow();
+        bluetoothConnection->poll();
         usleep(250000);
     }
-
-    BP3_Pointer->reset_all();
 }

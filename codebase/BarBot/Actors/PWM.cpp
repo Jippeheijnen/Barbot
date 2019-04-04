@@ -7,7 +7,7 @@
 void PWM::init(){
     wiringPiSetupGpio();
     pinMode(pinPWM, PWM_OUTPUT);
-    pwmSetMode(PWN_MODE_MS);
+    pwmSetMode(PWM_MODE_MS);
     pinMode(pinEnableCLK, OUTPUT);
     pinMode(pinEnableCCLK, OUTPUT);
     pwmSetRange(1024);
@@ -28,5 +28,5 @@ void PWM::sendPWM(uint8_t pwmspeed){
 }
 
 void PWM::setCornerPWM(uint8_t pwmspeed) {
-    pwmWrite(pinPWM, int(pwmspeed*0.8))
+    pwmWrite(pinPWM, int(pwmspeed*0.8));
 }
