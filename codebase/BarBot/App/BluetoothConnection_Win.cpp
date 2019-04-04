@@ -10,3 +10,6 @@ void BluetoothConnection::init() {
 void BluetoothConnection::poll() {
 
 }
+
+BluetoothConnection::BluetoothConnection(LineFollow *lineFollow) : lineFollow(lineFollow) {}
+

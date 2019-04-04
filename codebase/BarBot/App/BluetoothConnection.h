@@ -7,7 +7,13 @@
 
 
 #include <BarBot/Events/LineFollow.h>
+#include <vector>
+#if _WIN32
+class BluetoothServerSocket{};
+class BluetoothSocket{};
+#else
 #include "BluetoothSocket.h"
+#endif
 
 class BluetoothConnection {
 private:
@@ -15,8 +21,6 @@ private:
     std::vector<BluetoothSocket*> clientSockets = {};
     LineFollow *lineFollow;
 public:
-    BluetoothConnection(const LineFollow &lineFollow);
-
     BluetoothConnection(LineFollow *lineFollow);
 
     void init();

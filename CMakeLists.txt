@@ -38,9 +38,10 @@ target_sources(LCD_Display
 add_executable(Barbot "codebase/BarBot/main.cpp")
 
 target_link_libraries(Barbot plibsys)
-target_link_libraries(Barbot wiringPi)
+
 target_include_directories(Barbot PRIVATE ${plibsys_SOURCE_DIR} )
 if (UNIX)
+    target_link_libraries(Barbot wiringPi)
     target_sources(
             Barbot
             PUBLIC

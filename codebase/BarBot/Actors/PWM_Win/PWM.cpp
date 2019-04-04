@@ -14,6 +14,6 @@ void PWM::sendPWM(uint8_t pwmspeed){
     std::cout << "Setting PWM-Speed to " << pwmspeed << std::endl;
 }
 
-void PWM::setCornerPWM(uint8_t pwmspeed) {
+void PWM::sendCornerPWM(uint8_t pwmspeed) {
     std::cout << "Setting cornerPWMspeed to " << pwmspeed << std::endl;
 }
