@@ -69,18 +69,9 @@ int main() {
     sleep(2);
     BluetoothConnection connection;
     connection.init();
-    while(true) {
-        connection.poll();
-        usleep(1000);
-    }
-//    mainInit();
-//    if(Pumps_Pointer->pour(7))
-//        std::cout << "SUCCESS" << std::endl;
-//
-//    if(!Pumps_Pointer->pour(21))
-//        std::cout << "FAILED SUCCESFULLY" << std::endl;
 
     while (running) {
+        connection.poll();
         double sensorValue = LD_Pointer->getLineDirection();
         std::cout << "sensorValue: " << sensorValue << std::endl;
         LF_Pointer->follow(sensorValue, centerPos, M, LD);

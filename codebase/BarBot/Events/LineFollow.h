@@ -2,7 +2,7 @@
 #define BARBOT_LINEFOLLOW_H
 
 
-#include "LineDetection.h"
+#include "../Sensors/LineDetection.h"
 
 class LineFollow {
 public:
