@@ -13,6 +13,8 @@ private:
     int32_t centerPosition;
     BrickPi3 * brickPi3;
     PWMMotor * motorPWM;
+    bool forward;
+
 public:
 
     Movement(BrickPi3 *brickPi3);

@@ -47,7 +47,6 @@ void mainInit() {
 
     // Initialize Actors
     pumpService->init();
-    pwm->init();
 
     bluetoothConnection->init();
 

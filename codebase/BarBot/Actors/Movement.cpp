@@ -2,9 +2,7 @@
 #include <iostream>
 #include <csignal>
 #include "Movement.h"
-// Todo: Exit handler fix
-
-
+#include "PWMMotor.h"
 
 void Movement::init() {
     motorPWM = new PWMMotor(16, 18, 20);
@@ -35,14 +33,17 @@ void Movement::speed(uint8_t speed) {
     targSpeed = speed;
 }
 
-//Todo: GPIO function here
-
 void Movement::step() {
+
+    if (forward) {
+        if (currSpeed == 0) motorPWM->setRotation(forward);
+    } else if (currSpeed == 0) motorPWM->setRotation(!forward);
+
     int speedDiff = targSpeed - currSpeed;
     if (currSpeed != targSpeed)
         currSpeed=(static_cast<uint8_t>
                 (currSpeed + (speedDiff / abs(speedDiff))));
-    //todo: Call GPIO function here: func(currSpeed);
+    motorPWM->sendPWM(currSpeed);
 }
 
 Movement::Movement(BrickPi3 *brickPi3) : brickPi3(brickPi3) {}
