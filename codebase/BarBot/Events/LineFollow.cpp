@@ -14,19 +14,21 @@ void LineFollow::resume() {
 }
 
 void LineFollow::follow() {
+
     double sensorValue = lineDetection->getLineDirection();
     std::cout << "sensorValue: " << sensorValue << std::endl;
 
     if (!toBePaused) {
+
         if (sensorValue < 0) movement->steer(true, abs(sensorValue)/2);
-        else if (sensorValue > 0)
-            movement->steer( false, sensorValue/2);
-        else
-            movement->center();
+
+        else if (sensorValue > 0) movement->steer( false, sensorValue/2);
+
+        else movement->center();
+
     }
-    if (toBePaused) {
-        movement->stop();
-    }
+    if (toBePaused) movement->stop();
+
     movement->step();
 }
 

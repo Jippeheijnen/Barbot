@@ -12,7 +12,7 @@ private:
 public:
     LineFollow(Movement *movement, LineDetection *lineDetection);
 
-/**
+    /**
      * collect data from LineDetection::getLineDirection, process it and send to function Movement::steer()
      */
     void follow();

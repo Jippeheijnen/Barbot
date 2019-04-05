@@ -30,8 +30,8 @@ private:
     uint8_t COLOR_SENSOR_PORT = PORT_3;
     BrickPi3* brickPi3;
     Movement* movement;
-public:
 
+public:
     int16_t target, margin;
 
 

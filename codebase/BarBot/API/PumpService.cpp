@@ -6,15 +6,22 @@
 #include "PumpService.h"
 
 /**
- * Pour Drink By ID
+ * Pour Drink By ID.
  * @param drink Drink ID to be poured
  * @return True if pouring was possible, False if not all ingredients are connected or when an error occured
  */
 bool PumpService::pour(int drink) {
+
     std::vector<std::string> result = connection.command({"pour", std::to_string(drink)});
     return (!result.empty() && result[0] == "success");
+
 }
 
+/**
+ * Transforms vector of strings to vector of fluids.
+ * @param data This is the vector containing strings.
+ * @return Returns vector with fluids (obviously).
+ */
 std::vector<fluid> parse_fluids(const std::vector<std::string> & data) {
     std::vector<fluid> fluids = {};
     for(size_t i = 0; i < data.size(); i++) {
@@ -32,7 +39,9 @@ std::vector<fluid> parse_fluids(const std::vector<std::string> & data) {
  * @return List of Fluids
  */
 std::vector<fluid> PumpService::get_fluids() {
+
     return parse_fluids(connection.command({"get_fluids"}));
+
 }
 
 /**
@@ -40,11 +49,13 @@ std::vector<fluid> PumpService::get_fluids() {
  * @return List of Fluids
  */
 std::vector<fluid> PumpService::get_connected_fluids() {
+
     return parse_fluids(connection.command({"get_connected_fluids"}));
+
 }
 
 /**
- * Get all Drinks known
+ * Get all known Drinks.
  * @return List Of Drinks
  */
 std::vector<drink> PumpService::get_drinks() {

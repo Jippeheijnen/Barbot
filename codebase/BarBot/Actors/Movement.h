@@ -26,31 +26,31 @@ public:
     void step();
 
     /**
-     * Initializes Motors
+     * Initializes Motors.
      */
     void init();
 
     /**
-     * Stops the robot gradually
+     * Stops the robot gradually.
      */
     void stop();
 
 
     /**
-     * steers the BarBot by limiting the speed to a certain motor
+     * steers the BarBot by limiting the speed to a certain motor.
      * @param direction true is right, false is left.
      * @param percentage percentage in integers.
      */
     void steer(bool direction, uint8_t percentage);
 
     /**
-     * Centers the steering wheel
-     * @param centerPos
+     * Centers the steering wheel.
+     * @param centerPos This is the posistion in which the steeringwheel is centered.
      */
     void center();
 
     /**
-     * Sets the speed for the motors
+     * Sets the speed for the motors.
      * @param speed (arbitrary) speed to set
      */
     void speed(uint8_t speed);

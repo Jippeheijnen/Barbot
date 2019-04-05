@@ -1,6 +1,7 @@
 #ifndef BARBOT_PWM_H
 #define BARBOT_PWM_H
 
+#include <cstdint>
 
 class PWMMotor {
 private:
@@ -12,26 +13,26 @@ private:
     bool rotation;
 public:
 
-
+    //Constructor
     PWMMotor(int pinPWM, int pinEnableCLK, int pinEnableCCLK);
 
-/**
-     * Gets signal and sends it over PWM to motors
-     * @param pwmspeed Number between 0 and 255
+    /**
+     * Sends PWM signal to motors.
+     * @param pwmspeed Int between 0 and 255
      */
     void sendPWM(uint8_t pwmspeed);
 
     /**
-     * Sets the GPIO pin to HIGH if motor driver direction Enable pin needs to be on
-     * @param rotation Boolean that defines the rotation. Clockwise or Counter Clockwise
+     * Sets the GPIO Direction pin to HIGH.
+     * @param rotation Boolean that defines the rotation. Clockwise (true) or Counter Clockwise (False).
      */
     void setRotation(bool rotation);
 
     /**
-     * Gets signal and sends it over PWM to motors for in the corners
+     * Sends PWM signal to motors for reduced speed.
      * @param pwmspeed Number between 0 and
      */
-    void sendCornerPWM(uint8_t pwmspeed);
+    void sendReducedPWM(uint8_t pwmspeed);
 
 };
 
