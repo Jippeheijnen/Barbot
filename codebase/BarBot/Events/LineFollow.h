@@ -2,19 +2,25 @@
 #define BARBOT_LINEFOLLOW_H
 
 
-#include "../Sensors/LineDetection.h"
+#include "BarBot/Sensors/LineDetection.h"
+
 
 class LineFollow {
+private:
+    Movement *movement;
+    LineDetection *lineDetection;
 public:
-    /**
+    LineFollow(Movement *movement, LineDetection *lineDetection);
+
+/**
      * collect data from LineDetection::getLineDirection, process it and send to function Movement::steer()
      */
-    void follow(double sensorValue, int32_t centerPos, Movement M, LineDetection LD);
+    void follow();
 
     /**
      * Sets boolean toBePaused to true and stops the motor
      */
-    void pause(Movement &M);
+    void pause();
 
     /**
      * Sets boolean toBePaused to false

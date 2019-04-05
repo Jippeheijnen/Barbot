@@ -299,7 +299,7 @@ public:
     // Get sensor value(s)
     int get_sensor(uint8_t port, sensor_val_struct_t &sensor_val_struct);
 
-    // Set the motor PWM power
+    // Set the motor PWMMotor power
     int set_motor_power(uint8_t port, uint8_t power);
 
     // Set the motor target position to run to
@@ -315,7 +315,7 @@ public:
     // Set the motor limits. Only the power limit is implemented. Use the power limit to limit the motor speed/torque.
     int set_motor_limits(uint8_t port, uint8_t power, uint16_t dps);
 
-    // Get the motor status. State, PWM power, encoder position, and speed (in degrees per second)
+    // Get the motor status. State, PWMMotor power, encoder position, and speed (in degrees per second)
     int get_motor_status(uint8_t port, uint8_t &state, int8_t &power, int32_t &position, int16_t &dps);
 
     // Offset the encoder position. By setting the offset to the current position, it effectively resets the encoder value.

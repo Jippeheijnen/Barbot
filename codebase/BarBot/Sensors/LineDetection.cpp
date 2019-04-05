@@ -1,19 +1,10 @@
 
 #include <iostream>
-#include <zconf.h>
 #include "LineDetection.h"
 
-void LineDetection::init(int16_t target, int16_t margin) {
-    this->target = target;
-    this->margin = margin;
-
-    BP.detect(); // Ensure
-    BP.set_sensor_type(LIGHT_SENSOR_PORT, SENSOR_TYPE_NXT_LIGHT_ON);
-    BP.set_sensor_type(COLOR_SENSOR_PORT, SENSOR_TYPE_NXT_COLOR_FULL);
-}
 
 double LineDetection::getLineDirection() {
-    if(BP.get_sensor(LIGHT_SENSOR_PORT, LIGHT_SENSOR_DATA) == 0) {
+    if(brickPi3->get_sensor(LIGHT_SENSOR_PORT, LIGHT_SENSOR_DATA) == 0) {
 //        std::cout << LIGHT_SENSOR_DATA.reflected << std::endl;
         int16_t relative = LIGHT_SENSOR_DATA.reflected - this->target;
         if (abs(relative) < margin)
@@ -25,9 +16,18 @@ double LineDetection::getLineDirection() {
 }
 
 ColorReading LineDetection::readColor() {
-    if (BP.get_sensor(COLOR_SENSOR_PORT, COLOR_SENSOR_DATA) == 0) {
+    if (brickPi3->get_sensor(COLOR_SENSOR_PORT, COLOR_SENSOR_DATA) == 0) {
         lastColorReading.hasChanged = lastColorReading.color != COLOR_SENSOR_DATA.color;
         lastColorReading.color = COLOR_SENSOR_DATA.color;
     }
     return lastColorReading;
 }
+
+void LineDetection::init(int16_t tar, int16_t mar) {
+    margin = mar;
+    target = tar;
+    brickPi3->set_sensor_type(LIGHT_SENSOR_PORT, SENSOR_TYPE_NXT_LIGHT_ON);
+    brickPi3->set_sensor_type(COLOR_SENSOR_PORT, SENSOR_TYPE_NXT_COLOR_FULL);
+}
+
+LineDetection::LineDetection(BrickPi3 *brickPi3, Movement *movement) : brickPi3(brickPi3), movement(movement) {}
