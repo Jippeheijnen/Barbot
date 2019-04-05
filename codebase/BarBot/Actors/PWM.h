@@ -11,12 +11,11 @@ private:
     int pinEnabled;
     bool rotation;
 public:
-    /**
-     * Initiates the PPWM settings
-     */
-    void init();
 
-    /**
+
+    PWM(int pinPWM, int pinEnableCLK, int pinEnableCCLK);
+
+/**
      * Gets signal and sends it over PWM to motors
      * @param pwmspeed Number between 0 and 255
      */

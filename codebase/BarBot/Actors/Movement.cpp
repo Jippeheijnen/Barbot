@@ -7,6 +7,7 @@
 
 
 void Movement::init() {
+    motorPWM = new PWM(16, 18, 20);
     brickPi3->set_motor_limits(PORT_D, 60, 200);
     brickPi3->reset_motor_encoder(PORT_D);
     centerPosition = brickPi3->get_motor_encoder(PORT_D);

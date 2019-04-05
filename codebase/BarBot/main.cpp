@@ -26,7 +26,7 @@ LineDetection *lineDetection = new LineDetection(brickPi3, movement);
 LineFollow *lineFollow = new LineFollow(movement, lineDetection);
 CupDetection *cupDetection = new CupDetection(brickPi3);
 PumpService *pumpService = new PumpService();
-PWM *pwm = new PWM();
+PWM *pwm = new PWM(0, 0, 0);
 BluetoothConnection *bluetoothConnection = new BluetoothConnection(lineFollow);
 
 void exit_handler(int signo) {
