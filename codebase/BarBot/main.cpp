@@ -9,7 +9,7 @@
 #include <BarBot/Actors/Movement.h>
 #include <BarBot/Events/LineFollow.h>
 #include <BarBot/API/PumpService.h>
-#include <BarBot/Actors/PWM.h>
+#include <BarBot/Actors/PWMMotor.h>
 #include "BarBot/App/BluetoothConnection.h"
 
 
@@ -26,7 +26,7 @@ LineDetection *lineDetection = new LineDetection(brickPi3, movement);
 LineFollow *lineFollow = new LineFollow(movement, lineDetection);
 CupDetection *cupDetection = new CupDetection(brickPi3);
 PumpService *pumpService = new PumpService();
-PWM *pwm = new PWM(0, 0, 0);
+PWMMotor *pwm = new PWMMotor(0, 0, 0);
 BluetoothConnection *bluetoothConnection = new BluetoothConnection(lineFollow);
 
 void exit_handler(int signo) {

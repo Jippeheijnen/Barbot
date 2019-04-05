@@ -2,7 +2,7 @@
 #define BARBOT_PWM_H
 
 
-class PWM {
+class PWMMotor {
 private:
     uint8_t pwmspeed;
     int pinPWM = 16;
@@ -13,7 +13,7 @@ private:
 public:
 
 
-    PWM(int pinPWM, int pinEnableCLK, int pinEnableCCLK);
+    PWMMotor(int pinPWM, int pinEnableCLK, int pinEnableCCLK);
 
 /**
      * Gets signal and sends it over PWM to motors

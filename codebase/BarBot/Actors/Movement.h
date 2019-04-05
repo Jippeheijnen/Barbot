@@ -4,7 +4,7 @@
 
 
 #include "BrickPI3/BrickPi3.h"
-#include "PWM.h"
+#include "PWMMotor.h"
 
 class Movement {
 private:
@@ -12,7 +12,7 @@ private:
     uint8_t targSpeed = 0;
     int32_t centerPosition;
     BrickPi3 * brickPi3;
-    PWM * motorPWM;
+    PWMMotor * motorPWM;
 public:
 
     Movement(BrickPi3 *brickPi3);
