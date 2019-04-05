@@ -10,6 +10,7 @@
 #include <BarBot/Events/LineFollow.h>
 #include <BarBot/API/PumpService.h>
 #include <BarBot/Actors/PWMMotor.h>
+#include <unistd.h>
 #include "BarBot/App/BluetoothConnection.h"
 
 
@@ -21,13 +22,13 @@ const int16_t CUPDETECTION_DISTANCE = 5;
 
 
 BrickPi3 *brickPi3 = new BrickPi3();
-Movement *movement = new Movement(brickPi3);
-LineDetection *lineDetection = new LineDetection(brickPi3, movement);
-LineFollow *lineFollow = new LineFollow(movement, lineDetection);
+//Movement *movement = new Movement(brickPi3);
+//LineDetection *lineDetection = new LineDetection(brickPi3, movement);
+//LineFollow *lineFollow = new LineFollow(movement, lineDetection);
 CupDetection *cupDetection = new CupDetection(brickPi3);
 PumpService *pumpService = new PumpService();
 PWMMotor *pwm = new PWMMotor(0, 0, 0);
-BluetoothConnection *bluetoothConnection = new BluetoothConnection(lineFollow);
+//BluetoothConnection *bluetoothConnection = new BluetoothConnection(lineFollow);
 
 void exit_handler(int signo) {
     if (signo == SIGINT) {
@@ -38,17 +39,17 @@ void exit_handler(int signo) {
 };
 
 void mainInit() {
-    brickPi3->detect();
+//    brickPi3->detect();
 
     // Initialize Sensors
-    lineDetection->init(LINEDETECTION_THRESHOLD, LINEDETECTION_MARGIN);
+//    lineDetection->init(LINEDETECTION_THRESHOLD, LINEDETECTION_MARGIN);
     cupDetection->init(CUPDETECTION_DISTANCE);
-    movement->init();
+//    movement->init();
 
     // Initialize Actors
     pumpService->init();
 
-    bluetoothConnection->init();
+//    bluetoothConnection->init();
 
     signal(SIGINT, exit_handler);
 
@@ -65,8 +66,11 @@ int main() {
 
 
     while (running) {
-        lineFollow->follow();
-        bluetoothConnection->poll();
-        usleep(250000);
+        std::cout << "Testing or something" << std::endl;
+        std::cout << std::to_string(cupDetection->isCupPlaced());
+
+//        lineFollow->follow();
+//        bluetoothConnection->poll();
+        usleep(500000);
     }
 }
