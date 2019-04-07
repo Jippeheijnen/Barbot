@@ -13,6 +13,7 @@ class SpeechRecognition {
 public:
     void innit();
     std::vector<std::string> poll();
+    void logics();
 
 private:
     //innit variables

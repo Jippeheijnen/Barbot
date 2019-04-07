@@ -10,14 +10,12 @@
 void SpeechRecognition::innit() {
     syscall(SYS_pipe, pipefd, nullptr);
 
-
     long P;
     P = syscall(SYS_fork);
     if(P == 0) {
 
         syscall(SYS_dup2, pipefd[1], STDOUT_FILENO);
         syscall(SYS_close, pipefd[0], nullptr);
-
 
         std::string item = "/home/pi/Niels_VR/codebase/BarBot/Communication/VoiceRecognition/vr.py";
         char file[item.size()];
@@ -48,4 +46,37 @@ std::vector<std::string> SpeechRecognition::poll() {
         }
     }
     return pollResult;
+}
+
+
+void SpeechRecognition::logics(){
+    std::vector<std::string> heard = SpeechRecognition::poll();
+    std::vector<std::string> drinks = PumpService::get_drinks();
+    if((std::find(heard.begin(), heard.end(), "barbot") != heard.end()) && (std::find(heard.begin(), heard.end(), "stop") != heard.end())){
+        LineFollow::pause();
+        SpeechSynthesis::speak("Wat wilt u drinken?");
+        heard = SpeechRecognition::poll();
+
+        for(size_t i=0; i < drinks.size()-1; i++){
+            if((std::find(heard.begin(), heard.end(), drinks[i]) != heard.end())){
+                SpeechSynthesis::speak("Komt eraan");
+
+                int count == 0;
+                while(true) {
+                    if (CupDetection::isCupPlaced()) {
+                        PumpService::pour(drinks[i]);
+                        LineFollow::resume();
+                        break;
+                    } else if (count == 7000) {
+                        count = 0;
+                        SpeechSynthesis::speak("Plaats alstublieft een beker");
+                    }else{
+                        count++;
+                        usleep(1)
+                    }
+                }
+                break;
+            }
+        }
+    }
 }
