@@ -16,7 +16,7 @@ void Movement::stop() {
 }
 
 void Movement::steer(bool direction, uint8_t percentage) {
-    //TODO: Steering function
+
     if (direction)
         brickPi3->set_motor_position(PORT_A, (centerPosition - percentage));
     else
