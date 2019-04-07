@@ -283,7 +283,7 @@ BluetoothServerSocket::BluetoothServerSocket(uint8_t localChannel, int queueLen)
 	if(sockDesc < 0) throw BluetoothException("error creating socket");
 	//BluetoothAddress locaddr(NULL, localChannel, BluetoothAddress::BLUETOOTH_SERVER);
 	//bind(locaddr);
-//    fcntl(sockDesc, F_SETFL, O_NONBLOCK);
+    fcntl(sockDesc, F_SETFL, O_NONBLOCK);
 	struct sockaddr_rc loc_addr = { 0 };
 	loc_addr.rc_family = AF_BLUETOOTH;
     loc_addr.rc_bdaddr = {0};

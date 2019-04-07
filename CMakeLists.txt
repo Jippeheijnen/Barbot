@@ -46,7 +46,6 @@ if (UNIX)
             Barbot
             PUBLIC
             include/BrickPI3/Raspi/BrickPi3.cpp
-            codebase/BarBot/Actors/PWMMotor.cpp
             codebase/BarBot/App/BluetoothSocket.cpp
             codebase/BarBot/App/BluetoothConnection.cpp
     )
@@ -57,7 +56,6 @@ else (UNIX)
             Barbot
             PUBLIC
             include/BrickPI3/Windows/BrickPi3.cpp
-            codebase/BarBot/Windows_Debug/PWMMotor_win.cpp
             codebase/BarBot/Windows_Debug/BluetoothConnection_Win.cpp
     )
     add_executable(GitInspector "codebase/GitInspector/GitInspector_Check.cpp")
@@ -73,6 +71,7 @@ target_sources(
         codebase/BarBot/Sensors/CupDetection.cpp
         codebase/BarBot/API/PumpService.cpp
         codebase/BarBot/API/SocketConnection.cpp
+        codebase/BarBot/Actors/ArduinoMotor.cpp
 )
 
 

@@ -23,11 +23,13 @@ void SocketConnection::init() {
         return;
     }
 
+    std::cout << "Connecting to socket" << std::endl;
     if (!p_socket_connect(socket, address, nullptr)) {
         cleanup("Error connecting to socket", address);
         return;
     }
 
+    std::cout << "Making Socket Blocking" << std::endl;
     p_socket_set_blocking(socket, true);
 }
 
@@ -74,4 +76,5 @@ std::vector<std::string> SocketConnection::command(const std::vector<std::string
 
 void SocketConnection::close() {
     p_socket_close(socket, nullptr);
+    cleanup("Cleaning Up Socket", nullptr);
 }

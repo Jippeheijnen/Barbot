@@ -3,6 +3,7 @@
 #include "BarBot/Actors/PWMMotor.h"
 
 
+
 void PWMMotor::setRotation(bool rotation){
     std::cout << "Setting rotation to " << rotation << std::endl;
 }

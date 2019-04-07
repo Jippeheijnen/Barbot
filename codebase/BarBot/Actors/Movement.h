@@ -4,16 +4,16 @@
 
 
 #include "BrickPI3/BrickPi3.h"
-#include "PWMMotor.h"
+#include "ArduinoMotor.h"
 
 class Movement {
 private:
-    uint8_t currSpeed = 0;
-    uint8_t targSpeed = 0;
+    int16_t currSpeed = 0;
+    int16_t targSpeed = 0;
     int32_t centerPosition;
     BrickPi3 * brickPi3;
-    PWMMotor * motorPWM;
     bool forward;
+    ArduinoMotor * motor;
 
 public:
 
@@ -53,7 +53,7 @@ public:
      * Sets the speed for the motors
      * @param speed (arbitrary) speed to set
      */
-    void speed(uint8_t speed);
+    void speed(int16_t speed);
 };
 
 
