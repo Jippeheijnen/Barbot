@@ -13,6 +13,7 @@
 #include <sys/time.h>
 #include "BarBot/App/BluetoothConnection.h"
 #include "BarBot/Actors/ArduinoMotor.h"
+#include "BarBot/Communication/SpeechSynthesis.h"
 
 
 const int16_t LINEDETECTION_THRESHOLD = 2005;
@@ -70,20 +71,22 @@ long get_millis() {
 int main() {
 
 //    Todo: Event-loop here.
-
-    bool running = true;
-    int count = 0;
-    std::cout << "Starting Main Init" << std::endl;
-    mainInit();
-
-//    movement->speed(0);
-
-    long ms = get_millis();
-    while(running) {
-        lineFollow->follow();
-    }
-    usleep(10000000);
-    movement->speed(-255);
+    SpeechSynthesis synth ;
+    synth.speak("I Am Testing Right Now");
+//
+//    bool running = true;
+//    int count = 0;
+//    std::cout << "Starting Main Init" << std::endl;
+//    mainInit();
+//
+////    movement->speed(0);
+//
+//    long ms = get_millis();
+//    while(running) {
+//        lineFollow->follow();
+//    }
+//    usleep(10000000);
+//    movement->speed(-255);
 
 
 }
