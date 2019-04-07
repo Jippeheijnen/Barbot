@@ -26,11 +26,6 @@ class MicrophoneStream(object):
 
     def __enter__(self):
         self._audio_interface = pyaudio.PyAudio()
-        info = self._audio_interface.get_host_api_info_by_index(0)
-        numdevices = info.get('deviceCount')
-        for i in range(0, numdevices):
-            if (self._audio_interface.get_device_info_by_host_api_device_index(0, i).get('maxInputChannels')) > 0:
-                print("Input Device id ", i, " - ", self._audio_interface.get_device_info_by_host_api_device_index(0, i).get('name'))
         self._audio_stream = self._audio_interface.open(
             format=pyaudio.paInt16,
             # The API currently only supports 1-channel (mono) audio
@@ -102,7 +97,6 @@ def listen_print_loop(responses):
     """
     num_chars_printed = 0
     for response in responses:
-
         if not response.results:
             continue
 
@@ -144,8 +138,8 @@ def listen_print_loop(responses):
 def main():
     # See http://g.co/cloud/speech/docs/languages
     # for a list of supported languages.
-    language_code = 'nl-NL'  # a BCP-47 language tag
-    #
+    language_code = 'en-US'  # a BCP-47 language tag
+
     client = speech.SpeechClient()
     config = types.RecognitionConfig(
         encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
@@ -160,10 +154,17 @@ def main():
         requests = (types.StreamingRecognizeRequest(audio_content=content)
                     for content in audio_generator)
 
-        responses = client.streaming_recognize(streaming_config, requests)
+        while True:
+            try:
+                responses = client.streaming_recognize(streaming_config, requests)
 
-        # Now, put the transcription responses to use.
-        listen_print_loop(responses)
+                # Now, put the transcription responses to use.
+                listen_print_loop(responses)
+            except:
+                ...
+
+
+
 
 
 if __name__ == '__main__':

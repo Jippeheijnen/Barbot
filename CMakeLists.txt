@@ -72,6 +72,7 @@ target_sources(
         codebase/BarBot/API/PumpService.cpp
         codebase/BarBot/API/SocketConnection.cpp
         codebase/BarBot/Actors/ArduinoMotor.cpp
+        codebase/BarBot/Communication/SpeechSynthesis.cpp
 )
 
 
