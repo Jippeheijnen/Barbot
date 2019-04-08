@@ -48,6 +48,7 @@ if (UNIX)
             include/BrickPI3/Raspi/BrickPi3.cpp
             codebase/BarBot/App/BluetoothSocket.cpp
             codebase/BarBot/App/BluetoothConnection.cpp
+            codebase/BarBot/Communication/VoiceRecognition/SpeechRecognition.cpp
     )
     target_link_libraries(Barbot bluetooth)
 else (UNIX)
