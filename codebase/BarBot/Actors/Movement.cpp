@@ -1,12 +1,13 @@
 
 #include <iostream>
 #include <csignal>
+#include <BarBot/Util/Logger.h>
 #include "Movement.h"
 
 const std::string Movement::TAG = "Movemeent";
 
-void Movement::init() {
-    motor = new ArduinoMotor();
+void Movement::init(ArduinoMotor* m) {
+    motor = m;
     motor->init();
     brickPi3->set_motor_limits(PORT_A, 60, 200);
     brickPi3->reset_motor_encoder(PORT_A);
@@ -18,7 +19,6 @@ void Movement::stop() {
 }
 
 void Movement::steer(bool direction, uint8_t percentage) {
-
     if (direction)
         brickPi3->set_motor_position(PORT_A, (centerPosition - percentage));
     else

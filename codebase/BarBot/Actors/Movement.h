@@ -28,7 +28,7 @@ public:
     /**
      * Initializes Motors.
      */
-    void init();
+    void init(ArduinoMotor * m);
 
     /**
      * Stops the robot gradually.
