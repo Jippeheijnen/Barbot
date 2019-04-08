@@ -43,7 +43,7 @@ void LineFollow::follow() {
             movement->steer(true, abs(sensorValue*0.75));
         }
         else if (sensorValue > 0){
-            movement->steer(false, sensorValue*.75);
+            movement->steer(false, sensorValue*0.75);
         }
         else
             movement->center();

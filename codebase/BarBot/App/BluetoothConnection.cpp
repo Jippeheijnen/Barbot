@@ -20,24 +20,20 @@ void BluetoothConnection::poll() {
     try {
 //        Logger::log(TAG, "Trying to accept a connection");
         BluetoothSocket *clientSock = serverSocket->accept();
-        Logger::log(TAG, "Connection Accepted");
         clientSock->getMessageBox();
         clientSockets.push_back(clientSock);
 
-        Logger::log(TAG, "Connection Pushed Back");
+        Logger::log(TAG, "Connection Accepted");
 
     } catch(BluetoothException & e) {}
 
     for (size_t i = 0; i < clientSockets.size(); i++) {
-        Logger::log(TAG, "Getting Message Box");
 
         MessageBox* messageBox = clientSockets[i]->getMessageBox();
 
-        Logger::log(TAG, "Checking if messagebox is running");
         Logger::log(TAG, typeid(messageBox).name());
 
         if (messageBox->isRunning()) {
-            Logger::log(TAG, "Reading Message");
             std::string mess = messageBox->readMessage();
 
             if (!mess.empty()) {

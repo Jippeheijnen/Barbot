@@ -8,6 +8,7 @@ const std::string LineDetection::TAG = "LineDetection";
 
 double LineDetection::getLineDirection() {
     if(brickPi3->get_sensor(LIGHT_SENSOR_PORT, LIGHT_SENSOR_DATA) == 0) {
+        Logger::log(TAG, std::to_string(LIGHT_SENSOR_DATA.reflected));
         int16_t relative = LIGHT_SENSOR_DATA.reflected - this->target;
         if (abs(relative) < margin)
             return 0;
