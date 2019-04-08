@@ -3,7 +3,6 @@ project(BarBot)
 
 set(CMAKE_CXX_STANDARD 14)
 include(DownloadProject.cmake)
-include_directories(codebase)
 include_directories(include)
 if(POLICY CMP0076)
     cmake_policy(SET CMP0076 OLD)
@@ -25,7 +24,7 @@ configure_file(${CMAKE_BINARY_DIR}/plibsysconfig.h ${CMAKE_BINARY_DIR}/plibsys-s
 
 
 ################################################ Target: LCD_IP Display
-add_executable(LCD_Display "codebase/LCD_IPDisplay/LCD_IPDisplay.cpp")
+add_executable(LCD_Display "lib/LCD_IPDisplay/LCD_IPDisplay.cpp")
 
 
 target_sources(LCD_Display
@@ -35,7 +34,7 @@ target_sources(LCD_Display
         )
 
 ################################################ Target: Barbot
-add_executable(Barbot "codebase/BarBot/main.cpp")
+add_executable(Barbot "lib/BarBot/main.cpp")
 
 target_link_libraries(Barbot plibsys)
 
@@ -45,10 +44,10 @@ if (UNIX)
     target_sources(
             Barbot
             PUBLIC
-            include/BrickPI3/Raspi/BrickPi3.cpp
-            codebase/BarBot/App/BluetoothSocket.cpp
-            codebase/BarBot/App/BluetoothConnection.cpp
-            codebase/BarBot/Communication/VoiceRecognition/SpeechRecognition.cpp
+            ./include/BrickPI3/Raspi/BrickPi3.cpp
+            ./lib/BarBot/Connectivity/BluetoothSocket.cpp
+            ./lib/BarBot/Connectivity/BluetoothConnection.cpp
+            ./lib/BarBot/Communication/SpeechRecognition.cpp
     )
     target_link_libraries(Barbot bluetooth)
 else (UNIX)
@@ -56,25 +55,27 @@ else (UNIX)
     target_sources(
             Barbot
             PUBLIC
-            include/BrickPI3/Windows/BrickPi3.cpp
-            codebase/BarBot/Windows_Debug/BluetoothConnection_Win.cpp
+            ./include/BrickPI3/Windows/BrickPi3.cpp
+            ./lib/BarBot/Connectivity/BluetoothConnection.windows.cpp
+            ./lib/BarBot/Communication/SpeechRecognition.windows.cpp
     )
-    add_executable(GitInspector "codebase/GitInspector/GitInspector_Check.cpp")
+    add_executable(GitInspector "lib/GitInspector/GitInspector_Check.cpp")
 endif (UNIX)
 
 target_sources(
         Barbot
         PUBLIC
-        codebase/BarBot/Actors/Movement.cpp
-        codebase/BarBot/Sensors/LineDetection.cpp
-        codebase/BarBot/Events/LineFollow.cpp
-        codebase/NulVersie/nulVersie.cpp
-        codebase/BarBot/Sensors/CupDetection.cpp
-        codebase/BarBot/API/PumpService.cpp
-        codebase/BarBot/API/SocketConnection.cpp
-        codebase/BarBot/Actors/ArduinoMotor.cpp
-        codebase/BarBot/Communication/SpeechSynthesis.cpp
-        codebase/BarBot/Util/Logger.cpp
+        ./lib/BarBot/BarBot.cpp
+        ./lib/BarBot/Movement/Movement.cpp
+        ./lib/BarBot/Sensors/LineDetection.cpp
+        ./lib/BarBot/Scripts/LineFollow.cpp
+        ./lib/NulVersie/nulVersie.cpp
+        ./lib/BarBot/Sensors/CupDetection.cpp
+        ./lib/BarBot/Connectivity/PumpService.cpp
+        ./lib/BarBot/Connectivity/SocketConnection.cpp
+        ./lib/BarBot/Movement/ArduinoMotor.cpp
+        ./lib/BarBot/Communication/SpeechSynthesis.cpp
+        ./lib/BarBot/Util/Logger.cpp
 )
 
 

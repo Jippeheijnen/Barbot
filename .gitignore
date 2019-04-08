@@ -17,4 +17,5 @@ node_modules
 CMakeListsPrivate.txt
 include/rest-cpp
 .idea/
+vcs.xml
 BarBot.json
