@@ -7,6 +7,7 @@
 #include <vector>
 #include "SocketConnection.h"
 
+
 struct fluid {
     int id;
     std::string name;
@@ -23,6 +24,7 @@ class PumpService {
 private:
     SocketConnection connection;
 public:
+    static const std::string TAG;
     void init();
     void close();
     bool pour(int drink);

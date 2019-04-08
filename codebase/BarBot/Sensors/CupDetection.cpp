@@ -1,5 +1,8 @@
 #include <iostream>
+#include <BarBot/Util/Logger.h>
 #include "CupDetection.h"
+
+const std::string CupDetection::TAG = "CupDetection";
 
 /*
  * Yes, floats are being used because it's used that way in the original Brickpi code.
@@ -24,7 +27,7 @@ bool CupDetection::isCupPlaced() {
 
     }
 
-    std::cout << "Error receiving Sonar Sensor Data" << std::endl;
+    Logger::log(TAG, "Error receiving Sonar Sensor Data");
 
     return false;
 

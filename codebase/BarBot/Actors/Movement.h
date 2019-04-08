@@ -2,7 +2,6 @@
 #ifndef BARBOT_MOVEMENT_H
 #define BARBOT_MOVEMENT_H
 
-
 #include "BrickPI3/BrickPi3.h"
 #include "ArduinoMotor.h"
 
@@ -16,6 +15,7 @@ private:
     ArduinoMotor * motor;
 
 public:
+    static const std::string TAG;
 
     Movement(BrickPi3 *brickPi3);
 
@@ -55,6 +55,7 @@ public:
      */
     void speed(int16_t speed);
 };
+
 
 
 #endif //BARBOT_MOVEMENT_H

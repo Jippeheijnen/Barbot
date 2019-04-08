@@ -14,6 +14,7 @@
 #include "BarBot/App/BluetoothConnection.h"
 #include "BarBot/Actors/ArduinoMotor.h"
 #include "BarBot/Communication/SpeechSynthesis.h"
+#include "BarBot/Util/Logger.h"
 
 
 const int16_t LINEDETECTION_THRESHOLD = 2005;
@@ -39,25 +40,25 @@ void exit_handler(int signo) {
 };
 
 void mainInit() {
-    std::cout << "Detecting BrickPi" << std::endl;
+    Logger::setLogShow({
+                               BluetoothConnection::TAG
+                       });
+
     brickPi3->detect();
 
-//     Initialize Sensors
     lineDetection->init(LINEDETECTION_THRESHOLD, LINEDETECTION_MARGIN);
-    std::cout << "Initializing CupDetection" << std::endl;
+
     cupDetection->init(CUPDETECTION_DISTANCE);
 
-    std::cout << "Movement Init" << std::endl;
     movement->init();
 
     // Initialize Actors
 //    std::cout << "Initializing Pump Service" << std::endl;
 //    pumpService->init();
 
-    std::cout << "BluetoothInit " << std::endl;
     bluetoothConnection->init();
 
-    std::cout << "Sig Exit" << std::endl;
+    Logger::log("Main", "Setting SIG Exit");
     signal(SIGINT, exit_handler);
 
 }
@@ -71,22 +72,20 @@ long get_millis() {
 int main() {
 
 //    Todo: Event-loop here.
-    SpeechSynthesis synth ;
-    synth.speak("I Am Testing Right Now");
 //
-//    bool running = true;
-//    int count = 0;
-//    std::cout << "Starting Main Init" << std::endl;
-//    mainInit();
-//
-////    movement->speed(0);
-//
-//    long ms = get_millis();
-//    while(running) {
-//        lineFollow->follow();
-//    }
-//    usleep(10000000);
-//    movement->speed(-255);
+    bool running = true;
+    int count = 0;
+    mainInit();
+
+//    movement->speed(0);
+
+    long ms = get_millis();
+    while(running) {
+        lineFollow->follow();
+        bluetoothConnection->poll();
+    }
+    usleep(10000000);
+    movement->speed(-255);
 
 
 }

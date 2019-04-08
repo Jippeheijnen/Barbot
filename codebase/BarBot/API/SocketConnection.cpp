@@ -3,38 +3,41 @@
 //
 
 #include <iostream>
+#include <BarBot/Util/Logger.h>
 #include "SocketConnection.h"
+
+const std::string SocketConnection::TAG = "SocketConnection";
 
 void SocketConnection::init() {
     p_libsys_init();
 
     PSocketAddress *address;
 
-    std::cout << "Creating Address" << std::endl;
+    Logger::log(TAG, "Creating Address");
     p_socket_address_new("83.87.164.152", 8444);
     if ((address = p_socket_address_new("83.87.164.152", 8444)) == nullptr) {
         cleanup("Error setting socket address", address);
         return;
     }
 
-    std::cout << "Making Socket" << std::endl;
+    Logger::log(TAG, "Making Socket");
     if ((socket = p_socket_new(P_SOCKET_FAMILY_INET, P_SOCKET_TYPE_STREAM, P_SOCKET_PROTOCOL_TCP, NULL)) == nullptr) {
         cleanup("Error creating socket", address);
         return;
     }
 
-    std::cout << "Connecting to socket" << std::endl;
+    Logger::log(TAG, "Connecting to socket");
     if (!p_socket_connect(socket, address, nullptr)) {
         cleanup("Error connecting to socket", address);
         return;
     }
 
-    std::cout << "Making Socket Blocking" << std::endl;
+    Logger::log(TAG, "Making Socket Blocking");
     p_socket_set_blocking(socket, true);
 }
 
 void SocketConnection::cleanup(const std::string &message, PSocketAddress *address) {
-    std::cout << message << std::endl;
+    Logger::log(TAG, message);
     if (address != nullptr)
         p_socket_address_free(address);
     if (socket != nullptr)

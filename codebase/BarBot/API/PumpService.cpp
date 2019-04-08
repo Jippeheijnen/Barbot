@@ -5,6 +5,8 @@
 #include <iostream>
 #include "PumpService.h"
 
+const std::string PumpService::TAG = "PumpService";
+
 /**
  * Pour Drink By ID.
  * @param drink Drink ID to be poured

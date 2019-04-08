@@ -3,6 +3,8 @@
 #include <csignal>
 #include "Movement.h"
 
+const std::string Movement::TAG = "Movemeent";
+
 void Movement::init() {
     motor = new ArduinoMotor();
     motor->init();

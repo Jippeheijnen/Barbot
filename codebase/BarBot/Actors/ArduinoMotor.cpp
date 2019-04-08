@@ -3,15 +3,21 @@
 //
 
 
+#include <BarBot/Util/Logger.h>
 #include "ArduinoMotor.h"
 
 #define BAUDRATE B9600
 #define MODEMDEVICE "/dev/ttyUSB0"
 
+
+const std::string ArduinoMotor::TAG = "ArduinoMotor";
+
 void ArduinoMotor::command(std::string pack) {
     write(fileDescriptor, pack.c_str(), pack.size());
 //    clear();
 }
+ArduinoMotor * am;
+
 
 int set_interface_attribs (int fd, int speed, int parity)
 {
@@ -19,7 +25,8 @@ int set_interface_attribs (int fd, int speed, int parity)
     memset (&tty, 0, sizeof tty);
     if (tcgetattr (fd, &tty) != 0)
     {
-        printf ("error %d from tcgetattr", errno);
+        std::string msg = "Error from tcgetattr";
+        Logger::log(ArduinoMotor::TAG, msg.append(std::to_string(errno)));
         return -1;
     }
 
@@ -58,7 +65,8 @@ void set_blocking (int fd, int should_block)
     memset (&tty, 0, sizeof tty);
     if (tcgetattr (fd, &tty) != 0)
     {
-        printf("error %d from tggetattr", errno);
+        std::string msg = "Error from tcgetattr";
+        Logger::log(ArduinoMotor::TAG, msg.append(std::to_string(errno)));
         return;
     }
 
@@ -66,7 +74,10 @@ void set_blocking (int fd, int should_block)
     tty.c_cc[VTIME] = 5;            // 0.5 seconds read timeout
 
     if (tcsetattr (fd, TCSANOW, &tty) != 0)
-        printf("error %d setting term attributes", errno);
+    {
+        std::string msg = "Error setting term attributes";
+        Logger::log(ArduinoMotor::TAG, msg.append(std::to_string(errno)));
+    }
 }
 
 void ArduinoMotor::setSpeed(uint8_t speed) {
@@ -80,7 +91,6 @@ void ArduinoMotor::setSpeed(uint8_t speed) {
 void ArduinoMotor::setForwardRotation(bool rot) {
     std::string cmd = "d";
     cmd.append(std::to_string(rot)).append("\n");
-    std::cout << cmd << "|";
     command(cmd);
 }
 
@@ -90,7 +100,8 @@ void ArduinoMotor::init() {
     if (fileDescriptor == 0)
     {
         perror(MODEMDEVICE);
-        printf("Failed to open MODEMDEVICE \"/dev/ttyAMA0\"\n");
+        std::string msg = "Error: Failed to open /dev/ttyUSB0";
+        Logger::log(ArduinoMotor::TAG, msg.append(std::to_string(errno)));
         exit(-1);
     }
 

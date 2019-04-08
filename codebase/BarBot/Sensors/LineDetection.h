@@ -32,6 +32,7 @@ private:
     Movement* movement;
 
 public:
+    static const std::string TAG;
     int16_t target, margin;
 
 

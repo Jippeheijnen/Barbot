@@ -12,6 +12,7 @@ private:
 
     BrickPi3* brickPi3;
 public:
+    static const std::string TAG ;
     float detectDistance;
 
     CupDetection(BrickPi3 *brickPi3);

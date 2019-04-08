@@ -5,6 +5,8 @@
 
 bool toBePaused = false;
 
+const std::string LineFollow::TAG = "LineFollow";
+
 void LineFollow::pause() {
     movement->stop();
     toBePaused = true;
@@ -24,12 +26,10 @@ void LineFollow::follow() {
     if (sensorValue < min) {
         min = sensorValue;
     }
-//    std::cout << min << "-" <<max << std::endl;
 
 
     sensorValue /= 145;
     sensorValue *= 120;
-    std::cout << sensorValue << std::endl;
     if (sensorValue > 120) {
         sensorValue = 120;
     }
@@ -40,11 +40,9 @@ void LineFollow::follow() {
 
     if (!toBePaused) {
         if (sensorValue < 0) {
-//            std::cout << "Steering negative " << abs(sensorValue) << std::endl;
             movement->steer(true, abs(sensorValue*0.75));
         }
         else if (sensorValue > 0){
-//            std::cout << "Steering positive " << abs(sensorValue) << std::endl;
             movement->steer(false, sensorValue*.75);
         }
         else

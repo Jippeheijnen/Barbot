@@ -21,6 +21,7 @@ private:
     std::vector<BluetoothSocket*> clientSockets = {};
     LineFollow *lineFollow;
 public:
+    static const std::string TAG;
     BluetoothConnection(LineFollow *lineFollow);
 
     void init();

@@ -7,9 +7,11 @@
 
 class LineFollow {
 private:
+
     Movement *movement;
     LineDetection *lineDetection;
 public:
+    static const std::string TAG;
     LineFollow(Movement *movement, LineDetection *lineDetection);
 
     /**

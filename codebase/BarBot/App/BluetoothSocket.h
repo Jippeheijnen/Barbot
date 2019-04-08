@@ -239,7 +239,7 @@ public:
    */
   std::iostream &getStream() ;
   
-  MessageBox& getMessageBox();
+  MessageBox *getMessageBox();
 
 private:
   // Access for BluetoothServerSocket::accept() connection creation

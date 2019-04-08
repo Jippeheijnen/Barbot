@@ -19,6 +19,7 @@
 #include <plibsys.h>
 #include <psocket.h>
 
+
 class SocketConnection {
 private:
     PSocket * socket;
@@ -26,6 +27,7 @@ private:
 
     void cleanup(const std::string & message, PSocketAddress * address);
 public:
+    static const std::string TAG;
     void init();
     void close();
     std::vector<std::string> read_line();

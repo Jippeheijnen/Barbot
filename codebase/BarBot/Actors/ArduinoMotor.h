@@ -32,11 +32,11 @@ private:
     void clear();
 
 public:
+    static const std::string TAG;
     void init();
     void setSpeed(uint8_t speed);
     void setForwardRotation(bool rot);
 
 };
-
 
 #endif //BARBOT_ARDUINOMOTOR_H
