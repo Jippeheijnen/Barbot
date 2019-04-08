@@ -88,8 +88,7 @@ int main() {
     movement->speed(55);
 
     while(running) {
-        if(get_millis() > (ms + 1000))
-            movement->speed(28);
+        if(get_millis() > (ms + 1000)) movement->speed(28);
         lineFollow->follow();
         bluetoothConnection->poll();
         usleep(10000);

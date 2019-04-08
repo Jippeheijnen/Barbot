@@ -39,10 +39,10 @@ void LineFollow::follow() {
     }
 
     if (!toBePaused) {
-        if (sensorValue < 0) {
+        if (sensorValue < 0) { // leaving line
             movement->steer(true, abs(sensorValue*0.75));
         }
-        else if (sensorValue > 0){
+        else if (sensorValue > 0){ // entering line
             movement->steer(false, sensorValue*0.75);
         }
         else
