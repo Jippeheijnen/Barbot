@@ -14,6 +14,7 @@
 #include "BarBot/App/BluetoothConnection.h"
 #include "BarBot/Actors/ArduinoMotor.h"
 #include "BarBot/Communication/SpeechSynthesis.h"
+#include "BarBot/Communication/VoiceRecognition/SpeechRecognition.h"
 #include "BarBot/Util/Logger.h"
 
 
@@ -28,8 +29,9 @@ Movement *movement = new Movement(brickPi3);
 LineDetection *lineDetection = new LineDetection(brickPi3, movement);
 LineFollow *lineFollow = new LineFollow(movement, lineDetection);
 CupDetection *cupDetection = new CupDetection(brickPi3);
-//PumpService *pumpService = new PumpService();
+PumpService *pumpService = new PumpService();
 BluetoothConnection *bluetoothConnection = new BluetoothConnection(lineFollow);
+SpeechRecognition *speechRecognition = new SpeechRecognition(lineFollow, pumpService, cupDetection);
 
 void exit_handler(int signo) {
     if (signo == SIGINT) {
@@ -71,8 +73,6 @@ long get_millis() {
 
 int main() {
 
-//    Todo: Event-loop here.
-//
     bool running = true;
     int count = 0;
     mainInit();

@@ -5,9 +5,14 @@
 #include <cstring>
 #include <iostream>
 #include <vector>
+#include <algorithm>
+#include <BarBot/API/PumpService.h>
+#include <BarBot/Communication/SpeechSynthesis.h>
+#include <BarBot/Events/LineFollow.h>
+#include <BarBot/Sensors/CupDetection.h>
 
 
-void SpeechRecognition::innit() {
+void SpeechRecognition::init() {
     syscall(SYS_pipe, pipefd, nullptr);
 
     long P;
@@ -51,28 +56,28 @@ std::vector<std::string> SpeechRecognition::poll() {
 
 void SpeechRecognition::logics(){
     std::vector<std::string> heard = SpeechRecognition::poll();
-    std::vector<std::string> drinks = PumpService::get_drinks();
+    std::vector<drink> drinks = pumpService->get_drinks();
     if((std::find(heard.begin(), heard.end(), "barbot") != heard.end()) && (std::find(heard.begin(), heard.end(), "stop") != heard.end())){
-        LineFollow::pause();
+        lineFollow->pause();
         SpeechSynthesis::speak("Wat wilt u drinken?");
         heard = SpeechRecognition::poll();
 
         for(size_t i=0; i < drinks.size()-1; i++){
-            if((std::find(heard.begin(), heard.end(), drinks[i]) != heard.end())){
+            if((std::find(heard.begin(), heard.end(), drinks[i].name) != heard.end())){
                 SpeechSynthesis::speak("Komt eraan");
 
-                int count == 0;
+                int count = 0;
                 while(true) {
-                    if (CupDetection::isCupPlaced()) {
-                        PumpService::pour(drinks[i]);
-                        LineFollow::resume();
+                    if (cupDetection->isCupPlaced()) {
+                        pumpService->pour(drinks[i].id);
+                        lineFollow->resume();
                         break;
                     } else if (count == 7000) {
                         count = 0;
                         SpeechSynthesis::speak("Plaats alstublieft een beker");
                     }else{
                         count++;
-                        usleep(1)
+                        usleep(1);
                     }
                 }
                 break;
@@ -80,3 +85,6 @@ void SpeechRecognition::logics(){
         }
     }
 }
+
+SpeechRecognition::SpeechRecognition(LineFollow *lineFollow, PumpService *pumpservice, CupDetection *cupDetection)
+    : lineFollow(lineFollow), pumpService(pumpservice), cupDetection(cupDetection) {}
