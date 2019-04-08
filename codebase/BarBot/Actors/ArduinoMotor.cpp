@@ -84,13 +84,14 @@ void ArduinoMotor::setSpeed(uint8_t speed) {
     std::string cmd = "s";
     cmd.append(std::to_string(int(speed)));
     cmd.append("\n");
+    Logger::log(TAG, "Sending Command: " + cmd);
     command(cmd);
 
 }
 
 void ArduinoMotor::setForwardRotation(bool rot) {
     std::string cmd = "d";
-    cmd.append(std::to_string(rot)).append("\n");
+    cmd.append(std::to_string(!rot)).append("\n");
     command(cmd);
 }
 

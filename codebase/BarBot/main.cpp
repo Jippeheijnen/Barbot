@@ -18,13 +18,14 @@
 #include "BarBot/Util/Logger.h"
 
 
-const int16_t LINEDETECTION_THRESHOLD = 2005;
-const int16_t LINEDETECTION_MARGIN = 30;
+const int16_t LINEDETECTION_THRESHOLD = 1720;
+const int16_t LINEDETECTION_MARGIN = 10;
 
 const int16_t CUPDETECTION_DISTANCE = 10;
 
 
 BrickPi3 *brickPi3 = new BrickPi3();
+ArduinoMotor *motor = new ArduinoMotor();
 Movement *movement = new Movement(brickPi3);
 LineDetection *lineDetection = new LineDetection(brickPi3, movement);
 LineFollow *lineFollow = new LineFollow(movement, lineDetection);
@@ -35,16 +36,23 @@ SpeechRecognition *speechRecognition = new SpeechRecognition(lineFollow, pumpSer
 
 void exit_handler(int signo) {
     if (signo == SIGINT) {
+        movement->steer(true, 0);
         brickPi3->reset_all();
 //        pumpService->close();
+        motor->setSpeed(0);
         exit(-2);
     }
 };
 
 void mainInit() {
     Logger::setLogShow({
-                               BluetoothConnection::TAG
+//                               BluetoothConnection::TAG,
+                               Movement::TAG,
+                               LineDetection::TAG
+//                               ArduinoMotor::TAG
                        });
+
+    motor->init();
 
     brickPi3->detect();
 
@@ -52,9 +60,8 @@ void mainInit() {
 
     cupDetection->init(CUPDETECTION_DISTANCE);
 
-    movement->init();
+    movement->init(motor);
 
-    // Initialize Actors
 //    std::cout << "Initializing Pump Service" << std::endl;
 //    pumpService->init();
 
@@ -77,12 +84,14 @@ int main() {
     int count = 0;
     mainInit();
 
-//    movement->speed(0);
-
     long ms = get_millis();
+    movement->speed(55);
+
     while(running) {
+        if(get_millis() > (ms + 1000)) movement->speed(28);
         lineFollow->follow();
         bluetoothConnection->poll();
+        usleep(10000);
     }
     usleep(10000000);
     movement->speed(-255);
