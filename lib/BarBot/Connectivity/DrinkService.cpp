@@ -3,18 +3,18 @@
 //
 
 #include <iostream>
-#include "BarBot/Connectivity/PumpService.h"
+#include "BarBot/Connectivity/DrinkService.h"
 
-const std::string PumpService::TAG = "PumpService";
+const std::string DrinkService::TAG = "DrinkService";
 
 /**
  * Pour Drink By ID.
  * @param drink Drink ID to be poured
  * @return True if pouring was possible, False if not all ingredients are connected or when an error occured
  */
-bool PumpService::pour(int drink) {
+bool DrinkService::pour(int drink) {
 
-    std::vector<std::string> result = connection.command({"pour", std::to_string(drink)});
+    std::vector<std::string> result = drinkServerConnection->command({"pour", std::to_string(drink)});
     return (!result.empty() && result[0] == "success");
 
 }
@@ -40,9 +40,9 @@ std::vector<fluid> parse_fluids(const std::vector<std::string> & data) {
  * Get all known fluids
  * @return List of Fluids
  */
-std::vector<fluid> PumpService::get_fluids() {
+std::vector<fluid> DrinkService::get_fluids() {
 
-    return parse_fluids(connection.command({"get_fluids"}));
+    return parse_fluids(drinkServerConnection->command({"get_fluids"}));
 
 }
 
@@ -50,9 +50,9 @@ std::vector<fluid> PumpService::get_fluids() {
  * Get all fluids that are currently connected
  * @return List of Fluids
  */
-std::vector<fluid> PumpService::get_connected_fluids() {
+std::vector<fluid> DrinkService::get_connected_fluids() {
 
-    return parse_fluids(connection.command({"get_connected_fluids"}));
+    return parse_fluids(drinkServerConnection->command({"get_connected_fluids"}));
 
 }
 
@@ -60,8 +60,8 @@ std::vector<fluid> PumpService::get_connected_fluids() {
  * Get all known Drinks.
  * @return List Of Drinks
  */
-std::vector<drink> PumpService::get_drinks() {
-    std::vector<std::string> response = connection.command({"get_drinks"});
+std::vector<drink> DrinkService::get_drinks() {
+    std::vector<std::string> response = drinkServerConnection->command({"get_drinks"});
     std::vector<drink> drinkList = {};
 
     for(size_t i = 0; i < response.size(); i++) {
@@ -90,16 +90,17 @@ std::vector<drink> PumpService::get_drinks() {
 /**
  * Initialize connection to the Pump API
  */
-void PumpService::init() {
-    connection.init("83.87.164.152", 8444);
+void DrinkService::init(SocketConnection* dsC) {
+    drinkServerConnection = dsC;
+    drinkServerConnection->init("83.87.164.152", 8444);
 }
 
 
 /**
  * Close connection
  */
-void PumpService::close() {
-    connection.close();
+void DrinkService::close() {
+    drinkServerConnection->close();
 }
 
 

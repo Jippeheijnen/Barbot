@@ -17,7 +17,7 @@ void Logger::setLogShow(std::vector<std::string> ls) {
 
 
 void Logger::log(std::string tag, std::string message) {
-    bool found = false;
+    bool found = logShow.empty();
     for (std::string ls : logShow) {
         if (tag == ls) {
             found = true;
@@ -28,7 +28,7 @@ void Logger::log(std::string tag, std::string message) {
     if(found) {
         for(size_t i = tag.size(); i < 25; i++)
             tag.append(" ");
-        tag.append(":");
+        tag.append(": ");
         std::cout << tag << message << std::endl;
     }
 }

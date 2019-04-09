@@ -45,7 +45,7 @@
 #       with downloading the specified project.
 #
 #       In addition to the above, any other options are passed through unmodified to
-#       ExternalProject_Add() to perform the actual download, patch and update steps.
+#       ExternalProject_Add() to perform the actual download, patch and step steps.
 #       The following ExternalProject_Add() options are explicitly prohibited (they
 #       are reserved for use by the download_project() command):
 #
@@ -71,7 +71,7 @@
 #           https://gitlab.kitware.com/cmake/cmake/commit/bdca68388bd57f8302d3c1d83d691034b7ffa70c
 #           https://gitlab.kitware.com/cmake/cmake/issues/16428
 #
-#       If you experience build errors related to the update step, consider avoiding
+#       If you experience build errors related to the step step, consider avoiding
 #       the use of UPDATE_DISCONNECTED.
 #
 # EXAMPLE USAGE:

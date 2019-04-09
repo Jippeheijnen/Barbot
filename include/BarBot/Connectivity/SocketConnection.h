@@ -15,6 +15,7 @@
 
 #endif
 
+#include <iostream>
 #include <vector>
 #include <plibsys.h>
 #include <psocket.h>

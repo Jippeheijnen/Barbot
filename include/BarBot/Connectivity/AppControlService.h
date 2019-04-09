@@ -2,8 +2,8 @@
 // Created by niels on 4/3/2019.
 //
 
-#ifndef BARBOT_BLUETOOTHCONNECTION_H
-#define BARBOT_BLUETOOTHCONNECTION_H
+#ifndef BARBOT_APPCONTROLSERVICE_H
+#define BARBOT_APPCONTROLSERVICE_H
 
 
 #include <BarBot/Scripts/LineFollow.h>
@@ -15,17 +15,20 @@ class BluetoothSocket{};
 #include "BluetoothSocket.h"
 #endif
 
-class BluetoothConnection {
+class AppControlService {
 private:
     BluetoothServerSocket *serverSocket;
     std::vector<BluetoothSocket*> clientSockets = {};
     LineFollow *lineFollow;
+    long ctlPipe[3];
 public:
     static const std::string TAG;
+    static const std::string TAG_CTL;
 
-    void init(LineFollow *linFol);
-    void poll();
+    void init();
+    void relayLogs(int fD);
+    void update();
 };
 
 
-#endif //BARBOT_BLUETOOTHCONNECTION_H
+#endif //BARBOT_APPCONTROLSERVICE_H

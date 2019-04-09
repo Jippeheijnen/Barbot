@@ -12,9 +12,11 @@
 #include <BarBot/Sensors/LineDetection.h>
 #include <BarBot/Scripts/LineFollow.h>
 #include <BarBot/Sensors/CupDetection.h>
-#include <BarBot/Connectivity/PumpService.h>
-#include <BarBot/Connectivity/BluetoothConnection.h>
+#include <BarBot/Connectivity/DrinkService.h>
+#include <BarBot/Connectivity/AppControlService.h>
 #include <BarBot/Speech/SpeechRecognition.h>
+#include <BarBot/Connectivity/AppRequestService.h>
+#include <BarBot/Scripts/Pathing.h>
 #include <cmath>
 
 class BarBot {
@@ -25,12 +27,28 @@ public:
     LineDetection *lineDetection;
     LineFollow *lineFollow;
     CupDetection *cupDetection;
-    PumpService *pumpService;
-    BluetoothConnection *bluetoothConnection;
+    DrinkService *drinkService;
+    AppControlService *appControlService;
     SpeechRecognition *speechRecognition;
+    SocketConnection *drinkServerConnection;
+    AppRequestService *appRequestService;
+    Pathing* pathing;
+    bool running, logSensorData;
 
     int16_t lineDetectionTarget, lineDetectionMargin;
+    uint8_t movementKickStartPower;
+    std::vector<int> pathingColorOrder = {};
+
+    void setPathingColorOrder(const std::vector<int> &pathingColorOrder);
+
+    void setMovementKickStartPower(uint8_t movementKickStartPower);
+
     float_t cupDetectionDistance;
+    std::string drinkServerIP;
+
+    void setDrinkServer(const std::string &drinkServerIp, int drinkServerPort);
+
+    int drinkServerPort;
 
     void setCupDetectionDistance(const float_t &cupDetectionDistance);
 
@@ -39,8 +57,12 @@ public:
     void setLineDetectionMargin(int16_t lineDetectionMargin);
 
     BarBot();
+
     void init();
+
     void step();
+
+    void setLogSensorData(bool logSensorData);
 
 };
 

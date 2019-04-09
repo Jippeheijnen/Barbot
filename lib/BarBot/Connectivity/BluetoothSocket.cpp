@@ -17,7 +17,6 @@
  */
 
 
-#include <BarBot/Util/Logger.h>
 #include "BarBot/Connectivity/BluetoothSocket.h"
  using namespace std;
  
@@ -255,7 +254,6 @@ void BluetoothSocket::connect(const BluetoothAddress &foreignAddress)
 
 iostream& BluetoothSocket::getStream()  {
 
-    Logger::log("BluetoothConnection", "Getting Stream");
   if (myStream == NULL) {
     myStreambuf = new SocketStreamBuffer<char>(this);
     myStream = new iostream(myStreambuf);
@@ -265,7 +263,6 @@ iostream& BluetoothSocket::getStream()  {
 
 MessageBox * BluetoothSocket::getMessageBox() {
 
-    Logger::log("BluetoothConnection", "Getting MessageBox");
 	if (myMessageBox == NULL) {
 		myMessageBox = new MessageBox(getStream());
 	}

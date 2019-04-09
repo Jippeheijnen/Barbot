@@ -2,6 +2,7 @@
 // Created by Niels on 4/8/2019.
 //
 
+#include <BarBot/Util/Logger.h>
 #include "BarBot/BarBot.h"
 
 
@@ -14,23 +15,37 @@ BarBot::BarBot() {
     lineDetection = new LineDetection();
     lineFollow = new LineFollow();
     cupDetection = new CupDetection();
-    pumpService = new PumpService();
-    bluetoothConnection = new BluetoothConnection();
+    drinkServerConnection = new SocketConnection();
+    drinkService = new DrinkService();
+    appControlService = new AppControlService();
+    appRequestService = new AppRequestService();
     speechRecognition = new SpeechRecognition();
+    pathing = new Pathing();
 }
 
 void BarBot::init() {
     brickPi3->detect();
     motor->init();
-    movement->init(motor, brickPi3);
-    lineDetection->init(brickPi3, movement, lineDetectionTarget, lineDetectionMargin);
+    movement->init(motor, brickPi3, movementKickStartPower);
+    lineDetection->init(brickPi3, movement, lineDetectionTarget, lineDetectionMargin, logSensorData);
     lineFollow->init(movement, lineDetection);
     cupDetection->init(brickPi3, cupDetectionDistance);
-    pumpService->init();
-    bluetoothConnection->init(lineFollow);
-    speechRecognition->init(lineFollow, pumpService, cupDetection);
+    drinkServerConnection->init(drinkServerIP, drinkServerPort);
+    drinkService->init(drinkServerConnection);
+    appRequestService->init(drinkServerConnection);
+    appControlService->init();
+//    speechRecognition->init(lineFollow, drinkService, cupDetection);
+    pathing->init(drinkServerConnection, appRequestService, lineDetection, lineFollow, movement, pathingColorOrder);
+    running = true;
 }
 
+void BarBot::step() {
+    lineFollow->step();
+    appRequestService->update();
+    appControlService->update();
+    pathing->step();
+    movement->step();
+}
 
 
 void BarBot::setLineDetectionTarget(int16_t lineDetectionTarget) {
@@ -45,6 +60,20 @@ void BarBot::setCupDetectionDistance(const float_t &cupDetectionDistance) {
     BarBot::cupDetectionDistance = cupDetectionDistance;
 }
 
-void BarBot::step() {
 
+void BarBot::setDrinkServer(const std::string &drinkServerIp, int drinkServerPort) {
+    drinkServerIP = drinkServerIp;
+    BarBot::drinkServerPort = drinkServerPort;
+}
+
+void BarBot::setMovementKickStartPower(uint8_t movementKickStartPower) {
+    BarBot::movementKickStartPower = movementKickStartPower;
+}
+
+void BarBot::setPathingColorOrder(const std::vector<int> &pathingColorOrder) {
+    BarBot::pathingColorOrder = pathingColorOrder;
+}
+
+void BarBot::setLogSensorData(bool logSensorData) {
+    BarBot::logSensorData = logSensorData;
 }

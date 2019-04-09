@@ -2,6 +2,7 @@
 
 
 #include <BarBot/BarBot.h>
+#include <BarBot/Util/Logger.h>
 
 const int16_t LINEDETECTION_THRESHOLD = 1720;
 const int16_t LINEDETECTION_MARGIN = 10;
@@ -15,9 +16,9 @@ const int16_t CUPDETECTION_DISTANCE = 10;
 //LineDetection *lineDetection = new LineDetection(brickPi3, movement);
 //LineFollow *lineFollow = new LineFollow(movement, lineDetection);
 //CupDetection *cupDetection = new CupDetection(brickPi3);
-//PumpService *pumpService = new PumpService();
-//BluetoothConnection *bluetoothConnection = new BluetoothConnection(lineFollow);
-//SpeechRecognition *speechRecognition = new SpeechRecognition(lineFollow, pumpService, cupDetection);
+//DrinkService *drinkService = new DrinkService();
+//AppControlService *appControlService = new AppControlService(lineFollow);
+//SpeechRecognition *speechRecognition = new SpeechRecognition(lineFollow, drinkService, cupDetection);
 
 //void exit_handler(int signo) {
 //    if (signo == SIGINT) {
@@ -50,7 +51,7 @@ const int16_t CUPDETECTION_DISTANCE = 10;
 ////    std::cout << "Initializing Pump Service" << std::endl;
 ////    pumpService->init();
 //
-//    bluetoothConnection->init(nullptr);
+//    appControlService->init(nullptr);
 //
 //    Logger::log("Main", "Setting SIG Exit");
 //    signal(SIGINT, exit_handler);
@@ -65,24 +66,25 @@ const int16_t CUPDETECTION_DISTANCE = 10;
 
 int main()
 {
+        Logger::setLogShow({});
+
     BarBot bot;
+    bot.setCupDetectionDistance(10);
+    bot.setDrinkServer("83.87.164.152", 8444);
+    bot.setLineDetectionTarget(1700);
+    bot.setLineDetectionMargin(10);
+    bot.setPathingColorOrder({
+        INPUT_BLUECOLOR,
+        INPUT_GREENCOLOR,
+        INPUT_YELLOWCOLOR
+    });
+    bot.setLogSensorData(false);
 
-//
-//        bool running = true;
-//        int count = 0;
-//        mainInit();
-//
-//        long ms = get_millis();
-//        movement->speed(55);
-//
-//        while(running) {
-//            if(get_millis() > (ms + 1000)) movement->speed(28);
-//            lineFollow->follow();
-//            bluetoothConnection->poll();
-//            usleep(10000);
-//        }
-//        usleep(10000000);
-//        movement->speed(-255);
+    bot.init();
 
-
+    Logger::log("Main", "Bot Initialized");
+    while(bot.running) {
+        bot.step();
+        usleep(10000);
+    }
 }

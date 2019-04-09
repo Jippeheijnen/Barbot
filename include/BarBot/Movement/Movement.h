@@ -13,6 +13,8 @@ private:
     BrickPi3 * brickPi3;
     bool forward;
     ArduinoMotor * motor;
+    uint8_t kickStartPower, finalSpeed;
+    bool kickStarting = false;
 
 public:
     static const std::string TAG;
@@ -27,7 +29,7 @@ public:
     /**
      * Initializes Motors.
      */
-    void init(ArduinoMotor *mot, BrickPi3 *bp3);
+    void init(ArduinoMotor *mot, BrickPi3 *bp3, uint8_t kSP);
 
     /**
      * Stops the robot gradually.
@@ -52,7 +54,7 @@ public:
      * Sets the speed for the motors.
      * @param speed (arbitrary) speed to set
      */
-    void speed(int16_t speed);
+    void speed(int16_t speed, bool force);
 
 };
 

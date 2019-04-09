@@ -10,30 +10,23 @@
 #include <vector>
 #include <BarBot/Sensors/CupDetection.h>
 #include <BarBot/Scripts/LineFollow.h>
-#include <BarBot/Connectivity/PumpService.h>
+#include <BarBot/Connectivity/DrinkService.h>
 
 class SpeechRecognition {
 private:
     //init variables
-    long pipefd[2];
-    long P;
-    std::string item;
+    long speechPipe;
     char file;
     char *arg;
     LineFollow *lineFollow;
-    PumpService *pumpService;
+    DrinkService *drinkService;
     CupDetection *cupDetection;
 
-    //poll variables
-    std::vector<std::string> pollResult;
-    char pipeResult;
-    long bytesread;
-    std::string temp;
-
+    //step variables
 public:
-    void init(LineFollow *linFol, PumpService *pumpSer, CupDetection *cupDet);
+    static const std::string TAG, TAG_PYTHON;
+    void init(LineFollow *linFol, DrinkService *pumpSer, CupDetection *cupDet);
     std::vector<std::string> poll();
-    void logics();
 
 };
 

@@ -2,8 +2,8 @@
 // Created by niels on 4/2/2019.
 //
 
-#ifndef BARBOT_PUMPSERVICE_H
-#define BARBOT_PUMPSERVICE_H
+#ifndef BARBOT_DRINKSERVICE_H
+#define BARBOT_DRINKSERVICE_H
 #include <vector>
 #include "SocketConnection.h"
 
@@ -20,12 +20,12 @@ struct drink {
     std::vector<fluid> fluids;
 };
 
-class PumpService {
+class DrinkService {
 private:
-    SocketConnection connection;
+    SocketConnection* drinkServerConnection;
 public:
     static const std::string TAG;
-    void init();
+    void init(SocketConnection* dsC);
     void close();
     bool pour(int drink);
     std::vector<fluid> get_fluids();
@@ -34,4 +34,4 @@ public:
 };
 
 
-#endif //BARBOT_PUMPSERVICE_H
+#endif //BARBOT_DRINKSERVICE_H

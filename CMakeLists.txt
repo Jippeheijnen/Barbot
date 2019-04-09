@@ -46,8 +46,9 @@ if (UNIX)
             PUBLIC
             ./include/BrickPI3/Raspi/BrickPi3.cpp
             ./lib/BarBot/Connectivity/BluetoothSocket.cpp
-            ./lib/BarBot/Connectivity/BluetoothConnection.cpp
+            ./lib/BarBot/Connectivity/AppControlService.cpp
             ./lib/BarBot/Communication/SpeechRecognition.cpp
+            ./lib/BarBot/Movement/ArduinoMotor.cpp
     )
     target_link_libraries(Barbot bluetooth)
 else (UNIX)
@@ -56,8 +57,9 @@ else (UNIX)
             Barbot
             PUBLIC
             ./include/BrickPI3/Windows/BrickPi3.cpp
-            ./lib/BarBot/Connectivity/BluetoothConnection.windows.cpp
+            lib/BarBot/Connectivity/AppControlService.windows.cpp
             ./lib/BarBot/Communication/SpeechRecognition.windows.cpp
+            ./lib/BarBot/Movement/ArduinoMotor.windows.cpp
     )
     add_executable(GitInspector "lib/GitInspector/GitInspector_Check.cpp")
 endif (UNIX)
@@ -69,12 +71,14 @@ target_sources(
         ./lib/BarBot/Movement/Movement.cpp
         ./lib/BarBot/Sensors/LineDetection.cpp
         ./lib/BarBot/Scripts/LineFollow.cpp
+        ./lib/BarBot/Scripts/SpeechInterpretation.cpp
         ./lib/NulVersie/nulVersie.cpp
         ./lib/BarBot/Sensors/CupDetection.cpp
-        ./lib/BarBot/Connectivity/PumpService.cpp
+        lib/BarBot/Connectivity/DrinkService.cpp
+        lib/BarBot/Connectivity/AppRequestService.cpp
         ./lib/BarBot/Connectivity/SocketConnection.cpp
-        ./lib/BarBot/Movement/ArduinoMotor.cpp
         ./lib/BarBot/Communication/SpeechSynthesis.cpp
+        ./lib/BarBot/Scripts/Pathing.cpp
         ./lib/BarBot/Util/Logger.cpp
 )
 

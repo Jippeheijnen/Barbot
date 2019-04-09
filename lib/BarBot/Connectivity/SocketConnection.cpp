@@ -57,6 +57,8 @@ std::vector<std::string> SocketConnection::read_line() {
         ret.push_back(token);
         buff.erase(0, pos + 3);
     }
+    if(ret.empty() && buff == "buff")
+        return {};
     ret.push_back(buff);
     return ret;
 }

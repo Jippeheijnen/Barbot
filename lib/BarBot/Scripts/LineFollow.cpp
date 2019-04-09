@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <cmath>
+#include <BarBot/Util/Logger.h>
 #include "BarBot/Scripts/LineFollow.h"
 
 bool toBePaused = false;
@@ -8,18 +9,19 @@ bool toBePaused = false;
 const std::string LineFollow::TAG = "LineFollow";
 
 void LineFollow::pause() {
-    movement->stop();
+    Logger::log(TAG, "Pausing Line following");
     toBePaused = true;
 }
 
 void LineFollow::resume() {
+    Logger::log(TAG, "Resuming Line following");
     toBePaused = false;
 }
 
 
 double_t min = 0;
 double_t max = 0;
-void LineFollow::follow() {
+void LineFollow::step() {
     double_t sensorValue = lineDetection->getLineDirection();
     if(sensorValue > max)
         max = sensorValue;
@@ -49,9 +51,9 @@ void LineFollow::follow() {
             movement->center();
     }
     if (toBePaused) {
+
         movement->stop();
     }
-    movement->step();
 }
 
 void LineFollow::init(Movement *mov, LineDetection *lineDet) {

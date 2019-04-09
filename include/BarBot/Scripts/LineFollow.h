@@ -18,7 +18,7 @@ public:
     /**
      * collect data from LineDetection::getLineDirection, process it and send to function Movement::steer()
      */
-    void follow();
+    void step();
 
     /**
      * Sets boolean toBePaused to true and stops the motor

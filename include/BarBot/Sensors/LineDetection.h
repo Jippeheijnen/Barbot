@@ -19,6 +19,7 @@ struct ColorReading {
 
 class LineDetection {
 private:
+    bool logSensorData;
     double LIGHT_SENSOR_FACTOR = 0.2;
     sensor_light_t LIGHT_SENSOR_DATA;
 
@@ -42,7 +43,7 @@ public:
      * @param target The target value
      * @param margin Error margin for detection
      */
-    void init(BrickPi3 *bp3, Movement *mov, int16_t tar, int16_t mar);
+    void init(BrickPi3 *bp3, Movement *mov, int16_t tar, int16_t mar, bool lSD = false);
 
 
     /**
