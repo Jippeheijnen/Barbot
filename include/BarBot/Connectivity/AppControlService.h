@@ -20,12 +20,13 @@ private:
     BluetoothServerSocket *serverSocket;
     std::vector<BluetoothSocket*> clientSockets = {};
     LineFollow *lineFollow;
+    Movement* movement;
     long ctlPipe[3];
 public:
     static const std::string TAG;
     static const std::string TAG_CTL;
 
-    void init();
+    void init(Movement* mov);
     void relayLogs(int fD);
     void update();
 };

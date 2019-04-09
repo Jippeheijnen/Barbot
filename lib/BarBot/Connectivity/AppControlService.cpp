@@ -5,7 +5,8 @@
 const std::string AppControlService::TAG = "AppControlService";
 const std::string AppControlService::TAG_CTL = "BluetoothCTL";
 
-void AppControlService::init() {
+void AppControlService::init(Movement* mov) {
+    movement = mov;
     int fdOut[2], fdErr[2], fdW[2];
 
     pipe(fdOut);
@@ -94,11 +95,34 @@ void AppControlService::update() {
 
 
         if (messageBox->isRunning()) {
-            std::string mess = messageBox->readMessage();
+            std::string mess =  messageBox->readMessage();
 
-            if (!mess.empty()) {
-                Logger::log(TAG, "Message Received" + mess);
+            while(mess != "") {
+                if (!mess.empty()) {
+                    if (mess[0] == 'J') {
+                        std::string xS, yS;
+                        bool xDone = false;
+                        for(size_t j = 2; j < mess.size(); j++) {
+                            if(!xDone) {
+                                if(mess[j] == 'Y')
+                                    xDone = true;
+                                else
+                                    xS +=mess[j];
+                            } else {
+                                yS += mess[j];
+                            }
+                        }
+                        int x = std::stoi(xS)/2;
+                        int y = std::stoi(yS)*0.8;
+                        Logger::log(TAG, std::to_string(y));
+                        movement->steer(x >= 0, abs(x));
+                        movement->speed(y, false);
+                    }
+                }
+                mess = messageBox->readMessage();
             }
+
+
 
         }
         else {

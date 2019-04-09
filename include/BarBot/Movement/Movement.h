@@ -13,7 +13,7 @@ private:
     BrickPi3 * brickPi3;
     bool forward;
     ArduinoMotor * motor;
-    uint8_t kickStartPower, finalSpeed;
+    int16_t kickStartPower, finalSpeed;
     bool kickStarting = false;
 
 public:

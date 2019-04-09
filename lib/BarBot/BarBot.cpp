@@ -33,14 +33,14 @@ void BarBot::init() {
     drinkServerConnection->init(drinkServerIP, drinkServerPort);
     drinkService->init(drinkServerConnection);
     appRequestService->init(drinkServerConnection);
-    appControlService->init();
+    appControlService->init(movement);
 //    speechRecognition->init(lineFollow, drinkService, cupDetection);
     pathing->init(drinkServerConnection, appRequestService, lineDetection, lineFollow, movement, pathingColorOrder);
     running = true;
 }
 
 void BarBot::step() {
-    lineFollow->step();
+//    lineFollow->step();
     appRequestService->update();
     appControlService->update();
     pathing->step();

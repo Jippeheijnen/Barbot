@@ -64,6 +64,8 @@ public:
 
     void setLogSensorData(bool logSensorData);
 
+    void exit_handler(int signo);
+
 };
 
 

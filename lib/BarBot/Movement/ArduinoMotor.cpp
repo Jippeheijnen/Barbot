@@ -24,7 +24,7 @@
 #include <termios.h>
 
 
-#define BAUDRATE B9600
+#define BAUDRATE B115200
 #define MODEMDEVICE "/dev/ttyUSB0"
 
 
@@ -102,6 +102,7 @@ void ArduinoMotor::setSpeed(uint8_t speed) {
     Logger::log(TAG, "Motor speed: " + std::to_string(speed));
     std::string cmd = "s";
     cmd.append(std::to_string(int(speed)));
+
     cmd.append("\n");
 
     command(cmd);
@@ -110,7 +111,7 @@ void ArduinoMotor::setSpeed(uint8_t speed) {
 
 void ArduinoMotor::setDirection(bool rot) {
     std::string dir = rot ? "forward": "backward";
-    Logger::log(TAG, "Motor direction: " + dir);
+//    Logger::log(TAG, "Motor direction: " + dir);
     std::string cmd = "d";
     cmd.append(std::to_string(!rot)).append("\n");
     command(cmd);
@@ -150,7 +151,6 @@ void ArduinoMotor::clear() {
             int res = read(fileDescriptor,buffer,255);
             buffer[res]=0;		// terminate buffer
             sscanf(buffer,"%d\n",&variable);
-            printf("Received %d\n",variable);
         }
     }
 }

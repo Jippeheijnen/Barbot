@@ -3,6 +3,7 @@
 
 #include <BarBot/BarBot.h>
 #include <BarBot/Util/Logger.h>
+#include <csignal>
 
 const int16_t LINEDETECTION_THRESHOLD = 1720;
 const int16_t LINEDETECTION_MARGIN = 10;
@@ -20,15 +21,7 @@ const int16_t CUPDETECTION_DISTANCE = 10;
 //AppControlService *appControlService = new AppControlService(lineFollow);
 //SpeechRecognition *speechRecognition = new SpeechRecognition(lineFollow, drinkService, cupDetection);
 
-//void exit_handler(int signo) {
-//    if (signo == SIGINT) {
-//        movement->steer(true, 0);
-//        brickPi3->reset_all();
-////        pumpService->close();
-//        motor->setSpeed(0);
-//        exit(-2);
-//    }
-//};
+
 //
 //void mainInit() {
 //    Logger::setLogShow({
@@ -64,11 +57,25 @@ const int16_t CUPDETECTION_DISTANCE = 10;
 //    return tp.tv_sec * 1000 + tp.tv_usec / 1000;
 //}
 
+BarBot bot;
+
+void exit_handler(int signo) {
+    if (signo == SIGINT) {
+        bot.movement->steer(true, 0);
+        bot.brickPi3->reset_all();
+//        pumpService->close();
+        bot.motor->setSpeed(0);
+        exit(-2);
+    }
+};
+
 int main()
 {
-        Logger::setLogShow({});
+        Logger::setLogShow({
+//            AppControlService::TAG,
+            Movement::TAG
+        });
 
-    BarBot bot;
     bot.setCupDetectionDistance(10);
     bot.setDrinkServer("83.87.164.152", 8444);
     bot.setLineDetectionTarget(1700);
@@ -81,6 +88,10 @@ int main()
     bot.setLogSensorData(false);
 
     bot.init();
+
+
+
+    signal(SIGINT, exit_handler);
 
     Logger::log("Main", "Bot Initialized");
     while(bot.running) {
