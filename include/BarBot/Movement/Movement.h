@@ -36,7 +36,6 @@ public:
      */
     void stop();
 
-
     /**
      * steers the BarBot by limiting the speed to a certain motor.
      * @param direction true is right, false is left.
@@ -46,7 +45,7 @@ public:
 
     /**
      * Centers the steering wheel.
-     * @param centerPos This is the posistion in which the steeringwheel is centered.
+     * @param centerPos This is the position in which the steering wheel is centered.
      */
     void center();
 

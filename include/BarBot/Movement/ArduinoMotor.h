@@ -22,8 +22,22 @@ private:
 
 public:
     static const std::string TAG;
+
+    /**
+     *  Initiates this class.
+     */
     void init();
+
+    /**
+     * Sets the motor speed.
+     * @param speed Input speed, uint8_t datatype.
+     */
     void setSpeed(uint8_t speed);
+
+    /**
+     * Sets which direction the motors should turn.
+     * @param rot Rotation boolean. True is forward.
+     */
     void setDirection(bool rot);
 
 };

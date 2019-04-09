@@ -36,8 +36,19 @@ private:
     void acquireTarget();
     int currentIndex = 0;
     int nextColor;
+
 public:
     static const std::string TAG;
+
+    /**
+     * Initiates the Pathing class.
+     * @param dSC Pointer for drinkServerConnection.
+     * @param aRS Pointer for appRequestService.
+     * @param lD Pointer for lineDetection.
+     * @param lF Pointer for lineFollow.
+     * @param m Pointer for movement.
+     * @param cO Vector in which the colorOrder is defined.
+     */
     void init(SocketConnection* dSC, AppRequestService* aRS, LineDetection * lD, LineFollow * lF, Movement* m, std::vector<int> & cO);
     void step();
 };
