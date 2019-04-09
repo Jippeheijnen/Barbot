@@ -32,10 +32,14 @@ void SpeechInterpretation::listen(){
                 int count = 0;
                 while(true) {
                     if (cupDetection->isCupPlaced()) {
+                        usleep(20000);
                         pumpService->pour(drinks[i].id);
+                        while(cupDetection->isCupPlaced()){
+                            usleep(1);
+                        }
                         lineFollow->resume();
                         break;
-                    } else if (count == 7000) {
+                    } else if (count == 70000) {
                         count = 0;
                         SpeechSynthesis::speak("Plaats alstublieft een beker");
                     }else{
