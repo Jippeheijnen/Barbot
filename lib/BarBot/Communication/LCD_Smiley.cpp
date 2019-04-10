@@ -1,4 +1,3 @@
-#include <thread>
 #include "../../../include/BarBot/Communication/LCD_Smiley.h"
 #include "../../../include/nIels2C/nIels2C.h"
 
@@ -85,13 +84,10 @@ void LCD_Smiley::lookAround(){
             case 1: changeSmiley(2);
             case 2: changeSmiley(3);
             case 3: changeSmiley(4);
-            case 4: changeSmiley(0);
+            case 4: changeSmiley(2);
         }
         leftLooking =leftLooking-1;
-        if(leftLooking == 0){
-            lookingAround=false;
-        }
-        waitingForLoop = 40;
+        waitingForLoop = 4;
     }
 }
 
