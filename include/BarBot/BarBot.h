@@ -14,7 +14,8 @@
 #include <BarBot/Sensors/CupDetection.h>
 #include <BarBot/Connectivity/DrinkService.h>
 #include <BarBot/Connectivity/AppControlService.h>
-#include <BarBot/Speech/SpeechRecognition.h>
+#include <BarBot/Communication/LCD_Smiley.h>
+#include <BarBot/Communication/SpeechRecognition.h>
 #include <BarBot/Connectivity/AppRequestService.h>
 #include <BarBot/Scripts/Pathing.h>
 #include <cmath>
@@ -36,6 +37,7 @@ public:
     SocketConnection *drinkServerConnection;
     AppRequestService *appRequestService;
     Pathing* pathing;
+    LCD_Smiley *lcd_smiley;
     bool running, logSensorData;
 
     int16_t lineDetectionTarget, lineDetectionMargin;

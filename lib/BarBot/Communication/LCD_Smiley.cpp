@@ -1,3 +1,4 @@
+#include <thread>
 #include "../../../include/BarBot/Communication/LCD_Smiley.h"
 #include "../../../include/nIels2C/nIels2C.h"
 
@@ -5,11 +6,10 @@
  * Initialize LCD display, shows the default happy smiley
  */
 void LCD_Smiley::init() {
-    nIels2C lcd(0x3f, 4, 20);
-//    lcd.clear();
+    nI2C = new nIels2C(0x3f, 4, 20);
+    nI2C->clear();
     time_t start, end;
     time(&start);
-    std::atexit(exiting);
     changeSmiley(0);
 }
 
@@ -17,9 +17,9 @@ void LCD_Smiley::init() {
  * Displays A generic happy smile
  */
 void LCD_Smiley::displayHappy(){  //0
-    lcd.display_string("  /\\            /\\ ", 0);
-    lcd.display_string(" /  \\          /  \\ ", 1);
-    lcd.display_string("     \\________/     ", 3);
+    nI2C->display_string("  /\\            /\\ ", 0);
+    nI2C->display_string(" /  \\          /  \\ ", 1);
+    nI2C->display_string("     \\________/     ", 3);
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
 
@@ -27,44 +27,44 @@ void LCD_Smiley::displayHappy(){  //0
  * Displays a generic angry smile
  */
 void LCD_Smiley::displayAngry(){ //1
-    lcd.display_string("   /            \\   ", 0);
-    lcd.display_string("  /   |      |   \\  ", 1);
-    lcd.display_string("      ________      ", 2);
-    lcd.display_string("     /        \\     ", 3);
+    nI2C->display_string("   /            \\   ", 0);
+    nI2C->display_string("  /   |      |   \\  ", 1);
+    nI2C->display_string("      ________      ", 2);
+    nI2C->display_string("     /        \\     ", 3);
 }
 
 /**
  * Display a straight smile
  */
 void LCD_Smiley::displayStraight(){ //2
-    lcd.display_string("  /¯¯\\        /¯¯\\  ", 0);
-    lcd.display_string("  \\__/        \\__/  ", 1);
-    lcd.display_string("     \\________/     ", 3);
+    nI2C->display_string("  /¯¯\\        /¯¯\\  ", 0);
+    nI2C->display_string("  \\__/        \\__/  ", 1);
+    nI2C->display_string("     \\________/     ", 3);
 }
 
 /**
  * Display a smiling smiley on the left side
  */
 void LCD_Smiley::displayLeft(){ //3
-    lcd.display_string("/¯¯\\        /¯¯\\    ", 0);
-    lcd.display_string("\\__/        \\__/    ", 1);
-    lcd.disolay_string("     \\________/     ", 3);
+    nI2C->display_string("/¯¯\\        /¯¯\\    ", 0);
+    nI2C->display_string("\\__/        \\__/    ", 1);
+    nI2C->display_string("     \\________/     ", 3);
 }
 
 /**
   * Display a smiling smiley on the right side
  */
 void LCD_Smiley::displayRight(){ //4
-    lcd.display_string("    /¯¯\\        /¯¯\\", 0);
-    lcd.display_string("    \\__/        \\__/", 1);
-    lcd.display_string("     \\________/     ", 3);
+    nI2C->display_string("    /¯¯\\        /¯¯\\", 0);
+    nI2C->display_string("    \\__/        \\__/", 1);
+    nI2C->display_string("     \\________/     ", 3);
 }
 
 /**
   * Changes the smiley by index
  */
-void LCD_Smiley::changeSmiley(nextSmiley){
-    lcd.clear();
+void LCD_Smiley::changeSmiley(int nextSmiley){
+    nI2C->clear();
     switch(nextSmiley){
         case 0: displayHappy();
         case 1: displayAngry();
@@ -82,25 +82,28 @@ void LCD_Smiley::lookAround(){
         leftLooking = 4;
         switch(currSmiley){
             case 0: changeSmiley(2);
-            case 1: changeSmilet(2);
-            case 2: changeSmilet(3);
+            case 1: changeSmiley(2);
+            case 2: changeSmiley(3);
             case 3: changeSmiley(4);
             case 4: changeSmiley(0);
         }
-        leftLooking =leftLooking-1
+        leftLooking =leftLooking-1;
         if(leftLooking == 0){
-            lookingAround=0;
+            lookingAround=false;
         }
-        waitingForLoop = 4
+        waitingForLoop = 40;
     }
 }
 
 /**
- * ..
+ *
  */
-void LCD_Smiley::waitingForLoopIretation() {
+void LCD_Smiley::waitingForLoopIteration() {
     if(waitingForLoop==0){
         lookAround();
+        leftLooking = 4;
     }
     waitingForLoop = waitingForLoop - 1;
-};
+}
+
+LCD_Smiley::LCD_Smiley() {}

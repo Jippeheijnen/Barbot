@@ -2,6 +2,7 @@
 
 
 #include <BarBot/BarBot.h>
+#include <BarBot/Communication/LCD_Smiley.h>
 #include <BarBot/Util/Logger.h>
 #include <csignal>
 
@@ -94,8 +95,11 @@ int main()
     signal(SIGINT, exit_handler);
 
     Logger::log("Main", "Bot Initialized");
+    Logger::log("main", "Initializing Smiley");
+
     while(bot.running) {
-        bot.step();
+//        bot.step();
+
         usleep(10000);
     }
 }
