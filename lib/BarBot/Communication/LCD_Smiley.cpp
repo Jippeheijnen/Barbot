@@ -85,12 +85,9 @@ void LCD_Smiley::lookAround(){
             case 1: changeSmilet(2);
             case 2: changeSmilet(3);
             case 3: changeSmiley(4);
-            case 4: changeSmiley(0);
+            case 4: changeSmiley(2);
         }
         leftLooking =leftLooking-1
-        if(leftLooking == 0){
-            lookingAround=0;
-        }
         waitingForLoop = 4
     }
 }
