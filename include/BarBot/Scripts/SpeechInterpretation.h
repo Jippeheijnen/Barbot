@@ -23,13 +23,14 @@ private:
     LCD_Smiley * lcdSmiley;
 
 public:
+    static const std::string TAG;
     /**
      * initializes speech recognition
      * @param lF
      * @param cD
      * @param pS
      */
-    void init(LineFollow *lF, CupDetection *cD, DrinkService *pS, LCD_Smiley *lS);
+    void init(LineFollow *lF, CupDetection *cD, DrinkService *pS, SpeechRecognition  * sR,  LCD_Smiley *lS);
 
     /**
      * Polls speech recognition.

@@ -50,7 +50,11 @@ void SpeechRecognition::init(LineFollow *linFol, DrinkService *pumpSer, CupDetec
         Logger::log(TAG, "Closing useless pipes");
         close(pipeOut[1]);
         close(pipeIn[0]);
-        speechPipe = pipeOut[0];
+        char test[500];
+        read(pipeOut[1], test, 499);
+
+        speechPipe[0] = pipeOut[0];
+        Logger::log(TAG, std::to_string(speechPipe[0]));
     }
 }
 
@@ -58,22 +62,18 @@ void SpeechRecognition::init(LineFollow *linFol, DrinkService *pumpSer, CupDetec
 std::vector<std::string> SpeechRecognition::poll() {
     std::vector<std::string> pollResult = {};
     char speechResult[301];
-    Logger::log(TAG, "READING");
-    long bytesread = read(speechPipe, speechResult, 300);
-    Logger::log(TAG, std::to_string(bytesread));
+    long bytesread = read(speechPipe[0], speechResult, 300);
     std::string temp;
     for(int i=0; i < bytesread; i++){
-        if(speechResult[i] == ' ' or speechResult[i] == '\n'){
+        if(speechResult[i] == ' ' || speechResult[i] == '\n'){
             pollResult.push_back(temp);
-            Logger::log(TAG, temp);
             temp = "";
-
         }else{
-            temp.push_back(speechResult[i]);
+            temp += tolower(speechResult[i]);
         }
     }
 
-    if(temp.size() > 0)
+    if(!temp.empty())
         pollResult.push_back(temp);
     return pollResult;
 }

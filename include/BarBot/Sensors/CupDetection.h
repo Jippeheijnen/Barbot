@@ -32,7 +32,7 @@ public:
      * Uses the Ultrasonic sensor to check if a cup is placed in the cupholder.
      * @return true if a cup is placed
      */
-    bool isCupPlaced();
+    int8_t isCupPlaced();
 };
 
 

@@ -7,6 +7,9 @@
 const std::string LineDetection::TAG = "LineDetection";
 
 double LineDetection::getLineDirection() {
+    if(noReadings)
+        return 0;
+
     if(brickPi3->get_sensor(LIGHT_SENSOR_PORT, LIGHT_SENSOR_DATA) == 0) {
         int16_t relative = LIGHT_SENSOR_DATA.reflected - this->target;
         if (abs(relative) < margin)
@@ -32,7 +35,8 @@ ColorReading LineDetection::readColor() {
     return lastColorReading;
 }
 
-void LineDetection::init(BrickPi3 *bp3, Movement *mov, int16_t tar, int16_t mar, bool lSD) {
+void LineDetection::init(BrickPi3 *bp3, Movement *mov, int16_t tar, int16_t mar, bool lSD, bool nR) {
+    noReadings = nR;
     logSensorData = lSD;
     brickPi3 = bp3;
     movement = mov;

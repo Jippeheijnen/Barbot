@@ -40,7 +40,9 @@ public:
     Pathing* pathing;
     LCD_Smiley *lcd_smiley;
     SpeechInterpretation * speechInterpretation;
-    bool running, logSensorData;
+    bool running, logSensorData, noReadings;
+
+    void setNoReadings(bool noReadings);
 
     int16_t lineDetectionTarget, lineDetectionMargin;
     uint8_t movementKickStartPower;

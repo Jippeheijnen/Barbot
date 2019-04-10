@@ -21,6 +21,7 @@ private:
     std::vector<BluetoothSocket*> clientSockets = {};
     LineFollow *lineFollow;
     Movement* movement;
+    bool dieEneKutError = false;
     long ctlPipe[3];
 public:
     static const std::string TAG;
@@ -41,6 +42,8 @@ public:
      *
      */
     void update();
+
+    void close_connection();
 };
 
 

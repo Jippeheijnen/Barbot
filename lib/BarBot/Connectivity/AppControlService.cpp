@@ -1,5 +1,7 @@
 
 #include <BarBot/Util/Logger.h>
+#include <BarBot/Connectivity/AppControlService.h>
+
 #include "BarBot/Connectivity/AppControlService.h"
 
 const std::string AppControlService::TAG = "AppControlService";
@@ -55,7 +57,13 @@ void AppControlService::init(Movement* mov) {
     }
 
     Logger::log(TAG, "Making Server Socket");
-    serverSocket = new BluetoothServerSocket(2,1);
+    try {
+        serverSocket = new BluetoothServerSocket(2, 1);
+    }
+    catch(BluetoothException& e) {
+        dieEneKutError = true;
+        std::cout << e.what() << std::endl;
+    }
 
 }
 
@@ -80,6 +88,8 @@ void AppControlService::relayLogs(int fD) {
 }
 
 void AppControlService::update() {
+    if(dieEneKutError)
+        return;
     try {
         BluetoothSocket *clientSock = serverSocket->accept();
         clientSock->getMessageBox();
@@ -133,6 +143,10 @@ void AppControlService::update() {
     }
     relayLogs(ctlPipe[0]);
     relayLogs(ctlPipe[1]);
+}
+
+void AppControlService::close_connection() {
+    serverSocket->close();
 }
 
 
