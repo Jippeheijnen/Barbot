@@ -1,4 +1,4 @@
-#include "BarBot/Speech/SpeechRecognition.h"
+#include "BarBot/Communication/SpeechRecognition.h"
 #include <syscall.h>
 #include <zconf.h>
 #include <string>
@@ -7,7 +7,7 @@
 #include <vector>
 #include <algorithm>
 #include <BarBot/Connectivity/DrinkService.h>
-#include <BarBot/Speech/SpeechSynthesis.h>
+#include <BarBot/Communication/SpeechSynthesis.h>
 #include <BarBot/Scripts/LineFollow.h>
 #include <BarBot/Sensors/CupDetection.h>
 #include <BarBot/Util/Logger.h>

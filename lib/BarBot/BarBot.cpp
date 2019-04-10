@@ -20,6 +20,7 @@ BarBot::BarBot() {
     appControlService = new AppControlService();
     appRequestService = new AppRequestService();
     speechRecognition = new SpeechRecognition();
+    lcd_smiley = new LCD_Smiley();
     pathing = new Pathing();
 }
 

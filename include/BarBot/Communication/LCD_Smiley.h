@@ -2,11 +2,15 @@
 #define BARBOT_LCD_SMILEY_H
 
 
+#include <nIels2C/nIels2C.h>
+
 /**
  * Library to easily show smileyfaces on an I2C LCD :)
  */
 class LCD_Smiley {
 private:
+    nIels2C* nI2C;
+    int currSmiley;
     int leftLooking;
     int waitingForLoop;
 public:
@@ -17,11 +21,13 @@ public:
     void displayHappy();
     void displayAngry();
     void displayStraight();
-    void isplayLeft();
+    void displayLeft();
     void displayRight();
-    void changeSmiley(nextSmiley);
+    void changeSmiley(int nextSmiley);
     void lookAround();
     void waitingForLoopIteration();
+
+    LCD_Smiley();
 };
 
 

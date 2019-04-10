@@ -22,6 +22,8 @@ void SpeechInterpretation::listen(){
     std::vector<drink> drinks = pumpService->get_drinks();
     if((std::find(heard.begin(), heard.end(), "barbot") != heard.end()) && (std::find(heard.begin(), heard.end(), "stop") != heard.end())){
         lineFollow->pause();
+        lcdSmiley.lookingAround = 0;
+        lcdSmiley->changeSmiley(0);
         SpeechSynthesis::speak("Wat wilt u drinken?");
         heard = speechRecognition->poll();
 
@@ -41,12 +43,14 @@ void SpeechInterpretation::listen(){
                         break;
                     } else if (count == 70000) {
                         count = 0;
+                        lcdSmiley->changeSmiley(1);
                         SpeechSynthesis::speak("Plaats alstublieft een beker");
                     }else{
                         count++;
                         usleep(1);
                     }
                 }
+                lcdSmiley.lookingAround = 1;
                 break;
             }
         }

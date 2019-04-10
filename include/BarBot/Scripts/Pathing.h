@@ -43,6 +43,7 @@ private:
     void acquireTarget();
     int currentIndex = 0;
     int nextColor;
+
 public:
     static const std::string TAG;
     /**
