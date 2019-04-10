@@ -185,11 +185,28 @@ public:
 };
 
 
+/**
+ * Stores messages from a bluetooth Connection
+ */
 class MessageBox {
 	public:
+    /**
+     * Creates a messagebox using an inputstream
+     * @param theStream  Stream to create a messagebox for
+     */
 	MessageBox(std::iostream &theStream);
 	~MessageBox();
+
+	/**
+	 * Retrieves next message from messagebox
+	 * @return The message
+	 */
 	std::string readMessage() ;
+
+	/**
+	 * Is the messagebox running
+	 * @return True if the messagebox is still retrieving messages
+	 */
 	inline bool isRunning() { return running; }
 	private:
 	bool running = false;
@@ -197,6 +214,11 @@ class MessageBox {
 	std::iostream& theStream;
 	std::thread* thr;
 	std::queue<std::string> theQueue;
+
+	/**
+	 * Retrieves messages from this messagebox's stream.
+	 * NOTE: This function loops endlessly, and should be run outside of the main loop
+	 */
 	void handleMessages();
 };
 
@@ -218,7 +240,7 @@ public:
    *   for typical applications that don't need to worry about the
    *   local address and port.  
    *   @param foreignAddress foreign address (IP address or name) 
-   *   @param foreignPort foreign port 
+   *   @param foreignChannel foreign port to use
    *   @exception BluetoothException thrown if unable to create TCP socket
    */
   BluetoothSocket(const char *foreignAddress, uint8_t foreignChannel) 
@@ -238,7 +260,10 @@ public:
    *   to getStream.
    */
   std::iostream &getStream() ;
-  
+  /**
+   * Retrieve a messagebox obect for the inputstream of a bluetoothsocket
+   * @return
+   */
   MessageBox *getMessageBox();
 
 private:

@@ -10,6 +10,9 @@
 #include <BarBot/Speech/SpeechRecognition.h>
 #include "LineFollow.h"
 
+/**
+ * Program to interpret Speech Recognition results
+ */
 class SpeechInterpretation {
 private:
     LineFollow *lineFollow;

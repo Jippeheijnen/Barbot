@@ -5,6 +5,11 @@
 #include "BrickPI3/BrickPi3.h"
 #include "ArduinoMotor.h"
 
+/**
+ * Performs all tasks that move the robot.
+ * Movement takes care of gradually adjusting motor speed, to prevent damage the motor.
+ *
+ */
 class Movement {
 private:
     int16_t currSpeed = 0;
@@ -36,6 +41,7 @@ public:
      */
     void stop();
 
+
     /**
      * steers the BarBot by limiting the speed to a certain motor.
      * @param direction true is right, false is left.
@@ -45,13 +51,14 @@ public:
 
     /**
      * Centers the steering wheel.
-     * @param centerPos This is the position in which the steering wheel is centered.
      */
     void center();
 
     /**
-     * Sets the speed for the motors.
+     * Sets the target speed for the motors.
+     * Note: This sets the target speed. When step is called periodically, motor speed will approach this target speed
      * @param speed (arbitrary) speed to set
+     * @param force Should the speed be applied immediately, instead of gradually approaching it. This only works when the new speed is lower thant the current speed
      */
     void speed(int16_t speed, bool force);
 

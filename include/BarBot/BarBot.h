@@ -19,6 +19,9 @@
 #include <BarBot/Scripts/Pathing.h>
 #include <cmath>
 
+/**
+ * Class for holding pointers to all components in this program
+ */
 class BarBot {
 public:
     BrickPi3 *brickPi3;

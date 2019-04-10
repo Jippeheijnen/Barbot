@@ -7,6 +7,10 @@
 
 using std::vector;
 
+/**
+ * Code For Arduino
+ * Can pump from 4 pumps simultaneously, based on amounts of time in ms
+ */
 class PumpHandler {
 private:
     std::vector<uint8_t> pump_pins = {0, 2, 4, 5};

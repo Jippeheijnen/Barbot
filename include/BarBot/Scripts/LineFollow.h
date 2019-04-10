@@ -13,6 +13,11 @@ private:
 public:
     static const std::string TAG;
 
+    /**
+     * Initializes LineFollower
+     * @param mov  Reference to the bot's movement instance
+     * @param lineDet  Reference to the bot's linedetection instance
+     */
     void init(Movement *mov, LineDetection *lineDet);
 
     /**

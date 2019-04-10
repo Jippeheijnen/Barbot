@@ -55,6 +55,9 @@ const uint8_t Rs = 0b00000001; // Register select bit
 
 
 
+/**
+ * Drives an LCD screen through an I2C backpack
+ */
 class nIels2C {
 private:
     uint8_t address, rows, cols;
@@ -63,20 +66,49 @@ private:
     void sleep(long us);
 
 public:
-    nIels2C();
-
+    /**
+     * Starts a connection to an LCD screen
+     * @param address I2C address to connect to
+     * @param rows Amount of rows in the LCD screen
+     * @param cols Amount of characters in a row on the screen
+     */
     nIels2C(uint8_t address, uint8_t rows, uint8_t cols);
 
+    /**
+     *
+     * @param data
+     */
     void strobe(uint8_t data);
 
+    /**
+     * Writes 4 bits of data, adds backlight enable bits
+     * @param data data to write
+     */
     void write_four_bits(uint8_t data);
 
+    /**
+     * Writes command to I2C
+     * @param cmd
+     * @param mode
+     */
     void write(uint8_t cmd, uint8_t mode = 0);
 
+    /**
+     * Display a string on the LCD screen
+     * @param str String to display
+     * @param line Line to display the string on
+     */
     void display_string(std::string str, uint8_t line);
 
+    /**
+     * Clear the LCD screen
+     */
     void clear();
 
+    /**
+     * Write raw data to the i2c
+     * @param data Data to write
+     */
     void i2c_write(uint8_t data);
 };
 
