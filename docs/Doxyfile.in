@@ -1,0 +1,7 @@
+OUTPUT_DIRECTORY       = @CMAKE_CURRENT_SOURCE_DIR@/docs/out/
+INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/
+RECURSIVE              = YES
+FILE_PATTERNS          = *.cpp *.h
+EXCLUDE_PATTERNS = */cmake-build*/*
+PDF_HYPERLINKS         = YES
+USE_PDFLATEX           = YES

@@ -6,6 +6,9 @@
 #include "../BrickPi3.h"
 
 
+/**
+ * Holds data for a Lego Motor
+ */
 struct Motor {
     char id = 't';
     std::string power = "0";
@@ -16,6 +19,10 @@ struct Motor {
 
 };
 
+/**
+ * Struct for holding all BrickPi motors.
+ * Why this couldn't just be an array, only god knows
+ */
 struct MotorData {
     Motor A, B, C, D;
 };

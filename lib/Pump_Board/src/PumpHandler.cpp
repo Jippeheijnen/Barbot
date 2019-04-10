@@ -5,12 +5,20 @@
 #include <cstdint>
 #include "PumpHandler.h"
 
+/**
+ * Stores an amount of fluid a pump should dispense
+ */
 struct PumpAmount {
     uint8_t pump;
     int amount;
 };
 
-
+/**
+ * Comparator for pumpamounts, compares by amount
+ * @param a First PumpAmount
+ * @param b Second PumpAmount
+ * @return
+ */
 bool comparePumpAmounts(PumpAmount a, PumpAmount b)
 {
     return (a.amount < b.amount);

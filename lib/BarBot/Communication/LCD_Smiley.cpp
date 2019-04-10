@@ -1,6 +1,9 @@
-#include "LCD_Smiley.h"
-#include "../../include/nIels2C/nIels2C.h"
+#include "../../../include/BarBot/Communication/LCD_Smiley.h"
+#include "../../../include/nIels2C/nIels2C.h"
 
+/**
+ * Initialize LCD display, shows the default happy smiley
+ */
 void LCD_Smiley::init() {
     nIels2C lcd(0x3f, 4, 20);
 //    lcd.clear();
@@ -10,6 +13,9 @@ void LCD_Smiley::init() {
     changeSmiley(0);
 }
 
+/**
+ * Displays A generic happy smile
+ */
 void LCD_Smiley::displayHappy(){  //0
     lcd.display_string("  /\\            /\\ ", 0);
     lcd.display_string(" /  \\          /  \\ ", 1);
@@ -17,6 +23,9 @@ void LCD_Smiley::displayHappy(){  //0
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
 
+/**
+ * Displays a generic angry smile
+ */
 void LCD_Smiley::displayAngry(){ //1
     lcd.display_string("   /            \\   ", 0);
     lcd.display_string("  /   |      |   \\  ", 1);
@@ -24,24 +33,36 @@ void LCD_Smiley::displayAngry(){ //1
     lcd.display_string("     /        \\     ", 3);
 }
 
+/**
+ * Display a straight smile
+ */
 void LCD_Smiley::displayStraight(){ //2
     lcd.display_string("  /¯¯\\        /¯¯\\  ", 0);
     lcd.display_string("  \\__/        \\__/  ", 1);
     lcd.display_string("     \\________/     ", 3);
 }
 
+/**
+ * Display a smiling smiley on the left side
+ */
 void LCD_Smiley::displayLeft(){ //3
     lcd.display_string("/¯¯\\        /¯¯\\    ", 0);
     lcd.display_string("\\__/        \\__/    ", 1);
     lcd.disolay_string("     \\________/     ", 3);
 }
 
+/**
+  * Display a smiling smiley on the right side
+ */
 void LCD_Smiley::displayRight(){ //4
     lcd.display_string("    /¯¯\\        /¯¯\\", 0);
     lcd.display_string("    \\__/        \\__/", 1);
     lcd.display_string("     \\________/     ", 3);
 }
 
+/**
+  * Changes the smiley by index
+ */
 void LCD_Smiley::changeSmiley(nextSmiley){
     lcd.clear();
     switch(nextSmiley){
@@ -53,6 +74,9 @@ void LCD_Smiley::changeSmiley(nextSmiley){
     }
 }
 
+/**
+  * Show smileys that are looking around on the LCD
+ */
 void LCD_Smiley::lookAround(){
     if(lookingAround){
         leftLooking = 4;
@@ -71,8 +95,11 @@ void LCD_Smiley::lookAround(){
     }
 }
 
-void LCD_Smiley::waitingForLoopIretation{
-    if(waitinfForLoop==0){
+/**
+ * ..
+ */
+void LCD_Smiley::waitingForLoopIretation() {
+    if(waitingForLoop==0){
         lookAround();
     }
     waitingForLoop = waitingForLoop - 1;

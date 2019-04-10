@@ -19,3 +19,4 @@ include/rest-cpp
 .idea/
 vcs.xml
 BarBot.json
+docs/out

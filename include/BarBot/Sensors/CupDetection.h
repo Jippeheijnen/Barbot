@@ -5,6 +5,9 @@
 #include "BrickPI3/BrickPi3.h"
 
 
+/**
+ * Uses the ultrasonic sensor to detect if a cup is placed in the cupholder
+ */
 class CupDetection {
 private:
     sensor_ultrasonic_t ULTRASONIC_SENSOR_DATA;
@@ -17,13 +20,18 @@ public:
     float detectDistance;
 
 
-/**
+    /**
      * Initializes CupDetection with a distance threshold
-     * @param detectDistance The targeted distance value in CM
+     * Sets sensor type of the selected port to ultrasonic
+     * @param bp3 Pointer to the used brickpi instance
+     * @param dD The targeted distance value in CM
      */
     void init(BrickPi3 *bp3, float dD);
 
-
+    /**
+     * Uses the Ultrasonic sensor to check if a cup is placed in the cupholder.
+     * @return true if a cup is placed
+     */
     bool isCupPlaced();
 };
 
