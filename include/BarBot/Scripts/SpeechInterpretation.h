@@ -18,7 +18,23 @@ private:
     SpeechRecognition *speechRecognition;
 
 public:
+    /**
+     * initializes speech recognition
+     * @param lF
+     * @param cD
+     * @param pS
+     */
     void init(LineFollow *lF, CupDetection *cD, DrinkService *pS);
+
+    /**
+     * Polls speech recognition.
+     * This data is then compared to certain words to find commands.
+     * If command is found, pauses linefollow.
+     * Then it polls again to see which drink is wanted.
+     * If a drink is given, waits untill a cup is detected.
+     * Start to pump the given drink.
+     * Then resumes linefollow.
+     */
     void listen();
 };
 

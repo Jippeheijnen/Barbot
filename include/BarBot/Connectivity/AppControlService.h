@@ -26,8 +26,20 @@ public:
     static const std::string TAG;
     static const std::string TAG_CTL;
 
+    /**
+     * Initiates app control.
+     * Opens bluetooth control process and creates pipes to this process.
+     * @param mov
+     */
     void init(Movement* mov);
+    /**
+     * Reads the log buffer and logs the recieved data
+     * @param fD
+     */
     void relayLogs(int fD);
+    /**
+     *
+     */
     void update();
 };
 
