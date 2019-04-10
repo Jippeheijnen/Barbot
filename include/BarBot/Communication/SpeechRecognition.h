@@ -12,6 +12,9 @@
 #include <BarBot/Scripts/LineFollow.h>
 #include <BarBot/Connectivity/DrinkService.h>
 
+/**
+ * Uses Google Cloud Speech and Python to recognise speech
+ */
 class SpeechRecognition {
 private:
     //init variables

@@ -8,13 +8,19 @@
 #ifndef BARBOT_APPREQUESTSERVICE_H
 #define BARBOT_APPREQUESTSERVICE_H
 
+/**
+ * Stores a drink request from the App
+ */
 struct App_Request {
     std::string location;
     std::string name;
 };
 
 
-
+/**
+ * Retrieves requests from the server that were made in the app
+ * Stores them in a queue, for FIFO retrieval
+ */
 class AppRequestService {
 private:
     SocketConnection* drinkServerConnection;

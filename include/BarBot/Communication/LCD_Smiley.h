@@ -2,6 +2,9 @@
 #define BARBOT_LCD_SMILEY_H
 
 
+/**
+ * Library to easily show smileyfaces on an I2C LCD :)
+ */
 class LCD_Smiley {
 private:
     int leftLooking;

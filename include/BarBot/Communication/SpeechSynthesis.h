@@ -4,6 +4,9 @@
 
 #include <iostream>
 
+/**
+ * Uses Google Speech and an sh script to synthesise speech
+ */
 class SpeechSynthesis {
 public:
     /**

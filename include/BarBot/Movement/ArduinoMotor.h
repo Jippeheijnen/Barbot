@@ -11,6 +11,9 @@
     #include <poll.h>
 #endif
 
+/**
+ * Maintains a serial connection to an arduino that controls a motor
+ */
 class ArduinoMotor {
 private:
     int fileDescriptor;
