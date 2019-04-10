@@ -4,17 +4,19 @@
 
 #include "BarBot/Scripts/SpeechInterpretation.h"
 #include <vector>
-#include <BarBot/Speech/SpeechRecognition.h>
-#include <BarBot/Speech/SpeechSynthesis.h>
+#include <BarBot/Communication/SpeechRecognition.h>
+#include <BarBot/Communication/SpeechSynthesis.h>
 #include <bits/stdc++.h>
 #include <zconf.h>
+#include <BarBot/Util/Logger.h>
 
 
-void SpeechInterpretation::init(LineFollow *lF, CupDetection *cD, DrinkService *pS) {
+void SpeechInterpretation::init(LineFollow *lF, CupDetection *cD, DrinkService *pS, LCD_Smiley *lS) {
     lineFollow = lF;
     cupDetection = cD;
     pumpService = pS;
     speechRecognition = new SpeechRecognition();
+    lcdSmiley = lS;
 }
 
 void SpeechInterpretation::listen(){
@@ -22,7 +24,7 @@ void SpeechInterpretation::listen(){
     std::vector<drink> drinks = pumpService->get_drinks();
     if((std::find(heard.begin(), heard.end(), "barbot") != heard.end()) && (std::find(heard.begin(), heard.end(), "stop") != heard.end())){
         lineFollow->pause();
-        lcdSmiley.lookingAround = 0;
+        lcdSmiley->lookingAround = 0;
         lcdSmiley->changeSmiley(0);
         SpeechSynthesis::speak("Wat wilt u drinken?");
         heard = speechRecognition->poll();
@@ -46,7 +48,7 @@ void SpeechInterpretation::listen(){
                         usleep(1);
                     }
                 }
-                lcdSmiley.lookingAround = 1;
+                lcdSmiley->lookingAround = 1;
                 break;
             }
         }

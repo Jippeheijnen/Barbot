@@ -20,6 +20,7 @@ BarBot::BarBot() {
     appControlService = new AppControlService();
     appRequestService = new AppRequestService();
     speechRecognition = new SpeechRecognition();
+    speechInterpretation = new SpeechInterpretation();
     lcd_smiley = new LCD_Smiley();
     pathing = new Pathing();
 }
@@ -35,17 +36,20 @@ void BarBot::init() {
     drinkService->init(drinkServerConnection);
     appRequestService->init(drinkServerConnection);
     appControlService->init(movement);
-//    speechRecognition->init(lineFollow, drinkService, cupDetection);
+    speechRecognition->init(lineFollow, drinkService, cupDetection);
+    lcd_smiley->init();
+    speechInterpretation->init(lineFollow, cupDetection, drinkService, nullptr);
     pathing->init(drinkServerConnection, appRequestService, lineDetection, lineFollow, movement, pathingColorOrder);
     running = true;
 }
 
 void BarBot::step() {
-//    lineFollow->step();
+    lineFollow->step();
     appRequestService->update();
     appControlService->update();
     pathing->step();
     movement->step();
+    speechInterpretation->listen();
 }
 
 

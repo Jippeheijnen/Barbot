@@ -7,7 +7,8 @@
 
 #include <BarBot/Sensors/CupDetection.h>
 #include <BarBot/Connectivity/DrinkService.h>
-#include <BarBot/Speech/SpeechRecognition.h>
+#include <BarBot/Communication/SpeechRecognition.h>
+#include <BarBot/Communication/LCD_Smiley.h>
 #include "LineFollow.h"
 
 /**
@@ -19,6 +20,7 @@ private:
     CupDetection *cupDetection;
     DrinkService *pumpService;
     SpeechRecognition *speechRecognition;
+    LCD_Smiley * lcdSmiley;
 
 public:
     /**
@@ -27,7 +29,7 @@ public:
      * @param cD
      * @param pS
      */
-    void init(LineFollow *lF, CupDetection *cD, DrinkService *pS);
+    void init(LineFollow *lF, CupDetection *cD, DrinkService *pS, LCD_Smiley *lS);
 
     /**
      * Polls speech recognition.

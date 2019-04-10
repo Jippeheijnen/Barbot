@@ -6,7 +6,7 @@
 
 const std::string Movement::TAG = "Movement";
 
-void Movement::init(ArduinoMotor *mot, BrickPi3 *bp3, uint8_t kSP ) {
+void Movement::init(ArduinoMotor *mot, BrickPi3 *bp3, int16_t kSP ) {
     motor = mot;
     kickStartPower = kSP;
     brickPi3 = bp3;
@@ -21,6 +21,11 @@ void Movement::stop() {
 }
 
 void Movement::steer(bool direction, uint8_t percentage) {
+//    correction = 1 - (float(percentage) / 100);
+//    if(correction < 0.1)
+//        correction = 0.1;
+//    Logger::log(TAG, std::to_string(correction));
+//    Logger::log(TAG, "Setting Direction" + std::to_string(percentage) + ":" + std::to_string(direction));
     if (direction)
         brickPi3->set_motor_position(PORT_A, (centerPosition - percentage));
     else
@@ -42,15 +47,15 @@ void Movement::speed(int16_t speed, bool force = false) {
             motor->setSpeed(abs(speed));
         }
     } else {
-        if (abs(speed) < 55 && abs(currSpeed) < 10) {
+        if (abs(speed) < kickStartPower && abs(currSpeed) < 10) {
             kickStarting = true;
             finalSpeed = speed;
             if(finalSpeed >= 0)
-                targSpeed = 55;
+                targSpeed = kickStartPower;
             else
-                targSpeed = -55;
+                targSpeed = int16_t (-1)* kickStartPower;
         } else {
-            if(abs(speed) >= 55) {
+            if(abs(speed) >= kickStartPower) {
                 kickStarting = false;
             }
             targSpeed = speed;
@@ -80,7 +85,7 @@ void Movement::step() {
     motor->setDirection(currSpeed >= 0);
 //    Logger::log(TAG, std::to_string(currSpeed) + "-" + std::to_string(newSpeed));
     if(currSpeed != newSpeed)
-        motor->setSpeed(static_cast<uint8_t>(abs(newSpeed)));
+        motor->setSpeed(static_cast<uint8_t>(abs(newSpeed)*correction));
     currSpeed = newSpeed;
 }
 

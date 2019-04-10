@@ -32,7 +32,7 @@ void AppControlService::init(Movement* mov) {
         close(fdW[1]);
 
         Logger::log(TAG_CTL, "Starting ctl");
-        char *argm[] = {"/usr/bin/bluetoothctl", "discoverable", "on", nullptr };
+        char *argm[] = {"/usr/bin/bluetoothctl", "discoverable", "on", nullptr};
 
         execve(argm[0], argm, nullptr);
         Logger::log(TAG_CTL, std::strerror(errno));
@@ -113,7 +113,7 @@ void AppControlService::update() {
                             }
                         }
                         int x = std::stoi(xS)/2;
-                        int y = std::stoi(yS)*0.8;
+                        int y = std::stoi(yS)*-2.2;
                         Logger::log(TAG, std::to_string(y));
                         movement->steer(x >= 0, abs(x));
                         movement->speed(y, false);

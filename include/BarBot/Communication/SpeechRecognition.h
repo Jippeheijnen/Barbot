@@ -18,7 +18,7 @@
 class SpeechRecognition {
 private:
     //init variables
-    long speechPipe;
+    int speechPipe;
     char file;
     char *arg;
     LineFollow *lineFollow;
