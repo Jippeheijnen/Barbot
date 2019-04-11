@@ -67,14 +67,12 @@ int main()
 
     bot.init();
 
-
-
     signal(SIGINT, exit_handler);
 
     Logger::log("Main", "Bot Initialized");
     Logger::log("main", "Initializing Smiley");
 
-//    bot.movement->speed(120, false);
+//    bot.movement->speed(50, false);
     bot.lineFollow->pause();
 while(bot.running) {
         bot.step();

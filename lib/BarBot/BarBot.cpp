@@ -40,6 +40,7 @@ void BarBot::init() {
     lcd_smiley->init();
     speechInterpretation->init(lineFollow, cupDetection, drinkService, speechRecognition, lcd_smiley);
     pathing->init(drinkServerConnection, appRequestService, lineDetection, lineFollow, movement, pathingColorOrder);
+    lcd_smiley->init();
     running = true;
 }
 
@@ -49,7 +50,7 @@ void BarBot::step() {
     appControlService->update();
     pathing->step();
     movement->step();
-//    speechInterpretation->listen();
+    speechInterpretation->listen();
 //    lcd_smiley->updateFace();
 }
 
