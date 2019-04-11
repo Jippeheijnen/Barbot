@@ -46,10 +46,6 @@ int main()
 
 
     Logger::setLogShow({
-        SpeechRecognition::TAG,
-        SpeechRecognition::TAG_PYTHON,
-        SpeechInterpretation::TAG,
-        Movement::TAG
     });
 
     bot.setCupDetectionDistance(10);

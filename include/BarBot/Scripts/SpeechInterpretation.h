@@ -21,6 +21,7 @@ private:
     DrinkService *pumpService;
     SpeechRecognition *speechRecognition;
     LCD_Smiley * lcdSmiley;
+    std::vector<std::string> heardLast;
 
 public:
     static const std::string TAG;
@@ -42,6 +43,11 @@ public:
      * Then resumes linefollow.
      */
     void listen();
+
+    bool wasHeard(std::string search);
+
+
+    void handleDrinkDispensing();
 };
 
 
