@@ -5,6 +5,7 @@
 #include <BarBot/Communication/LCD_Smiley.h>
 #include <BarBot/Util/Logger.h>
 #include <csignal>
+#include <sys/time.h>
 
 
 BarBot bot;
@@ -20,14 +21,35 @@ void exit_handler(int signo) {
     }
 };
 
+long get_millis() {
+    struct timeval tp;
+    gettimeofday(&tp, NULL);
+    return tp.tv_sec * 1000 + tp.tv_usec / 1000;
+}
+
 int main()
 {
+//    LCD_Smiley smile;
+//
+//    smile.init();
+//
+//    long ms = get_millis();
+//    while(true) {
+//        smile.updateFace();
+//        if (get_millis() > ms + 2000) {
+//            ms = get_millis() + 1000000;
+//            std::cout << "YOLOO" << std::endl;
+//            smile.sad(500);
+//        }
+//        usleep(10000);
+//    }
 
 
     Logger::setLogShow({
         SpeechRecognition::TAG,
         SpeechRecognition::TAG_PYTHON,
-        SpeechInterpretation::TAG
+        SpeechInterpretation::TAG,
+        Movement::TAG
     });
 
     bot.setCupDetectionDistance(10);
@@ -40,8 +62,8 @@ int main()
         INPUT_GREENCOLOR,
         INPUT_YELLOWCOLOR
     });
-    bot.setNoReadings(true);
-    bot.setLogSensorData(true);
+    bot.setNoReadings(false);
+    bot.setLogSensorData(false);
 
     bot.init();
 
@@ -52,7 +74,7 @@ int main()
     Logger::log("Main", "Bot Initialized");
     Logger::log("main", "Initializing Smiley");
 
-    bot.movement->speed(120, false);
+//    bot.movement->speed(120, false);
     bot.lineFollow->pause();
 while(bot.running) {
         bot.step();

@@ -13,18 +13,27 @@ private:
     int currSmiley;
     int leftLooking;
     int waitingForLoop;
-public:
-    int nextSmiley;
-    bool lookingAround;
-
-    void init();
     void displayHappy();
-    void displayAngry();
+    void displaySad();
     void displayStraight();
     void displayLeft();
     void displayRight();
+    void show(const std::string & txt, uint8_t line);
+public:
+    void happy(int duration);
+    void sad(int duration);
+    void straight(int duration);
+    void left(int duration);
+    void right(int duration);
+
+    int nextSmiley;
+    int lookingAroundTimer, differentFaceTimer, currentFace;
+    bool isDifferentFace;
+
+    void init();
+
     void changeSmiley(int nextSmiley);
-    void lookAround();
+    void updateFace();
     void waitingForLoopIteration();
 
     LCD_Smiley();

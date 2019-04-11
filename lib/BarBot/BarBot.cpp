@@ -49,7 +49,8 @@ void BarBot::step() {
     appControlService->update();
     pathing->step();
     movement->step();
-    speechInterpretation->listen();
+//    speechInterpretation->listen();
+//    lcd_smiley->updateFace();
 }
 
 

@@ -12,7 +12,7 @@ class CupDetection {
 private:
     sensor_ultrasonic_t ULTRASONIC_SENSOR_DATA;
 
-    uint8_t ULTRASONIC_SENSOR_PORT = PORT_1;
+    uint8_t ULTRASONIC_SENSOR_PORT = PORT_4;
 
     BrickPi3* brickPi3;
 public:

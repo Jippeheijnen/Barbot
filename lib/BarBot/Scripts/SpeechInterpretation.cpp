@@ -27,8 +27,7 @@ void SpeechInterpretation::listen(){
 
         std::vector<drink> drinks = pumpService->get_drinks();
         lineFollow->pause();
-        lcdSmiley->lookingAround = 0;
-        lcdSmiley->changeSmiley(0);
+        lcdSmiley->happy(500);
         SpeechSynthesis::speak("Wat wilt u drinken?");
         bool drankjeGevonden =false;
         while(!drankjeGevonden) {
@@ -43,6 +42,8 @@ void SpeechInterpretation::listen(){
                         if (cupDetection->isCupPlaced()) {
                             Logger::log(TAG, "Cup Detected");
                             Logger::log(TAG, "Dispensing " + drinks[i].name);
+
+                            lcdSmiley->happy(7000);
                             usleep(2000000);
                             pumpService->pour(drinks[i].id);
                             while(cupDetection->isCupPlaced() != 1){
@@ -53,7 +54,7 @@ void SpeechInterpretation::listen(){
                             break;
                         } else if (count == 7000) {
                             count = 0;
-                            lcdSmiley->changeSmiley(1);
+                            lcdSmiley->sad(700);
                             Logger::log(TAG, "Asking to place a cup ");
                             SpeechSynthesis::speak("Plaats alstublieft een beker");
                         } else {
@@ -61,7 +62,7 @@ void SpeechInterpretation::listen(){
                             usleep(1);
                         }
                     }
-                    lcdSmiley->lookingAround = 1;
+                    lcdSmiley->isDifferentFace = 1;
                     break;
                 }
             }

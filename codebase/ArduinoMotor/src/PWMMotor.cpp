@@ -3,10 +3,6 @@
 
 PWMMotor::PWMMotor(uint8_t pinA, uint8_t pinB) : pinA(pinA), pinB(pinB) {}
 
-void PWMMotor::setRotation(bool r) {
-    PWMMotor::forwardRotation = r;
-    update();
-}
 
 void PWMMotor::setPinA(uint8_t pinA) {
     PWMMotor::pinA = pinA;

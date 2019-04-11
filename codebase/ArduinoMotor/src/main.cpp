@@ -28,7 +28,7 @@ void loop() {
 
         if (*op == 'd') {
             Serial.println("Setting d");
-            motor->setRotation(val == 1);
+            motor->setForwardRotation(val == 1);
         }
         if(*op == 's') {
             Serial.println("Setting s");

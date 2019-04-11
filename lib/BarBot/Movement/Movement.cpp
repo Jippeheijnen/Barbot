@@ -11,9 +11,9 @@ void Movement::init(ArduinoMotor *mot, BrickPi3 *bp3, int16_t kSP ) {
     kickStartPower = kSP;
     brickPi3 = bp3;
     motor->init();
-    brickPi3->set_motor_limits(PORT_A, 60, 200);
-    brickPi3->reset_motor_encoder(PORT_A);
-    centerPosition = brickPi3->get_motor_encoder(PORT_A);
+    brickPi3->set_motor_limits(PORT_D, 60, 200);
+    brickPi3->reset_motor_encoder(PORT_D);
+    centerPosition = brickPi3->get_motor_encoder(PORT_D);
 }
 
 void Movement::stop() {
@@ -25,15 +25,15 @@ void Movement::steer(bool direction, uint8_t percentage) {
 //    if(correction < 0.1)
 //        correction = 0.1;
 //    Logger::log(TAG, std::to_string(correction));
-//    Logger::log(TAG, "Setting Direction" + std::to_string(percentage) + ":" + std::to_string(direction));
+    Logger::log(TAG, "Setting Direction" + std::to_string(percentage) + ":" + std::to_string(direction));
     if (direction)
-        brickPi3->set_motor_position(PORT_A, (centerPosition - percentage));
+        brickPi3->set_motor_position(PORT_D, (centerPosition - percentage));
     else
-        brickPi3->set_motor_position(PORT_A, (centerPosition + percentage));
+        brickPi3->set_motor_position(PORT_D, (centerPosition + percentage));
 }
 
 void Movement::center() {
-    brickPi3->set_motor_position(PORT_A, centerPosition);
+    brickPi3->set_motor_position(PORT_D, centerPosition);
 }
 
 void Movement::speed(int16_t speed, bool force = false) {
@@ -77,7 +77,7 @@ void Movement::step() {
         return;
 
     int16_t speedDiff = targSpeed - currSpeed;
-    int16_t step = speedDiff / abs(speedDiff) * 4;
+    int16_t step = speedDiff / abs(speedDiff) * 10;
     int16_t newSpeed = currSpeed + step;
 
     Logger::log(TAG, std::to_string(currSpeed));

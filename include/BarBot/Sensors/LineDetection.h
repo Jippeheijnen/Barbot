@@ -30,12 +30,12 @@ private:
     double LIGHT_SENSOR_FACTOR = 0.2;
     sensor_light_t LIGHT_SENSOR_DATA;
 
-    uint8_t LIGHT_SENSOR_PORT = PORT_4;
+    uint8_t LIGHT_SENSOR_PORT = PORT_1;
 
 
     ColorReading lastColorReading = {};
     sensor_color_t COLOR_SENSOR_DATA;
-    uint8_t COLOR_SENSOR_PORT = PORT_3;
+    uint8_t COLOR_SENSOR_PORT = PORT_2;
     BrickPi3* brickPi3;
     Movement* movement;
 
