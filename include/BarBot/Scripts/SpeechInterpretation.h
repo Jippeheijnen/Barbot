@@ -16,6 +16,7 @@
  */
 class SpeechInterpretation {
 private:
+    Movement * movement;
     LineFollow *lineFollow;
     CupDetection *cupDetection;
     DrinkService *pumpService;
@@ -31,7 +32,7 @@ public:
      * @param cD
      * @param pS
      */
-    void init(LineFollow *lF, CupDetection *cD, DrinkService *pS, SpeechRecognition  * sR,  LCD_Smiley *lS);
+    void init(LineFollow *lF, CupDetection *cD, DrinkService *pS, SpeechRecognition  * sR,  LCD_Smiley *lS, Movement * mo);
 
     /**
      * Polls speech recognition.

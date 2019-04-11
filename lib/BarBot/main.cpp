@@ -68,9 +68,15 @@ int main()
     Logger::log("Main", "Bot Initialized");
     Logger::log("main", "Initializing Smiley");
 
-//    bot.movement->speed(50, false);
+//    bot.movement->speed(180, false);
     bot.lineFollow->pause();
+    long ms = get_millis();
 while(bot.running) {
+//    if(ms > get_millis() + 5000)
+//    {
+//        bot.movement->speed(180, false);
+//        ms = get_millis()+50000000;
+//    }
         bot.step();
         usleep(10000);
     }

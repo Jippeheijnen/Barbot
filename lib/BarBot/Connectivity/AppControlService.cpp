@@ -123,7 +123,12 @@ void AppControlService::update() {
                             }
                         }
                         int x = std::stoi(xS)/2;
-                        int y = std::stoi(yS)*-2.2;
+                        int y = std::stoi(yS)*-3.2;
+                        if(y > 255)
+                            y = 255;
+                        if (y < -255) {
+                            y = -255;
+                        }
                         Logger::log(TAG, std::to_string(y));
                         movement->steer(x >= 0, abs(x));
                         movement->speed(y, false);
