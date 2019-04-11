@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <BarBot/Util/Logger.h>
 #include "BarBot/Connectivity/DrinkService.h"
 
 const std::string DrinkService::TAG = "DrinkService";
@@ -65,6 +66,9 @@ std::vector<drink> DrinkService::get_drinks() {
     std::vector<drink> drinkList = {};
 
     for(size_t i = 0; i < response.size(); i++) {
+        if (response[i] == "null") {
+            return {};
+        }
         drink d = {
                 stoi(response[i]),
                 response[i+1],

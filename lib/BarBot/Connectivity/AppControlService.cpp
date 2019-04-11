@@ -1,5 +1,7 @@
 
 #include <BarBot/Util/Logger.h>
+#include <BarBot/Connectivity/AppControlService.h>
+
 #include "BarBot/Connectivity/AppControlService.h"
 
 const std::string AppControlService::TAG = "AppControlService";
@@ -32,7 +34,7 @@ void AppControlService::init(Movement* mov) {
         close(fdW[1]);
 
         Logger::log(TAG_CTL, "Starting ctl");
-        char *argm[] = {"/usr/bin/bluetoothctl", "discoverable", "on", nullptr };
+        char *argm[] = {"/usr/bin/bluetoothctl", "discoverable", "on", nullptr};
 
         execve(argm[0], argm, nullptr);
         Logger::log(TAG_CTL, std::strerror(errno));
@@ -55,7 +57,13 @@ void AppControlService::init(Movement* mov) {
     }
 
     Logger::log(TAG, "Making Server Socket");
-    serverSocket = new BluetoothServerSocket(2,1);
+    try {
+        serverSocket = new BluetoothServerSocket(2, 1);
+    }
+    catch(BluetoothException& e) {
+        dieEneKutError = true;
+        std::cout << e.what() << std::endl;
+    }
 
 }
 
@@ -80,6 +88,8 @@ void AppControlService::relayLogs(int fD) {
 }
 
 void AppControlService::update() {
+    if(dieEneKutError)
+        return;
     try {
         BluetoothSocket *clientSock = serverSocket->accept();
         clientSock->getMessageBox();
@@ -113,7 +123,7 @@ void AppControlService::update() {
                             }
                         }
                         int x = std::stoi(xS)/2;
-                        int y = std::stoi(yS)*0.8;
+                        int y = std::stoi(yS)*-2.2;
                         Logger::log(TAG, std::to_string(y));
                         movement->steer(x >= 0, abs(x));
                         movement->speed(y, false);
@@ -133,6 +143,10 @@ void AppControlService::update() {
     }
     relayLogs(ctlPipe[0]);
     relayLogs(ctlPipe[1]);
+}
+
+void AppControlService::close_connection() {
+    serverSocket->close();
 }
 
 

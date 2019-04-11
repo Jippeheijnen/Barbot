@@ -9,6 +9,7 @@
  */
 class SpeechSynthesis {
 public:
+    static const std::string TAG;
     /**
      * @param text
      * Excecutes a bash script that pronounces the text given as parameter.

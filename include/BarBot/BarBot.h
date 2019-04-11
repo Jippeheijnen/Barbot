@@ -19,6 +19,7 @@
 #include <BarBot/Connectivity/AppRequestService.h>
 #include <BarBot/Scripts/Pathing.h>
 #include <cmath>
+#include <BarBot/Scripts/SpeechInterpretation.h>
 
 /**
  * Class for holding pointers to all components in this program
@@ -38,7 +39,10 @@ public:
     AppRequestService *appRequestService;
     Pathing* pathing;
     LCD_Smiley *lcd_smiley;
-    bool running, logSensorData;
+    SpeechInterpretation * speechInterpretation;
+    bool running, logSensorData, noReadings;
+
+    void setNoReadings(bool noReadings);
 
     int16_t lineDetectionTarget, lineDetectionMargin;
     uint8_t movementKickStartPower;

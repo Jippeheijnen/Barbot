@@ -11,6 +11,7 @@
 #include <BarBot/Scripts/LineFollow.h>
 #include <BarBot/Sensors/CupDetection.h>
 #include <BarBot/Util/Logger.h>
+#include <fcntl.h>
 
 const std::string SpeechRecognition::TAG = "SpeechRecognition";
 const std::string SpeechRecognition::TAG_PYTHON = "SpeechRecognition.py";
@@ -19,19 +20,27 @@ void SpeechRecognition::init(LineFollow *linFol, DrinkService *pumpSer, CupDetec
     lineFollow = linFol;
     drinkService = pumpSer;
     cupDetection = cupDet;
-    int pipeFD[2];
-    pipe(pipeFD);
+    int pipeOut[2], pipeIn[2];
 
-    long PID;
-    Logger::log(TAG, "Forking Process");
-    PID = fork();
-    if(PID == 0) {
+    pipe(pipeOut);
+    pipe(pipeIn);
 
-//        dup2(pipeFD[1], STDOUT_FILENO);
+    pid_t pid = fork();
+    fcntl(pipeOut[0], F_SETFL, O_NONBLOCK);
+    fcntl(pipeOut[1], F_SETFL, O_NONBLOCK);
+    fcntl(pipeIn[0], F_SETFL, O_NONBLOCK);
+    fcntl(pipeIn[1], F_SETFL, O_NONBLOCK);
+
+    if(pid == 0) {
+        Logger::log(TAG_PYTHON, "Starting up speech recognition");
+        dup2(pipeOut[1], STDOUT_FILENO);
+        dup2(pipeIn[0], STDIN_FILENO);
 
         Logger::log(TAG_PYTHON, "Closing Useless pipes");
-        close(pipeFD[0]);
-        Logger::log(TAG_PYTHON, "Starting up speech recognition");
+        close(pipeOut[0]);
+        close(pipeIn[1]);
+
+
         char* arg[] = {"/usr/bin/python", "/home/pi/SpeechRecognition.py", nullptr};
         execve(arg[0], arg, nullptr);
         Logger::log(TAG_PYTHON, "Something went wrong, this is after an exec call");
@@ -39,33 +48,34 @@ void SpeechRecognition::init(LineFollow *linFol, DrinkService *pumpSer, CupDetec
     }
     else {
         Logger::log(TAG, "Closing useless pipes");
-        speechPipe = pipeFD[0];
-        syscall(SYS_close, pipeFD[1], nullptr);
+        close(pipeOut[1]);
+        close(pipeIn[0]);
+        char test[500];
+        read(pipeOut[1], test, 499);
+
+        speechPipe[0] = pipeOut[0];
+        Logger::log(TAG, std::to_string(speechPipe[0]));
     }
-
-
 }
 
 
 std::vector<std::string> SpeechRecognition::poll() {
     std::vector<std::string> pollResult = {};
     char speechResult[301];
-    long bytesread = syscall(SYS_read, speechPipe, speechResult, 300,  nullptr);
+    long bytesread = read(speechPipe[0], speechResult, 300);
     std::string temp;
     for(int i=0; i < bytesread; i++){
-        if(speechResult[i] == ' ' or speechResult[i] == '\n'){
+        if(speechResult[i] == ' ' || speechResult[i] == '\n'){
             pollResult.push_back(temp);
             temp = "";
-
         }else{
-            temp.push_back(speechResult[i]);
+            temp += tolower(speechResult[i]);
         }
     }
-    if(temp.size() > 0)
+
+    if(!temp.empty())
         pollResult.push_back(temp);
     return pollResult;
 }
 
 
-
-#pragma clang diagnostic pop

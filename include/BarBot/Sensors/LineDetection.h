@@ -26,7 +26,7 @@ struct ColorReading {
  */
 class LineDetection {
 private:
-    bool logSensorData;
+    bool logSensorData, noReadings;
     double LIGHT_SENSOR_FACTOR = 0.2;
     sensor_light_t LIGHT_SENSOR_DATA;
 
@@ -52,7 +52,7 @@ public:
       * @param mar Minimum distance needed for detection
       * @param lSD Additional logging: If true, all sensor readings will be logged
       */
-    void init(BrickPi3 *bp3, Movement *mov, int16_t tar, int16_t mar, bool lSD = false);
+    void init(BrickPi3 *bp3, Movement *mov, int16_t tar, int16_t mar, bool lSD = false, bool nR = false);
 
 
     /**

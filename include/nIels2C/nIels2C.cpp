@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stropts.h>
+#include <linux/i2c-dev.h>
 
 
 uint8_t i2c = 0x3f;

@@ -2,6 +2,7 @@
 #ifndef BARBOT_MOVEMENT_H
 #define BARBOT_MOVEMENT_H
 
+#include <cmath>
 #include "BrickPI3/BrickPi3.h"
 #include "ArduinoMotor.h"
 
@@ -16,6 +17,7 @@ private:
     int16_t targSpeed = 0;
     int32_t centerPosition;
     BrickPi3 * brickPi3;
+    double_t correction = 1;
     bool forward;
     ArduinoMotor * motor;
     int16_t kickStartPower, finalSpeed;
@@ -34,7 +36,7 @@ public:
     /**
      * Initializes Motors.
      */
-    void init(ArduinoMotor *mot, BrickPi3 *bp3, uint8_t kSP);
+    void init(ArduinoMotor *mot, BrickPi3 *bp3, int16_t kSP);
 
     /**
      * Stops the robot gradually.

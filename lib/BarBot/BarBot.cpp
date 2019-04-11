@@ -20,6 +20,7 @@ BarBot::BarBot() {
     appControlService = new AppControlService();
     appRequestService = new AppRequestService();
     speechRecognition = new SpeechRecognition();
+    speechInterpretation = new SpeechInterpretation();
     lcd_smiley = new LCD_Smiley();
     pathing = new Pathing();
 }
@@ -28,24 +29,27 @@ void BarBot::init() {
     brickPi3->detect();
     motor->init();
     movement->init(motor, brickPi3, movementKickStartPower);
-    lineDetection->init(brickPi3, movement, lineDetectionTarget, lineDetectionMargin, logSensorData);
+    lineDetection->init(brickPi3, movement, lineDetectionTarget, lineDetectionMargin, logSensorData, noReadings);
     lineFollow->init(movement, lineDetection);
     cupDetection->init(brickPi3, cupDetectionDistance);
     drinkServerConnection->init(drinkServerIP, drinkServerPort);
     drinkService->init(drinkServerConnection);
     appRequestService->init(drinkServerConnection);
     appControlService->init(movement);
-//    speechRecognition->init(lineFollow, drinkService, cupDetection);
+    speechRecognition->init(lineFollow, drinkService, cupDetection);
+    lcd_smiley->init();
+    speechInterpretation->init(lineFollow, cupDetection, drinkService, speechRecognition, lcd_smiley);
     pathing->init(drinkServerConnection, appRequestService, lineDetection, lineFollow, movement, pathingColorOrder);
     running = true;
 }
 
 void BarBot::step() {
-//    lineFollow->step();
+    lineFollow->step();
     appRequestService->update();
     appControlService->update();
     pathing->step();
     movement->step();
+    speechInterpretation->listen();
 }
 
 
@@ -77,4 +81,8 @@ void BarBot::setPathingColorOrder(const std::vector<int> &pathingColorOrder) {
 
 void BarBot::setLogSensorData(bool logSensorData) {
     BarBot::logSensorData = logSensorData;
+}
+
+void BarBot::setNoReadings(bool noReadings) {
+    BarBot::noReadings = noReadings;
 }

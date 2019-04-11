@@ -18,18 +18,16 @@ void CupDetection::init(BrickPi3 *bp3, float dD) {
 
 }
 
-bool CupDetection::isCupPlaced() {
+int8_t CupDetection::isCupPlaced() {
 
     if(brickPi3->get_sensor(ULTRASONIC_SENSOR_PORT, ULTRASONIC_SENSOR_DATA) == 0) {
-
         float distance = ULTRASONIC_SENSOR_DATA.cm;
         return distance < detectDistance;
-
     }
 
     Logger::log(TAG, "Error receiving Sonar Sensor Data");
 
-    return false;
+    return -1;
 
 }
 
