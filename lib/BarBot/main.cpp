@@ -17,8 +17,7 @@ void exit_handler(int signo) {
         bot.drinkService->close();
         bot.appControlService->close_connection();
         bot.motor->setSpeed(0);
-        exit(-2);
-    }
+        exit(-2); }
 };
 
 long get_millis() {
