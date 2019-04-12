@@ -38,7 +38,7 @@ void BarBot::init() {
     appControlService->init(movement);
     speechRecognition->init(lineFollow, drinkService, cupDetection);
     lcd_smiley->init();
-    speechInterpretation->init(lineFollow, cupDetection, drinkService, speechRecognition, lcd_smiley);
+    speechInterpretation->init(lineFollow, cupDetection, drinkService, speechRecognition, lcd_smiley, movement);
     pathing->init(drinkServerConnection, appRequestService, lineDetection, lineFollow, movement, pathingColorOrder);
     lcd_smiley->init();
     running = true;

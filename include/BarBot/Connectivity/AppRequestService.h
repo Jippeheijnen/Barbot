@@ -27,7 +27,16 @@ private:
     std::queue<App_Request> reqeustQueue;
 public:
     std::string TAG = "AppRequestService";
+
+    /**
+     * Initialises the socket connections
+     * @param dsC
+     */
     void init(SocketConnection *dsC);
+
+    /**
+     * Get app requests from server
+     */
     void update();
 
     App_Request nextRequest();

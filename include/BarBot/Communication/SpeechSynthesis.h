@@ -11,8 +11,8 @@ class SpeechSynthesis {
 public:
     static const std::string TAG;
     /**
-     * @param text
      * Excecutes a bash script that pronounces the text given as parameter.
+     * @param text The text you want the robot to say
      */
     static void speak(std::string text);
 };

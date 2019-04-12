@@ -14,7 +14,8 @@
 
 const std::string SpeechInterpretation::TAG = "SpeechInterpretation";
 
-void SpeechInterpretation::init(LineFollow *lF, CupDetection *cD, DrinkService *pS, SpeechRecognition * sR, LCD_Smiley *lS) {
+void SpeechInterpretation::init(LineFollow *lF, CupDetection *cD, DrinkService *pS, SpeechRecognition * sR, LCD_Smiley *lS, Movement* mo) {
+    movement = mo;
     speechRecognition = sR;
     lineFollow = lF;
     cupDetection = cD;
@@ -25,19 +26,19 @@ void SpeechInterpretation::init(LineFollow *lF, CupDetection *cD, DrinkService *
 bool SpeechInterpretation::wasHeard(std::string search){
     for(const std::string & s : heardLast) {
         {
-            std::cout << s << " ";
             if(search == s)
                 return true;
         }
     }
-    std::cout << std::endl;
     return false;
 }
 
 void SpeechInterpretation::listen(){
     heardLast = speechRecognition->poll();
     if(wasHeard("barbot") || wasHeard("cartender")) {
+        Logger::log(TAG, "BARBOT");
         if(wasHeard("stop") || wasHeard("stoppen")) {
+            Logger::log(TAG, "STOP");
             handleDrinkDispensing();
         }
     }
@@ -72,7 +73,8 @@ void SpeechInterpretation::handleDrinkDispensing() {
                             usleep(1000);
                         }
                         SpeechSynthesis::speak("Tot de volgende keer!");
-                        lineFollow->resume();
+//                        lineFollow->resume();
+                        movement->speed(180, false);
                         break;
                     } else if (count == 7000) {
                         count = 0;

@@ -42,7 +42,7 @@ void LineFollow::step() {
 //        sensorValue = -120;
 //    }
 
-    Logger::log(TAG, std::to_string(sensorValue));
+//    Logger::log(TAG, std::to_string(sensorValue));
     if (sensorValue > 0)
         sensorValue *= .8;
     else

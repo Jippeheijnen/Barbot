@@ -24,7 +24,8 @@
 #include <termios.h>
 
 
-#define BAUDRATE B57600
+#define BAUDRATE B9600
+
 #define MODEMDEVICE "/dev/ttyUSB0"
 
 
