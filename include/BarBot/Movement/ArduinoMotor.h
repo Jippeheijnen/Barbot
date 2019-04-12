@@ -20,7 +20,16 @@ private:
     char buffer[255];
     int variable;
     struct pollfd fds[1];
+
+    /**
+     * commands the arduino motor
+     * @param pack The packt for command
+     */
     void command(const std::string & pack);
+
+    /**
+     * Clears the commands to the arduino motor
+     */
     void clear();
 
 public:

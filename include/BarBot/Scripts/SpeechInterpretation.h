@@ -47,7 +47,9 @@ public:
 
     bool wasHeard(std::string search);
 
-
+    /**
+     * Handles the drink dispensing
+     */
     void handleDrinkDispensing();
 };
 

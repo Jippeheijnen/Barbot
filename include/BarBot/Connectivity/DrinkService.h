@@ -36,7 +36,15 @@ private:
     SocketConnection* drinkServerConnection;
 public:
     static const std::string TAG;
+    /**
+    * Initiates socket connection
+    * @param dsC
+    */
     void init(SocketConnection* dsC);
+
+    /**
+     * Closes the socket connection
+     */
     void close();
     bool pour(int drink);
     std::vector<fluid> get_fluids();

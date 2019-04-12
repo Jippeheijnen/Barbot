@@ -35,14 +35,18 @@ public:
     void init(Movement* mov);
     /**
      * Reads the log buffer and logs the recieved data
-     * @param fD
+     * @param fD Filedescriptor of the pipe
      */
     void relayLogs(int fD);
+
     /**
-     *
+     *  Accepts bluetooth connections and retrieves commands from app to move
      */
     void update();
 
+    /**
+     * Closes the connection
+     */
     void close_connection();
 };
 

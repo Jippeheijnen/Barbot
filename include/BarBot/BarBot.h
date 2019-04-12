@@ -42,37 +42,75 @@ public:
     SpeechInterpretation * speechInterpretation;
     bool running, logSensorData, noReadings;
 
+    /**
+     * Function sets the noReadings boolean false or true
+     * @param noReadings The boolean to set function true or false
+     */
     void setNoReadings(bool noReadings);
 
     int16_t lineDetectionTarget, lineDetectionMargin;
     uint8_t movementKickStartPower;
     std::vector<int> pathingColorOrder = {};
 
+    /**
+     * Function sets the order of colors for pathing
+     * @param pathingColorOrder The vector of ints for the order of colors for pathing
+     */
     void setPathingColorOrder(const std::vector<int> &pathingColorOrder);
 
+    /**
+     * sets the kick start power
+     * @param movementKickStartPower The uint to set the kickstartpower
+     */
     void setMovementKickStartPower(uint8_t movementKickStartPower);
 
     float_t cupDetectionDistance;
     std::string drinkServerIP;
 
+    /**
+     * Sets the drink server
+     * @param drinkServerIp The drinkserverip
+     * @param drinkServerPort The drinkserverport
+     */
     void setDrinkServer(const std::string &drinkServerIp, int drinkServerPort);
 
     int drinkServerPort;
 
+    /**
+     * sets the cupdetectiondistance according to @param cupDetectionDistance
+     */
     void setCupDetectionDistance(const float_t &cupDetectionDistance);
 
+    /**
+     * sets linedetectiontarget according to @param lineDetectionTarget
+     */
     void setLineDetectionTarget(int16_t lineDetectionTarget);
 
+    /**
+     * set linedetectionmargin according to @param lineDetectionMargin
+     */
     void setLineDetectionMargin(int16_t lineDetectionMargin);
 
     BarBot();
 
+    /**
+     * Initiates everything
+     */
     void init();
 
+    /**
+     * step function does one step of the eventloop
+     */
     void step();
 
+    /**
+     * If @param logSensorData == true, saves every sensoroutput
+     */
     void setLogSensorData(bool logSensorData);
 
+    /**
+     * handles the exits according to @param signo
+     */
     void exit_handler(int signo);
 
 };
