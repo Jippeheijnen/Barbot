@@ -9,17 +9,17 @@
  * Initialize LCD display, shows the default happy smiley
  */
 void LCD_Smiley::init() {
-//    nI2C = new nIels2C(0x3f, 4, 20);
-//    nI2C->clear();
-//    time_t start, end;
-//    time(&start);
-//    changeSmiley(0);
+    nI2C = new nIels2C(0x3f, 4, 20);
+    nI2C->clear();
+    time_t start, end;
+    time(&start);
+    changeSmiley(0);
 }
 
 
 void LCD_Smiley::show(const std::string & txt, uint8_t line) {
-//    nI2C->display_string("                   ", line);
-//    nI2C->display_string(txt, line);
+    nI2C->display_string("                   ", line);
+    nI2C->display_string(txt, line);
 }
 
 /**

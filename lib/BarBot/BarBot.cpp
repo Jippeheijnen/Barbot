@@ -30,7 +30,7 @@ void BarBot::init() {
     motor->init();
     movement->init(motor, brickPi3, movementKickStartPower);
     lineDetection->init(brickPi3, movement, lineDetectionTarget, lineDetectionMargin, logSensorData, noReadings);
-    lineFollow->init(movement, lineDetection);
+    lineFollow->init(movement, lineDetection lineFollowEnabled);
     cupDetection->init(brickPi3, cupDetectionDistance);
     drinkServerConnection->init(drinkServerIP, drinkServerPort);
     drinkService->init(drinkServerConnection);
@@ -87,4 +87,8 @@ void BarBot::setLogSensorData(bool logSensorData) {
 
 void BarBot::setNoReadings(bool noReadings) {
     BarBot::noReadings = noReadings;
+}
+
+void BarBot::setLineFollowDisabled(bool lineFollowDisabled) {
+    BarBot::lineFollowDisabled = lineFollowDisabled;
 }

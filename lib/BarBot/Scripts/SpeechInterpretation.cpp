@@ -35,7 +35,6 @@ bool SpeechInterpretation::wasHeard(std::string search){
 }
 
 void SpeechInterpretation::listen(){
-    Logger::log(TAG, "TEST");
     heardLast = speechRecognition->poll();
     if(wasHeard("barbot") || wasHeard("cartender")) {
         if(wasHeard("stop") || wasHeard("stoppen")) {
@@ -50,7 +49,7 @@ void SpeechInterpretation::handleDrinkDispensing() {
 
     std::vector<drink> drinks = pumpService->get_drinks();
     lineFollow->pause();
-    lcdSmiley->happy(500);
+    lcdSmiley->happy(1);
     SpeechSynthesis::speak("Wat wilt u drinken?");
     bool drankjeGevonden =false;
     while(!drankjeGevonden) {
@@ -66,7 +65,7 @@ void SpeechInterpretation::handleDrinkDispensing() {
                         Logger::log(TAG, "Cup Detected");
                         Logger::log(TAG, "Dispensing " + drinks[i].name);
 
-                        lcdSmiley->happy(7000);
+                        lcdSmiley->happy(1);
                         usleep(2000000);
                         pumpService->pour(drinks[i].id);
                         while(cupDetection->isCupPlaced() != 1){

@@ -8,7 +8,7 @@ PWMMotor * motor;
 char  op[2];
 
 void setup() {
-    Serial.begin(57600);
+    Serial.begin(9600);
     motor = new PWMMotor(6, 5);
 }
 

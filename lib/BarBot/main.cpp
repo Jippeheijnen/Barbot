@@ -29,25 +29,8 @@ long get_millis() {
 
 int main()
 {
-//    LCD_Smiley smile;
-//
-//    smile.init();
-//
-//    long ms = get_millis();
-//    while(true) {
-//        smile.updateFace();
-//        if (get_millis() > ms + 2000) {
-//            ms = get_millis() + 1000000;
-//            std::cout << "YOLOO" << std::endl;
-//            smile.sad(500);
-//        }
-//        usleep(10000);
-//    }
-
-
     Logger::setLogShow({
     });
-
     bot.setCupDetectionDistance(10);
     bot.setDrinkServer("83.87.164.152", 8444);
     bot.setLineDetectionTarget(1900);
@@ -58,7 +41,8 @@ int main()
         INPUT_GREENCOLOR,
         INPUT_YELLOWCOLOR
     });
-    bot.setNoReadings(false);
+    bot.setNoReadings(true);
+    bot.setLineFollowDisabled(true);
     bot.setLogSensorData(false);
 
     bot.init();
@@ -66,7 +50,6 @@ int main()
     signal(SIGINT, exit_handler);
 
     Logger::log("Main", "Bot Initialized");
-    Logger::log("main", "Initializing Smiley");
 
 //    bot.movement->speed(50, false);
     bot.lineFollow->pause();

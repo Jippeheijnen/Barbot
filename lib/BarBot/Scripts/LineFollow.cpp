@@ -49,7 +49,7 @@ void LineFollow::step() {
         sensorValue *= .4;
 
 
-    if (!toBePaused) {
+    if (!toBePaused && !disabled) {
         if (sensorValue < 0) { // leaving line
             movement->steer(true, abs(sensorValue * 0.75));
         } else if (sensorValue > 0) { // entering line
@@ -60,7 +60,8 @@ void LineFollow::step() {
 
 }
 
-void LineFollow::init(Movement *mov, LineDetection *lineDet) {
+void LineFollow::init(Movement *mov, LineDetection *lineDet, bool dis) {
+    disabled = dis;
     movement = mov;
     lineDetection = lineDet;
 }

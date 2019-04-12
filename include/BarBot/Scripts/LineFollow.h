@@ -10,6 +10,7 @@ private:
 
     Movement *movement;
     LineDetection *lineDetection;
+    bool toBePaused, disabled;
 public:
     static const std::string TAG;
 
@@ -18,7 +19,7 @@ public:
      * @param mov  Reference to the bot's movement instance
      * @param lineDet  Reference to the bot's linedetection instance
      */
-    void init(Movement *mov, LineDetection *lineDet);
+    void init(Movement *mov, LineDetection *lineDet, bool dis);
 
     /**
      * collect data from LineDetection::getLineDirection, process it and send to function Movement::steer()
