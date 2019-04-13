@@ -7,7 +7,6 @@
 
 class LineFollow {
 private:
-
     Movement *movement;
     LineDetection *lineDetection;
     bool toBePaused, disabled;
@@ -19,7 +18,8 @@ public:
      * @param mov  Reference to the bot's movement instance
      * @param lineDet  Reference to the bot's linedetection instance
      */
-    void init(Movement *mov, LineDetection *lineDet, bool dis);
+    void init(Movement *mov, LineDetection *lineDet, bool disab);
+
 
     /**
      * collect data from LineDetection::getLineDirection, process it and send to function Movement::steer()

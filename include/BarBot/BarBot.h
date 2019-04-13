@@ -42,6 +42,7 @@ public:
     SpeechInterpretation * speechInterpretation;
     bool running, logSensorData, noReadings, lineFollowDisabled;
 
+
     void setLineFollowDisabled(bool lineFollowDisabled);
 
     /**

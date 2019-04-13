@@ -30,7 +30,7 @@ void BarBot::init() {
     motor->init();
     movement->init(motor, brickPi3, movementKickStartPower);
     lineDetection->init(brickPi3, movement, lineDetectionTarget, lineDetectionMargin, logSensorData, noReadings);
-    lineFollow->init(movement, lineDetection lineFollowEnabled);
+    lineFollow->init(movement, lineDetection, lineFollowDisabled);
     cupDetection->init(brickPi3, cupDetectionDistance);
     drinkServerConnection->init(drinkServerIP, drinkServerPort);
     drinkService->init(drinkServerConnection);
@@ -51,7 +51,7 @@ void BarBot::step() {
     pathing->step();
     movement->step();
     speechInterpretation->listen();
-//    lcd_smiley->updateFace();
+    lcd_smiley->updateFace();
 }
 
 

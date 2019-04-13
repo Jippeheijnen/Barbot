@@ -41,6 +41,7 @@ int main()
         INPUT_YELLOWCOLOR
     });
     bot.setNoReadings(true);
+
     bot.setLineFollowDisabled(true);
     bot.setLogSensorData(false);
 
@@ -51,7 +52,7 @@ int main()
     Logger::log("Main", "Bot Initialized");
 
 //    bot.movement->speed(180, false);
-    bot.lineFollow->pause();
+//    bot.lineFollow->pause();
     long ms = get_millis();
 while(bot.running) {
 //    if(ms > get_millis() + 5000)
